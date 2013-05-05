@@ -1,2 +1,5 @@
 node_modules
 views/built/templates.html
+
+# CSS should always be built from LESS:
+public/stylesheets/*.css
