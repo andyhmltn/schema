@@ -1,0 +1,44 @@
+<script type="text/x-handlebars-template" id="template-app">
+    <div class="navigation">
+        <a class="brand" href="#">Schema</a>
+        
+        <div class="user">
+            <img class="gravatar" src="http://gravatar.com/avatar/<%= window.user.gravatar %>?s=38&amp;r=pg&amp;d=mm" alt="" />
+            
+            <p class="user-info">
+                Logged in as <span><%= window.user.email %></span>
+                <br/>
+                <a href="/#/logout/" class="navbar-link">
+                    Logout?
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="toolbar">
+            <div class="title">
+                <!-- <a href="/servers/{{server.id}}/">{{server}}</a>
+                &gt;
+                <a href="/servers/{{server.id}}/databases/{{database}}/">{{database}}</a> -->
+            </div>
+            
+            <!-- <div class="right icons">
+                <a href="" class="icon search"></a>
+                <a href="" class="icon add"></a>
+            </div> -->
+        </div>
+        
+        <div class="search">
+            <input type="text" placeholder="Search..." />
+        </div>
+        
+        <ul class="sidenav">
+            
+        </ul>
+    </div>
+
+    <div class="main">
+        
+    </div>
+</script>

@@ -1,0 +1,64 @@
+<script type="text/x-handlebars-template" id="template-editserver">
+    <div class="toolbar">
+        <div class="title">Editing <%= name %></div>
+    </div>
+
+    <div class="view">
+        <ul class="form">
+            <li class="label">
+                <label for="name">Name</label>
+            </li>
+            <li class="input">
+                <input type="text" id="name" value="<%= name %>" />
+            </li>
+            
+            
+            <li class="label">
+                <label for="hostname">Hostname</label>
+            </li>
+            <li class="input">
+                <input type="text" id="hostname" value="<%= hostname %>" />
+            </li>
+            
+            
+            <li class="label">
+                <label for="username">Username</label>
+            </li>
+            <li class="input">
+                <input type="text" id="username" value="<%= username %>" />
+            </li>
+            
+            
+            <li class="label">
+                <label for="password">Password</label>
+            </li>
+            <li class="input">
+                <input type="password" id="password" value="" />
+            </li>
+            
+            
+            <li class="label">
+                <label for="port">Port</label>
+            </li>
+            <li class="input">
+                <input type="text" id="port" value="<%= port %>" />
+            </li>
+            
+            
+            <li class="label">
+                <label for="db_type">Database Type</label>
+            </li>
+            <li class="input">
+                <select name="db_type" id="db_type">
+                    <option value="1" <% if (db_type == "MySQL") { %>selected="selected"<% } %>>MySQL</option>
+                    <option value="2" <% if (db_type == "PostgreSQL") { %>selected="selected"<% } %>>PostgreSQL</option>
+                    <option value="3" <% if (db_type == "MongoDB") { %>selected="selected"<% } %>>MongoDB</option>
+                </select>
+            </li>
+            
+            <li class="input">
+                <input type="submit" id="submit" value="Save" />
+            </li>
+        </ul>
+    </div>
+</script>
