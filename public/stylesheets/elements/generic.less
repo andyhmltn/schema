@@ -1,0 +1,99 @@
+.toolbar {
+    background: lighten(@theme, 15%);
+    height: 30px;
+    border-bottom: 1px solid darken(@theme, 30%);
+    box-shadow: inset 0px 2px 1px lighten(@theme, 25%),
+                inset 0px -1px 1px lighten(@theme, 20%);
+    
+    .title {
+        font-size: 11px;
+        font-weight: bold;
+        padding: 9px;
+        color: darken(@theme, 30%);
+        text-shadow: 0 1px 0 lighten(@theme, 30%);
+        text-transform: uppercase;
+        float: left;
+        
+        a {
+            color: darken(@theme, 30%);
+            text-shadow: 0 1px 0 lighten(@theme, 30%);
+            text-decoration: none;
+            
+            &:hover {
+                color: darken(@theme, 50%);
+            }
+        }
+    }
+    
+    .icons {
+        margin-right: 5px;
+        .icon {
+            width: 12px;
+            height: 12px;
+            background: red;
+            float: right;
+            margin: 9px 4px;
+            
+            &.search {
+                background: url(/images/search.png);
+            }
+            &.add {
+                background: url(/images/add.png);
+            }
+        }
+    }
+    
+    ul.pills {
+        float: right;
+        
+        li {
+            float: left;
+            font-size: 11px;
+            font-weight: bold;
+            
+            a {
+                display: block;
+                height: 20px;
+                padding: 10px 10px 0 10px;
+                text-transform: uppercase;
+                color: darken(@theme, 30%);
+                text-shadow: 0 1px 0 lighten(@theme, 30%);
+                text-decoration: none;
+                
+                &:hover {
+                    color: darken(@theme, 50%);
+                }
+            }
+            
+            &.active {
+                a {
+                    background: lighten(@theme, 5%);
+                    border-left: 1px solid darken(@theme, 10%);
+                    border-right: 1px solid darken(@theme, 10%);
+                }
+            }
+        }
+    }
+}
+
+.status {
+    z-index: 70;
+    
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 351px;
+    background: lighten(@theme, 15%);
+    height: 24px;
+    border-top: 1px solid darken(@theme, 10%);
+    
+    .text {
+        text-transform: uppercase;
+        font-size: 11px;
+        padding: 5px;
+        margin: 0 5px;
+        font-weight: bold;
+        color: darken(@theme, 30%);
+        text-shadow: 0 1px 0 lighten(@theme, 30%);
+    }
+}
