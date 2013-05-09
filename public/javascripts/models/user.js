@@ -1,23 +1,24 @@
 var User = Backbone.Model.extend({
     defaults: {
+        token: null,
         email: null,
         logged_in: false,
     },
     
     initialize: function() {
-        if (window.token && window.email && window.gravatar) {
-            this.token = window.token;
+        if (this.token && this.email /*&& window.gravatar*/) {
             this.email = window.email;
-            this.gravatar = window.gravatar;
+            // this.gravatar = window.gravatar;
             this.logged_in = true;
         } else {
             window.location.replace('/#/login/');
         }
     },
     
-    setLoggedIn: function() {
+    setLoggedIn: function(response) {
+        this.email = response.email;
+        this.token = response.token;
         this.logged_in = true;
-        this.fetchData();
         window.location = "#/servers/";
     },
     
@@ -28,9 +29,25 @@ var User = Backbone.Model.extend({
     setLoggedOut: function() {
         user = this;
         
-        $.get('/api/auth/logout/', function() {
+        $.get('/api/auth/', function() {
             user.logged_in = false;
             window.location = "#/login/";
         });
+        
+        // $.ajax({
+        //     url: '/api/auth',
+        //     type: 'POST',
+        //     data: {
+        //         email: $('#login-email').val(),
+        //         password: $('#login-password').val()
+        //     },
+        //     error: function(data) {
+        //         alert('Incorrect username or password');
+        //     },
+        //     success: function(data) {
+        //         window.user.setLoggedIn();
+        //     }
+        // });
+        
     }
 });

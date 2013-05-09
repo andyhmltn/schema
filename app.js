@@ -3,8 +3,9 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 
-// Create express app:
+// Create express app and connect to SQLite DB:
 var app = express();
+app.database = require('./database');
 
 // Define settings and middleware for all environments:
 app.set('port', process.env.PORT || 8000);
@@ -22,6 +23,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
+
+// Define database connection store:
+app.user_connections = {};
+
+// Start connection monitor to run every 30 seconds:
+var monitor = require('./monitor')(app);
+setInterval(monitor, 30000);
 
 // Render single-page app:
 app.get('/', function(req, res) {

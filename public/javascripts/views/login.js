@@ -14,12 +14,19 @@ LoginView = Backbone.View.extend({
     
     login: function (event) {
         // Post this to the API:
-        $.post('/api/auth/login/', JSON.stringify({
-            email: $('#login-email').val(),
-            password: $('#login-password').val()
-        }), function(data) {
-            if (data.success) {
-                window.user.setLoggedIn();
+        $.ajax({
+            url: '/api/auth',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                email: $('#login-email').val(),
+                password: $('#login-password').val()
+            },
+            error: function(data) {
+                alert('Incorrect username or password');
+            },
+            success: function(data) {
+                window.user.setLoggedIn(data);
             }
         });
         
