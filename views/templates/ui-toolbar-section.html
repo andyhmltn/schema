@@ -1,0 +1,16 @@
+<script type="text/x-handlebars-template" id="template-ui-toolbar-section">
+    <ul>
+        <% _.each(items, function(item) { %>
+            <li class="item">
+                <a href="<%= item.url %>"
+                    <% if (item.event) { %>
+                        onclick="jQuery('body').trigger(jQuery.Event(item.event));"
+                    <% } %>
+                >
+                    <div class="image" style="" /></div>
+                    <div class="text"><%= item.text %></div>
+                </a>
+            </li>
+        <% }); %>
+    </ul>
+</script>

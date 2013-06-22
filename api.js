@@ -8,31 +8,29 @@ function return_json (res, data, status) {
 
 module.exports = function(app) {
     /**
-     * Authenticate user
+     * Make connection to database and return token which the client can
+     * use to make subsequent requests to the database.
+     *
+     * @todo Add validation to the parameters
+     * @todo Add tests
+     * @todo Add PostgreSQL support
      */
-    app.post('/api/auth', function(req, res) {
-        var email = req.body.email;
+    app.post('/api/connect', function(req, res) {
+        var hostname = req.body.hostname;
+        var username = req.body.username;
         var password = req.body.password;
+        var port = req.body.port;
         
-        app.database.getUser(email, password, function(user) {
-            if (user) {
-                // Add connection:
-                var uniq = 'id' + (new Date()).getTime();
-                app.user_connections[uniq] = {
-                    email: email,
-                    databases: {
-                    }
-                };
-                
+        app.database.makeDBConnection(hostname, username, password, port, function (token) {
+            if (token) {
                 return_json(res, {
-                    message: 'Logged in',
-                    email: email,
-                    token: uniq,
+                    token: token,
                 });
             } else {
                 return_json(res, {
-                    message: 'Incorrect username or password'
-                }, 401);
+                    error: true,
+                    message: 'Could not connect'
+                });
             }
         });
     });
@@ -41,7 +39,7 @@ module.exports = function(app) {
     /**
      * Log user out, close their DB connections, etc.
      */
-    app.delete('/api/auth/:token', function(req, res) {
+    app.post('/api/auth/:token', function(req, res) {
         Object.keys(app.user_connections).forEach(function(key) {
             if (key == req.param.token) {
                 console.log('FOUND IT:', key);
@@ -57,66 +55,33 @@ module.exports = function(app) {
         }
     })
     
-    /**
-     * Return list of servers
-     */
-    app.get('/api/servers', function(req, res) {
-        return_json(res, [
-            {
-                id: 'foobarbaz0',
-                name: 'Development',
-                hostname: '127.0.0.1',
-            },
-            {
-                id: 'foobarbaz1',
-                name: 'Production',
-                hostname: 'ariel.snowdon.ripple',
-            },
-            {
-                id: 'foobarbaz2',
-                name: 'Staging',
-                hostname: 'timdavi.es',
-            },
-        ]);
-    });
-    
-    /**
-     * Make connection to server
-     */
-    app.get('/api/servers/:id/', function(req, res) {
-        return_json(res, {
-        });
-    });
-    
-    /**
-     * Delete server from user's list
-     */
-    app.delete('/api/servers/:id/', function(req, res) {
-        return_json(res, {
-        });
-    });
-    
-    /**
-     * Modify server information
-     */
-    app.put('/api/servers/:id/', function(req, res) {
-        return_json(res, {
-        });
-    });
-    
-    /**
-     * Create server
-     */
-    app.post('/api/servers/:id/', function(req, res) {
-        return_json(res, {
-        });
-    });
     
     /**
      * Send query to server
      */
-    app.post('/api/servers/:id/query', function(req, res) {
-        return_json(res, {
+    app.post('/api/query', function(req, res) {
+        var token = req.body.token;
+        var query = req.body.query;
+        
+        if (!app.user_connections.hasOwnProperty(token)) {
+            return return_json(res, {
+                error: true,
+                message: 'Token invalid'
+            });
+        }
+        
+        app.user_connections[token].query(query, function(err, rows) {
+            if (err) {
+                return return_json(res, {
+                    error: true,
+                    message: 'Error in query'
+                });
+            }
+            
+            return_json(res, {
+                success: true,
+                rows: rows
+            });
         });
     });
 }

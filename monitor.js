@@ -1,5 +1,10 @@
 module.exports = function(app) {
     return function() {
-        console.log(app.user_connections);
+        var i = 0;
+        for (inc in app.user_connections) {
+            i++;
+        }
+        
+        console.log("There are " + i + " active database connections.");
     }
 };

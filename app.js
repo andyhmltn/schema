@@ -4,7 +4,7 @@ var http = require('http');
 var path = require('path');
 
 // Create express app and connect to SQLite DB:
-var app = express();
+app = express();
 app.database = require('./database');
 
 // Define settings and middleware for all environments:

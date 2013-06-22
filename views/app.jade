@@ -2,27 +2,28 @@ doctype 5
 html
   head
     title Schema
-    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Molle:400italic')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Molle:400italic|Open+Sans:400italic,400,600')
     link(rel='stylesheet', href='/stylesheets/stylesheet.css')
     include built/templates.html
     
     script(type='text/javascript', src='/javascripts/vendor/jquery.js')
     script(type='text/javascript', src='/javascripts/vendor/underscore.js')
-    script(type='text/javascript', src='/javascripts/vendor/json2.js')
     script(type='text/javascript', src='/javascripts/vendor/backbone.js')
     
-    script(type='text/javascript', src='/javascripts/models/server.js')
-    script(type='text/javascript', src='/javascripts/models/database.js')
-    script(type='text/javascript', src='/javascripts/models/user.js')
-    
-    script(type='text/javascript', src='/javascripts/collections/servers.js')
-    
-    script(type='text/javascript', src='/javascripts/views/app.js')
-    script(type='text/javascript', src='/javascripts/views/editserver.js')
-    script(type='text/javascript', src='/javascripts/views/login.js')
-    script(type='text/javascript', src='/javascripts/views/serveritem.js')
-    script(type='text/javascript', src='/javascripts/views/serverpicker.js')
-    
+    script(type='text/javascript', src='/javascripts/User.js')
+    script(type='text/javascript', src='/javascripts/DBConnection.js')
+    script(type='text/javascript', src='/javascripts/DatabasePicker.js')
+    script(type='text/javascript', src='/javascripts/Login.js')
+    script(type='text/javascript', src='/javascripts/ui/toolbar.js')
+    script(type='text/javascript', src='/javascripts/ui/sidebar.js')
+    script(type='text/javascript', src='/javascripts/ui/view.js')
     script(type='text/javascript', src='/javascripts/app.js')
   body
-    
+    div.ui-toolbar
+        div.section.sidebar#schema_logo
+            h1
+                a(href="/#/") Schema
+        div.section.left
+        div.section.right
+    div.ui-sidebar#sidebar
+    div.ui-view#main

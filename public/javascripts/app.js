@@ -1,73 +1,79 @@
 var SchemaRouter = Backbone.Router.extend({
     routes: {
         ""                 : "redirectToServerPicker",
-        "login/"           : "showLogin",
-        "logout/"          : "logoutUser",
         "servers/"         : "showServerPicker",
-        "servers/:server/" : "showDatabasePicker",
+        "databases/"       : "showDatabasePicker",
     },
     
     redirectToServerPicker: function() {
-        window.location = "#/servers/";
+        if (window.token) {
+            window.location = "#/servers/";
+        } else {
+            window.location = "#/databases/";
+        }
     },
     
-    checkAppLoaded: function() {
-        window.appView = new AppView();
-        $('body').html(window.appView.render().el);
-    },
+    // showLogin: function() {
+    //     // Set up toolbar:
+    //     Toolbar.clear();
+    //     Toolbar.addItem('left', 'Login', '', '#/login/', 'loginEvent');
+    //     Toolbar.addItem('left', 'Servers', '', '#/servers/');
+        
+    //     // Fill sidebar with saved servers:
+    //     // Sidebar.clear();
+    //     Sidebar.render();
+        
+    //     // var loginView = new LoginView();
+    //     // $('body').html(loginView.render().el);
+    // },
     
-    showLogin: function() {
-        var loginView = new LoginView();
-        $('body').html(loginView.render().el);
+    needLogin: function() {
+        if (!window.token) {
+            var token = localStorage['token'];
+            
+            if (token) {
+                window.token = token;
+            } else {
+                window.location = "#/servers/";
+            }
+        }
     },
     
     showServerPicker: function() {
-        this.checkAppLoaded();
-        
-        window.appView.setNavTitle("Pick a server");
-        
-        // Get servers:
-        serverCollection = new Servers;
-        serverCollection.fetch();
-        
-        // Give servers to server picker:
-        serverPickerView = new ServerPickerView({
-            collection: serverCollection
-        });
-        
-        serverPickerView.render();
-        window.appView.$el.find('ul.sidenav').html(serverPickerView.el);
+        Toolbar.clear();
+        Sidebar.clear();
+        var login = new Login();
+        login.displayLogin();
     },
     
     showDatabasePicker: function (server_id) {
-        this.checkAppLoaded();
+        this.needLogin();
+        Sidebar.clear();
+        Toolbar.clear();
         
-        // Get server:
-        server = new Server({
-            id: server_id
-        });
-        server.fetch({
-            'success': function() {
-                window.appView.setNavTitle(server.get('name'));
-            },
-            'error': function() {
-                console.log("an error occurred");
-            }
-        });
+        var databases = new DatabasePicker();
+        databases.displayPicker();
+        
+        // this.checkAppLoaded();
+        
+        // // Get server:
+        // server = new Server({
+        //     id: server_id
+        // });
+        // server.fetch({
+        //     'success': function() {
+        //         window.appView.setNavTitle(server.get('name'));
+        //     },
+        //     'error': function() {
+        //         console.log("an error occurred");
+        //     }
+        // });
     },
-    
-    logoutUser: function() {
-        window.user.setLoggedOut();
-    }
 });
 
 $(function() {
-    // This should be retrieved from auth call, but for now, we'll just define
-    // it here:
-    window.app_key = 'changeme';
+    window.user = new User;
     
-    // Create user:
-    window.user = new User();
     var router = new SchemaRouter();
     Backbone.history.start();
 });
