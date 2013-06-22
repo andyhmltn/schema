@@ -7,7 +7,7 @@ var DatabasePicker = function() {
         db.queryOrLogout("SHOW DATABASES;", function (rows) {
             for (var row_id in rows) {
                 var row = rows[row_id];
-                Sidebar.addItem(row.Database, '', 0);
+                window.sidebar.addItem(row.Database, '', '#/database/' + row.Database + '/', 0);
             }
         });
         

@@ -1,15 +1,19 @@
+window.sidebar = new Sidebar;
+
 var SchemaRouter = Backbone.Router.extend({
     routes: {
-        ""                 : "redirectToServerPicker",
-        "servers/"         : "showServerPicker",
-        "databases/"       : "showDatabasePicker",
+        ""                     : "redirectToServerPicker",
+        "servers/"             : "showServerPicker",
+        "database/"            : "listDatabases",
+        "database/:database/"  : "viewDatabase",
+        "database/:database/"  : "viewDatabase",
     },
     
     redirectToServerPicker: function() {
         if (window.token) {
-            window.location = "#/servers/";
+            window.location = "#/database/";
         } else {
-            window.location = "#/databases/";
+            window.location = "#/servers/";
         }
     },
     
@@ -41,14 +45,33 @@ var SchemaRouter = Backbone.Router.extend({
     
     showServerPicker: function() {
         Toolbar.clear();
-        Sidebar.clear();
+        window.sidebar.clear();
         var login = new Login();
         login.displayLogin();
     },
     
-    showDatabasePicker: function (server_id) {
+    viewDatabase: function(database_name) {
         this.needLogin();
-        Sidebar.clear();
+        window.sidebar.clear();
+        
+        var db = new DBConnection();
+        
+        // Populate left nav (database switcher):
+        db.queryOrLogout('USE ' + database_name + ';', function (rows) {
+            db.queryOrLogout('SHOW TABLES;', function (rows) {
+                window.rows = rows;
+                
+                _.each(rows, function (row) {
+                    var table_name = row[_.keys(row)[0]];
+                    window.sidebar.addItem(table_name, '', '#/database/' + database_name + '/' + table_name + '/');
+                });
+            });
+        });
+    },
+    
+    listDatabases: function (server_id) {
+        this.needLogin();
+        window.sidebar.clear();
         Toolbar.clear();
         
         var databases = new DatabasePicker();

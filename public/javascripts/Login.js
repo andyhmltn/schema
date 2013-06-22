@@ -26,7 +26,7 @@ var Login = function() {
                 if (token) {
                     window.token = token;
                     localStorage['token'] = token;
-                    window.location = "#/databases/";
+                    window.location = "#/database/";
                 } else {
                     alert("Sorry, could not connect");
                 }

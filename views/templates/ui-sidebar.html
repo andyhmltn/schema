@@ -2,7 +2,17 @@
     <ul>
         <% _.each(items, function(item) { %>
             <li class="item">
-                <%= item.text %>
+                <a href="<%= item.url %>">
+                    <% if (item.icon) { %>
+                        <span class="icon">
+                            <img src='<%= item.icon %>' />
+                        </span>
+                    <% } %>
+                    
+                    <span class="text">
+                        <%= item.text %>
+                    </span>
+                </a>
             </li>
         <% }); %>
     </ul>

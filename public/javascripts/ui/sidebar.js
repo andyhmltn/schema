@@ -1,18 +1,30 @@
 /**
  * Manages sidebar
  */
-Sidebar = {
+Sidebar = function () {
+    /**
+     * Initialise function
+     */
+    this.init = function () {
+        $(document).on('click', '.ui-sidebar li a', function(e) {
+            $('.ui-sidebar li a.active').removeClass('active');
+            $(this).addClass('active');
+        });
+    };
+    this.init();
+    
+    
     /**
      * Define sidebar and template selectors
      */
-    selector: 'div.ui-sidebar#sidebar',
-    template: '#template-ui-sidebar',
+    this.selector = 'div.ui-sidebar#sidebar';
+    this.template = '#template-ui-sidebar';
     
     
     /**
      * Define empty array for containing sidebar items
      */
-    items: [],
+    this.items = [];
     
     
     /**
@@ -20,10 +32,10 @@ Sidebar = {
      *
      * @return void
      */
-    clear: function() {
+    this.clear = function() {
         this.items = [];
         this.render();
-    },
+    };
     
     
     /**
@@ -35,15 +47,16 @@ Sidebar = {
      *
      * @return void
      */
-    addItem: function(text, icon, position) {
+    this.addItem = function(text, icon, url, position) {
         // callback instanceof Function
         this.items.push({
             text: text,
-            icon: icon
+            icon: icon,
+            url: url
         });
         
         this.render();
-    },
+    };
     
     
     /**
@@ -51,11 +64,11 @@ Sidebar = {
      *
      * @return void
      */
-    render: function() {
+    this.render = function() {
         var html = _.template($(this.template).html(), {
             items: this.items
         });
         
         $(this.selector).html(html);
-    }
+    };
 };
