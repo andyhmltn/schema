@@ -1,4 +1,5 @@
 node_modules
+npm-debug.log
 views/built/templates.html
 settings.db
 
