@@ -9,6 +9,8 @@
     "express": "3.2.1",
     "mysql": "2.0.0-alpha8",
     "jade": "*",
-    "less-middleware": "*"
+    "less-middleware": "*",
+    "chokidar": "*",
+    "glob": "3.2.1"
   }
 }
