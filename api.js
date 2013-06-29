@@ -63,6 +63,8 @@ module.exports = function(app) {
         var token = req.body.token;
         var query = req.body.query;
         
+        console.log("> Executing SQL: " + query);
+        
         if (!app.user_connections.hasOwnProperty(token)) {
             return return_json(res, {
                 error: true,
