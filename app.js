@@ -2,6 +2,9 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var chokidar = require('chokidar');
+var glob = require('glob');
+var fs = require('fs');
 
 // Create express app and connect to SQLite DB:
 app = express();
@@ -31,6 +34,50 @@ app.user_connections = {};
 var monitor = require('./monitor')(app);
 setInterval(monitor, 30000);
 
+// Monitor templates directory for changes:
+function rebuild_templates() {
+    console.log("> Building templates");
+    
+    glob("views/templates/*.html", {}, function (err, files) {
+        if (err) {
+            return;
+        }
+        
+        var files_complete = 0;
+        var text = "";
+        
+        files.forEach(function (file) {
+            fs.readFile(file, 'utf8', function (err, data) {
+                text = text + data;
+                ++files_complete;
+                
+                if (files_complete == files.length) {
+                    fs.writeFile("views/built/templates.html", text, function(err) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("> Templates successfully rebuilt");
+                        }
+                    }); 
+                }
+            });
+        });
+    });
+}
+
+rebuild_templates();
+
+var template_watch = chokidar.watch('views/templates/', {
+    ignored: /^\./,
+    persistent: true,
+    ignoreInitial: true
+});
+
+template_watch
+    .on('add', rebuild_templates)
+    .on('change', rebuild_templates)
+    .on('unlink', rebuild_templates);
+
 // Render single-page app:
 app.get('/', function(req, res) {
     res.render('app', {});
@@ -41,5 +88,5 @@ require('./api.js')(app);
 
 // Start server:
 http.createServer(app).listen(app.get('port'), function(){
-    console.log('Express server listening on port ' + app.get('port'));
+    console.log('> Schema is listening on port ' + app.get('port'));
 });

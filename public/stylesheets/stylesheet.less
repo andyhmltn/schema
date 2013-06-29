@@ -18,34 +18,62 @@ body {
 
 .ui-sidebar {
     background: darken(@toolbar_bg, 10%);
-    width: @sidebar_width - 1px;
+    width: @sidebar_width;
     border-right: 1px solid darken(@toolbar_bg, 20%);
     
     position: fixed;
     top: @toolbar_height;
     bottom: 0;
     left: 0;
-    overflow: scroll;
     
-    li {
-        width: @sidebar_width - 21px;
-        a {
-            float: left;
-            width: 100%;
-            font-size: 12px;
-            padding: 7px 10px;
-            border-bottom: 1px solid darken(@toolbar_bg, 15%);
-            color: lighten(@toolbar_bg, 40%);
-            text-decoration: none;
-            
-            &:hover {
-                background: darken(@toolbar_bg, 6%);
-            }
-            
-            &.active {
-                background: darken(@toolbar_bg, 15%);
-                color: #fff;
-                font-weight: bold;
+    .search {
+        height: 30px;
+        border-bottom: 1px solid darken(@toolbar_bg, 20%);
+        position: fixed;
+        top: @toolbar_height;
+        width: @sidebar_width;
+        
+        input {
+            display: block;
+            border: 0;
+            width: @sidebar_width - 20px;
+            height: 30px;
+            margin: 0;
+            padding: 0 10px 0 10px;
+            background: darken(@toolbar_bg, 5%);
+            color: #fff;
+            outline: 0;
+        }
+    }
+    
+    ul {
+        position: fixed;
+        top: @toolbar_height + 31px;
+        bottom: 0;
+        left: 0;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        
+        li {
+            width: @sidebar_width;
+            a {
+                float: left;
+                width: 100%;
+                font-size: 12px;
+                padding: 7px 10px;
+                border-bottom: 1px solid darken(@toolbar_bg, 15%);
+                color: lighten(@toolbar_bg, 40%);
+                text-decoration: none;
+                
+                &:hover {
+                    background: darken(@toolbar_bg, 6%);
+                }
+                
+                &.active {
+                    background: darken(@toolbar_bg, 15%);
+                    color: #fff;
+                    font-weight: bold;
+                }
             }
         }
     }
@@ -58,4 +86,58 @@ body {
     bottom: 0;
     right: 0;
     left: @sidebar_width + 1px; // 1px is for border
+    
+    .titlebar {
+        background: darken(@toolbar_bg, 10%);
+        height: 16px;
+        border-bottom: 1px solid darken(@toolbar_bg, 20%);
+        color: #fff;
+        font-weight: bold;
+        -webkit-font-smoothing: antialiased;
+        font-size: 14px;
+        padding: 7px;
+    }
+    
+    div.tableview {
+        overflow: scroll;
+        position: fixed;
+        border-left: 1px solid darken(@toolbar_bg, 20%);
+        background: lighten(desaturate(@toolbar_bg, 15%), 50%);
+        top: @toolbar_height + 30px;
+        left: @sidebar_width;
+        right: 0;
+        bottom: 0;
+        
+        table {
+            position: relative;
+            left: -1px;
+            
+            tr {
+                th, td {
+                    
+                }
+            }
+            
+            thead {
+                tr {
+                    th {
+                        background: white;
+                        padding: 4px 10px;
+                        font-size: 12px;
+                        border: 1px solid darken(@toolbar_bg, 20%);
+                    }
+                }
+            }
+            
+            tbody {
+                tr {
+                    td {
+                        background: #fafafa;
+                        padding: 4px 10px;
+                        border: 1px solid darken(@toolbar_bg, 20%);
+                    }
+                }
+            }
+        }
+    }
 }

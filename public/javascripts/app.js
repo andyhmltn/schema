@@ -2,11 +2,11 @@ window.sidebar = new Sidebar;
 
 var SchemaRouter = Backbone.Router.extend({
     routes: {
-        ""                     : "redirectToServerPicker",
-        "servers/"             : "showServerPicker",
-        "database/"            : "listDatabases",
-        "database/:database/"  : "viewDatabase",
-        "database/:database/"  : "viewDatabase",
+        "database/:database/:table/" : "viewTable",
+        "database/:database/"        : "viewDatabase",
+        "database/"                  : "listDatabases",
+        "servers/"                   : "showServerPicker",
+        ""                           : "redirectToServerPicker",
     },
     
     redirectToServerPicker: function() {
@@ -52,19 +52,41 @@ var SchemaRouter = Backbone.Router.extend({
     
     viewDatabase: function(database_name) {
         this.needLogin();
-        window.sidebar.clear();
         
         var db = new DBConnection();
         
         // Populate left nav (database switcher):
         db.queryOrLogout('USE ' + database_name + ';', function (rows) {
             db.queryOrLogout('SHOW TABLES;', function (rows) {
-                window.rows = rows;
+                window.sidebar.clear();
                 
                 _.each(rows, function (row) {
                     var table_name = row[_.keys(row)[0]];
                     window.sidebar.addItem(table_name, '', '#/database/' + database_name + '/' + table_name + '/');
                 });
+            });
+        });
+    },
+    
+    viewTable: function(database_name, table_name) {
+        this.needLogin();
+        
+        var db = new DBConnection();
+        
+        // Populate left nav (database switcher):
+        db.queryOrLogout('USE ' + database_name + ';', function (rows) {
+            db.queryOrLogout('SHOW TABLES;', function (rows) {
+                window.sidebar.clear();
+                
+                _.each(rows, function (row) {
+                    var row_table_name = row[_.keys(row)[0]];
+                    var active = table_name == row_table_name;
+                    window.sidebar.addItem(row_table_name, '', '#/database/' + database_name + '/' + row_table_name + '/', 0, active);
+                });
+            });
+            
+            var table = new Table(table_name, function() {
+                var tableview = new TableView(table);
             });
         });
     },

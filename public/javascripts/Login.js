@@ -3,8 +3,8 @@ var Login = function() {
         $('#main').html(_.template(
             $('#template-connect-to-server').html(),
             {
-                hostname: '',
-                username: '',
+                hostname: 'localhost',
+                username: 'root',
                 password: '',
                 port:     '',
                 db_type:  ''

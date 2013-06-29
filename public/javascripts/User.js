@@ -6,7 +6,6 @@ var User = function() {
      * Load session from cookie.
      */
     this.loadSession = function() {
-        console.log('loaded');
     };
     
     this.loadSession();

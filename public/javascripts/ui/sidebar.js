@@ -44,15 +44,17 @@ Sidebar = function () {
      * @param string text
      * @param string icon     
      * @param int    position Position to add item at (optional)
+     * @param bool   active   Whether item is active or not
      *
      * @return void
      */
-    this.addItem = function(text, icon, url, position) {
+    this.addItem = function(text, icon, url, position, active) {
         // callback instanceof Function
         this.items.push({
             text: text,
             icon: icon,
-            url: url
+            url: url,
+            active: active
         });
         
         this.render();
