@@ -1,29 +1,12 @@
 /**
  * Table
  */
-var Table = function(table_name, callback) {
-    /**
-     * List of columns
-     */
-    this.columns = [];
-    
-    
-    /**
-     * List of rows
-     */
-    this.rows = [];
-    
-    
-    /**
-     * Name of table in database
-     */
-    this.table_name = table_name;
-    
-    
-    /**
-     * Initialise table object
-     */
-    this.init = function() {
+var Table = Backbone.Model.extend({
+    initialize: function(table_name, callback) {
+        this.table_name = table_name;
+        this.columns = [];
+        this.rows = [];
+        
         this.db = new DBConnection();
         var table = this;
         
@@ -37,13 +20,12 @@ var Table = function(table_name, callback) {
         this.getStatistics(function(num_rows) {
             console.log(num_rows);
         });
-    };
-    
+    },
     
     /**
      *
      */
-    this.buildColumns = function(callback) {
+    buildColumns: function(callback) {
         var table = this;
         
         this.db.queryOrLogout('SHOW columns FROM ' + this.table_name + ';', function (rows) {
@@ -55,13 +37,13 @@ var Table = function(table_name, callback) {
                 callback();
             }
         });
-    };
+    },
     
     
     /**
      *
      */
-    this.getInitialData = function(callback) {
+    getInitialData: function(callback) {
         var table = this;
         var sql = _.str.sprintf("SELECT * FROM %s LIMIT 50;", this.table_name);
         
@@ -76,7 +58,7 @@ var Table = function(table_name, callback) {
                 callback();
             }
         });
-    };
+    },
     
     
     /**
@@ -86,7 +68,7 @@ var Table = function(table_name, callback) {
      *
      * @return void
      */
-    this.getStatistics = function(callback) {
+    getStatistics: function(callback) {
         var sql = "SELECT COUNT(*) AS num_rows FROM " + this.table_name;
         this.db.query(sql, function (err, rows) {
             if (err) {
@@ -97,66 +79,60 @@ var Table = function(table_name, callback) {
                 callback(rows[0]['num_rows']);
             }
         });
-    };
+    },
     
     
     /**
      *
      */
-    this.addColumn = function (row) {
+    addColumn: function (row) {
         this.columns.push(row);
         this.renderView();
-    };
+    },
     
     
     /**
      *
      */
-    this.getColumns = function () {
+    getColumns: function () {
         return this.columns;
-    };
+    },
     
     
     
     /**
      * Add row to table
      */
-    this.addRow = function (row) {
+    addRow: function (row) {
         this.rows.push(row);
         this.renderView();
-    };
+    },
     
     
     /**
      * Return list of rows
      */
-    this.getRows = function () {
+    getRows: function () {
         return this.rows;
-    };
+    },
     
     
     /**
      * Set view
      */
-    this.setView = function (view) {
+    setView: function (view) {
         this.view = view;
         this.renderView();
-    }
+    },
     
     
     /**
      *
      */
-    this.renderView = function() {
+    renderView: function() {
         if (this.view) {
             console.log('Rendering view');
             this.view.render();
         }
     }
-    
-    
-    /**
-     *
-     */
-    this.init();
-};
+});
