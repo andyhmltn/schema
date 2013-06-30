@@ -1,5 +1,8 @@
-var Login = function() {
-    this.displayLogin = function() {
+var Login = Backbone.Model.extend({
+    /**
+     * Display login form
+     */
+    displayLogin : function() {
         $('#main').html(_.template(
             $('#template-connect-to-server').html(),
             {
@@ -12,9 +15,13 @@ var Login = function() {
         ));
         
         this.bindInputs();
-    };
+    },
     
-    this.bindInputs = function() {
+    
+    /**
+     * Bind inputs
+     */
+    bindInputs : function() {
         $('#server-connect-button').click(function() {
             var hostname = $('#connect-hostname').val();
             var username = $('#connect-username').val();
@@ -32,5 +39,5 @@ var Login = function() {
                 }
             });
         });
-    };
-};
+    }
+});
