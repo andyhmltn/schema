@@ -1,30 +1,29 @@
 /**
  * Manages sidebar
  */
-Sidebar = function () {
+Sidebar = Backbone.Model.extend({
     /**
      * Initialise function
      */
-    this.init = function () {
+    initialise: function () {
         $(document).on('click', '.ui-sidebar li a', function(e) {
             $('.ui-sidebar li a.active').removeClass('active');
             $(this).addClass('active');
         });
-    };
-    this.init();
+    },
     
     
     /**
      * Define sidebar and template selectors
      */
-    this.selector = 'div.ui-sidebar#sidebar';
-    this.template = '#template-ui-sidebar';
+    selector: 'div.ui-sidebar#sidebar',
+    template: '#template-ui-sidebar',
     
     
     /**
      * Define empty array for containing sidebar items
      */
-    this.items = [];
+    items: [],
     
     
     /**
@@ -32,10 +31,10 @@ Sidebar = function () {
      *
      * @return void
      */
-    this.clear = function() {
+    clear: function() {
         this.items = [];
         this.render();
-    };
+    },
     
     
     /**
@@ -48,7 +47,7 @@ Sidebar = function () {
      *
      * @return void
      */
-    this.addItem = function(text, icon, url, position, active) {
+    addItem: function(text, icon, url, position, active) {
         // callback instanceof Function
         this.items.push({
             text: text,
@@ -58,7 +57,7 @@ Sidebar = function () {
         });
         
         this.render();
-    };
+    },
     
     
     /**
@@ -66,11 +65,11 @@ Sidebar = function () {
      *
      * @return void
      */
-    this.render = function() {
+    render: function() {
         var html = _.template($(this.template).html(), {
             items: this.items
         });
         
         $(this.selector).html(html);
-    };
-};
+    }
+});
