@@ -8,19 +8,19 @@ var fs = require('fs');
 
 // Create express app and connect to SQLite DB:
 app = express();
-app.database = require('./database');
+app.database = require('./server/database');
 
 // Define settings and middleware for all environments:
 app.set('port', process.env.PORT || 8000);
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/client/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
-app.use(require('less-middleware')({ src: __dirname + '/public' }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('less-middleware')({ src: __dirname + '/client' }));
+app.use(express.static(path.join(__dirname, 'client')));
 
 // Configure development settings and middleware:
 if ('development' == app.get('env')) {
@@ -31,14 +31,14 @@ if ('development' == app.get('env')) {
 app.user_connections = {};
 
 // Start connection monitor to run every 30 seconds:
-var monitor = require('./monitor')(app);
+var monitor = require('./server/monitor')(app);
 setInterval(monitor, 30000);
 
 // Monitor templates directory for changes:
 function rebuild_templates() {
     console.log("> Building templates");
     
-    glob("views/templates/*.html", {}, function (err, files) {
+    glob("client/views/templates/*.html", {}, function (err, files) {
         if (err) {
             return;
         }
@@ -48,7 +48,7 @@ function rebuild_templates() {
         
         files.forEach(function (file) {
             fs.readFile(file, 'utf8', function (err, data) {
-                var name = file.replace('views/templates/', '').replace('.html', '');
+                var name = file.replace('client/views/templates/', '').replace('.html', '');
                 var header = '<script type="text/x-handlebars-template" id="template-' + name + '">';
                 var footer = '</script>';
                 
@@ -56,7 +56,7 @@ function rebuild_templates() {
                 ++files_complete;
                 
                 if (files_complete == files.length) {
-                    fs.writeFile("views/built/templates.html", text, function(err) {
+                    fs.writeFile("client/views/built/templates.html", text, function(err) {
                         if (err) {
                             console.log(err);
                         } else {
@@ -88,7 +88,7 @@ app.get('/', function(req, res) {
 });
 
 // API routes:
-require('./api.js')(app);
+require('./server/api.js')(app);
 
 // Start server:
 http.createServer(app).listen(app.get('port'), function(){

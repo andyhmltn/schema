@@ -1,0 +1,302 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
+/**
+ * Theme settings
+ */
+/**
+ * General styles
+ */
+body {
+  background: #fff;
+  font-family: "Open Sans", serif;
+}
+/**
+ * Import UI elements
+ */
+.ui-toolbar {
+  height: 44px;
+  background: #3c2d49;
+  border-bottom: 1px solid #2f2339;
+  margin: 0;
+  padding: 0;
+}
+.ui-toolbar #schema_logo h1 {
+  margin: -10px 0 0 -5px;
+  padding: 2px;
+  -webkit-transform: rotate(-8deg);
+}
+.ui-toolbar #schema_logo h1 a {
+  color: #fff;
+  text-shadow: 0 4px 0px #221929;
+  text-decoration: none;
+  font-family: 'Molle';
+  font-style: italic;
+  font-weight: normal;
+  font-size: 22px;
+}
+.ui-toolbar .section {
+  height: 25px;
+  min-width: 100px;
+  position: absolute;
+  top: 10px;
+}
+.ui-toolbar .section.sidebar {
+  left: 10px;
+  width: 210px;
+}
+.ui-toolbar .section.left {
+  left: 240px;
+}
+.ui-toolbar .section.right {
+  right: 10px;
+}
+.ui-toolbar .section ul .item {
+  float: left;
+  height: 25px;
+  width: 45px;
+  margin: 0 5px;
+}
+.ui-toolbar .section ul .item a {
+  display: block;
+  height: 25px;
+  width: 45px;
+  text-decoration: none;
+  text-align: center;
+  color: #000;
+  font-size: 11px;
+}
+.ui-toolbar .section ul .item a div.image {
+  width: 20px;
+  height: 20px;
+  margin: 0 12.5px;
+  background: black;
+}
+.ui-toolbar .section ul .item a div.text {
+  margin-top: 6px;
+}
+.ui-sidebar {
+  background: #493758;
+  width: 230px;
+  border-right: 1px solid #2f2339;
+  position: fixed;
+  top: 45px;
+  bottom: 0;
+  left: 0;
+}
+.ui-sidebar .search {
+  height: 30px;
+  border-bottom: 1px solid #2f2339;
+  position: fixed;
+  top: 45px;
+  width: 230px;
+}
+.ui-sidebar .search input {
+  display: block;
+  border: 0;
+  width: 210px;
+  height: 30px;
+  margin: 0;
+  padding: 0 10px 0 10px;
+  background: #564068;
+  color: #fff;
+  outline: 0;
+}
+.ui-sidebar ul {
+  position: fixed;
+  top: 76px;
+  bottom: 0;
+  left: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.ui-sidebar ul li {
+  width: 230px;
+}
+.ui-sidebar ul li a {
+  float: left;
+  width: 100%;
+  font-size: 12px;
+  padding: 7px 10px;
+  border-bottom: 1px solid #3c2d49;
+  color: #c8bad4;
+  text-decoration: none;
+}
+.ui-sidebar ul li a:hover {
+  background: #533e65;
+}
+.ui-sidebar ul li a.active {
+  background: #3c2d49;
+  color: #fff;
+  font-weight: bold;
+}
+.ui-view {
+  background: #ededed;
+  position: absolute;
+  top: 45px;
+  bottom: 0;
+  right: 0;
+  left: 231px;
+}
+.ui-view .titlebar {
+  background: #493758;
+  height: 16px;
+  border-bottom: 1px solid #2f2339;
+  color: #fff;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  padding: 7px;
+}
+.ui-view div.tableview {
+  overflow: scroll;
+  position: fixed;
+  border-left: 1px solid #2f2339;
+  background: #e1dee3;
+  top: 75px;
+  left: 230px;
+  right: 0;
+  bottom: 0;
+}
+.ui-view div.tableview table {
+  position: relative;
+  left: -1px;
+}
+.ui-view div.tableview table thead tr th {
+  background: white;
+  padding: 4px 10px;
+  font-size: 12px;
+  border: 1px solid #2f2339;
+}
+.ui-view div.tableview table tbody tr td {
+  background: #fafafa;
+  padding: 4px 10px;
+  border: 1px solid #2f2339;
+}
