@@ -48,7 +48,11 @@ function rebuild_templates() {
         
         files.forEach(function (file) {
             fs.readFile(file, 'utf8', function (err, data) {
-                text = text + data;
+                var name = file.replace('views/templates/', '').replace('.html', '');
+                var header = '<script type="text/x-handlebars-template" id="template-' + name + '">';
+                var footer = '</script>';
+                
+                text += header + data + footer;
                 ++files_complete;
                 
                 if (files_complete == files.length) {

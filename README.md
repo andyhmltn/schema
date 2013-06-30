@@ -10,5 +10,3 @@ Schema is a modern, web-based database management tool. Features include:
 ## Installation
 
 ## Development
-
-If you modify a template, make sure to build them all by running `make`.
