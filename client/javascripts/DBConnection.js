@@ -1,5 +1,11 @@
-var DBConnection = function() {
-    this.connectToDatabase = function(hostname, username, password, port, callback) {
+/**
+ *
+ */
+var DBConnection = Backbone.Model.extend({
+    /**
+     *
+     */
+    connectToDatabase: function(hostname, username, password, port, callback) {
         $.post('/api/connect', {
             hostname: hostname,
             username: username,
@@ -12,9 +18,13 @@ var DBConnection = function() {
                 callback(data.token);
             }
         }, 'json');
-    };
+    },
     
-    this.query = function (sql, callback) {
+    
+    /**
+     *
+     */
+    query: function (sql, callback) {
         $.post('/api/query', {
             token: window.token,
             query: sql
@@ -25,9 +35,13 @@ var DBConnection = function() {
                 callback(true, data.rows);
             }
         }, 'json');
-    };
+    },
     
-    this.queryOrLogout = function (sql, callback) {
+    
+    /**
+     *
+     */
+    queryOrLogout: function (sql, callback) {
         this.query(sql, function(err, rows) {
             if (err) {
                 window.token = '';
@@ -37,5 +51,5 @@ var DBConnection = function() {
                 callback(rows);
             }
         });
-    };
-};
+    }
+});
