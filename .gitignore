@@ -3,4 +3,4 @@ npm-debug.log
 client/views/built/templates.html
 
 # CSS should always be built from LESS:
-client/stylesheets/*.css
+*.css
