@@ -1,12 +1,20 @@
-var User = function() {
-    this.email = "";
-    this.gravatar = "";
+/**
+ *
+ */
+var User = Backbone.Model.extend({
+    email: "",
+    gravatar: "",
+    
+    /**
+     *
+     */
+    initialize: function() {
+        this.loadSession();
+    },
     
     /**
      * Load session from cookie.
      */
-    this.loadSession = function() {
-    };
-    
-    this.loadSession();
-};
+    loadSession: function() {
+    }
+});
