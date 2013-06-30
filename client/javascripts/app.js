@@ -1,4 +1,5 @@
-window.sidebar = new Sidebar;
+sidebar = new Sidebar;
+toolbar = new Toolbar;
 
 var SchemaRouter = Backbone.Router.extend({
     routes: {
@@ -19,7 +20,7 @@ var SchemaRouter = Backbone.Router.extend({
     
     // showLogin: function() {
     //     // Set up toolbar:
-    //     Toolbar.clear();
+    //     toolbar.clear();
     //     Toolbar.addItem('left', 'Login', '', '#/login/', 'loginEvent');
     //     Toolbar.addItem('left', 'Servers', '', '#/servers/');
         
@@ -44,8 +45,8 @@ var SchemaRouter = Backbone.Router.extend({
     },
     
     showServerPicker: function() {
-        Toolbar.clear();
-        window.sidebar.clear();
+        toolbar.clear();
+        sidebar.clear();
         var login = new Login();
         login.displayLogin();
     },
@@ -58,11 +59,11 @@ var SchemaRouter = Backbone.Router.extend({
         // Populate left nav (database switcher):
         db.queryOrLogout('USE ' + database_name + ';', function (rows) {
             db.queryOrLogout('SHOW TABLES;', function (rows) {
-                window.sidebar.clear();
+                sidebar.clear();
                 
                 _.each(rows, function (row) {
                     var table_name = row[_.keys(row)[0]];
-                    window.sidebar.addItem(table_name, '', '#/database/' + database_name + '/' + table_name + '/');
+                    sidebar.addItem(table_name, '', '#/database/' + database_name + '/' + table_name + '/');
                 });
             });
         });
@@ -76,12 +77,12 @@ var SchemaRouter = Backbone.Router.extend({
         // Populate left nav (database switcher):
         db.queryOrLogout('USE ' + database_name + ';', function (rows) {
             db.queryOrLogout('SHOW TABLES;', function (rows) {
-                window.sidebar.clear();
+                sidebar.clear();
                 
                 _.each(rows, function (row) {
                     var row_table_name = row[_.keys(row)[0]];
                     var active = table_name == row_table_name;
-                    window.sidebar.addItem(row_table_name, '', '#/database/' + database_name + '/' + row_table_name + '/', 0, active);
+                    sidebar.addItem(row_table_name, '', '#/database/' + database_name + '/' + row_table_name + '/', 0, active);
                 });
             });
             
@@ -93,8 +94,8 @@ var SchemaRouter = Backbone.Router.extend({
     
     listDatabases: function (server_id) {
         this.needLogin();
-        window.sidebar.clear();
-        Toolbar.clear();
+        sidebar.clear();
+        toolbar.clear();
         
         var databases = new DatabasePicker();
         databases.displayPicker();

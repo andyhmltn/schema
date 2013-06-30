@@ -1,7 +1,7 @@
 /**
  * Manages ui-toolbar
  */
-Toolbar = {
+var Toolbar = Backbone.Model.extend({
     /**
      * Define handlebars templates
      */
@@ -108,4 +108,4 @@ Toolbar = {
         
         this.renderSection(section);
     }
-}
+});
