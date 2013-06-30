@@ -1,5 +1,7 @@
 sidebar = new Sidebar;
 toolbar = new Toolbar;
+view = new View;
+pane = new Pane;
 
 var SchemaRouter = Backbone.Router.extend({
     routes: {
