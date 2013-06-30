@@ -6,7 +6,7 @@ var DatabasePicker = Backbone.Model.extend({
         db.queryOrLogout("SHOW DATABASES;", function (rows) {
             for (var row_id in rows) {
                 var row = rows[row_id];
-                window.sidebar.addItem(row.Database, '', '#/database/' + row.Database + '/', 0);
+                sidebar.addItem(row.Database, '', '#/database/' + row.Database + '/', 0);
             }
         });
         
