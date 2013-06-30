@@ -1,52 +1,50 @@
-<script type="text/x-handlebars-template" id="template-connect-to-server">
-    <ul class="form">
-        <li class="label">
-            <label for="connect-hostname">Hostname</label>
-        </li>
-        <li class="input">
-            <input type="text" id="connect-hostname" value="<%= hostname %>" />
-        </li>
-        
-        
-        <li class="label">
-            <label for="connect-username">Username</label>
-        </li>
-        <li class="input">
-            <input type="text" id="connect-username" value="<%= username %>" />
-        </li>
-        
-        
-        <li class="label">
-            <label for="connect-password">Password</label>
-        </li>
-        <li class="input">
-            <input type="password" id="connect-password" value="" />
-        </li>
-        
-        
-        <li class="label">
-            <label for="connect-port">Port</label>
-        </li>
-        <li class="input">
-            <input type="text" id="connect-port" value="<%= port ? port : 3306 %>" />
-        </li>
-        
-        
-        <!--<li class="label">
-            <label for="db_type">Database Type</label>
-        </li>
-        <li class="input">
-            <select name="db_type" id="db_type">
-                <option value="1" <% if (db_type == "MySQL") { %>selected="selected"<% } %>>MySQL</option>
-                <option value="2" <% if (db_type == "PostgreSQL") { %>selected="selected"<% } %>>PostgreSQL</option>
-                <option value="3" <% if (db_type == "MongoDB") { %>selected="selected"<% } %>>MongoDB</option>
-            </select>
-        </li>-->
-        
-        
-        <li class="input">
-            <input type="submit" id="server-connect-button" value="Connect" />
-            <input type="submit" value="Save" />
-        </li>
-    </ul>
-</script>
+<ul class="form">
+    <li class="label">
+        <label for="connect-hostname">Hostname</label>
+    </li>
+    <li class="input">
+        <input type="text" id="connect-hostname" value="<%= hostname %>" />
+    </li>
+    
+    
+    <li class="label">
+        <label for="connect-username">Username</label>
+    </li>
+    <li class="input">
+        <input type="text" id="connect-username" value="<%= username %>" />
+    </li>
+    
+    
+    <li class="label">
+        <label for="connect-password">Password</label>
+    </li>
+    <li class="input">
+        <input type="password" id="connect-password" value="" />
+    </li>
+    
+    
+    <li class="label">
+        <label for="connect-port">Port</label>
+    </li>
+    <li class="input">
+        <input type="text" id="connect-port" value="<%= port ? port : 3306 %>" />
+    </li>
+    
+    
+    <!--<li class="label">
+        <label for="db_type">Database Type</label>
+    </li>
+    <li class="input">
+        <select name="db_type" id="db_type">
+            <option value="1" <% if (db_type == "MySQL") { %>selected="selected"<% } %>>MySQL</option>
+            <option value="2" <% if (db_type == "PostgreSQL") { %>selected="selected"<% } %>>PostgreSQL</option>
+            <option value="3" <% if (db_type == "MongoDB") { %>selected="selected"<% } %>>MongoDB</option>
+        </select>
+    </li>-->
+    
+    
+    <li class="input">
+        <input type="submit" id="server-connect-button" value="Connect" />
+        <input type="submit" value="Save" />
+    </li>
+</ul>

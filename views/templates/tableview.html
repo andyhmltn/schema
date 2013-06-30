@@ -1,32 +1,29 @@
-<script type="text/x-handlebars-template" id="template-tableview">
-    <div class="titlebar">
-        <%= table.table_name %>
-    </div>
-    
-    <div class="tableview">
-        <table>
-            <thead>
+<div class="titlebar">
+    <%= table.table_name %>
+</div>
+
+<div class="tableview">
+    <table>
+        <thead>
+            <tr>
+                <% _.each(table.getColumns(), function (column) { %>
+                    <th>
+                        <%= column.Field %>
+                    </th>
+                <% }); %>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% _.each(table.getRows(), function (row) { %>
                 <tr>
                     <% _.each(table.getColumns(), function (column) { %>
-                        <th>
-                            <%= column.Field %>
-                        </th>
+                        <td>
+                            <%= row[column.Field] %>
+                        </td>
                     <% }); %>
                 </tr>
-            </thead>
-            
-            <tbody>
-                <% _.each(table.getRows(), function (row) { %>
-                    <tr>
-                        <% _.each(table.getColumns(), function (column) { %>
-                            <td>
-                                <%= row[column.Field] %>
-                            </td>
-                        <% }); %>
-                    </tr>
-                <% }); %>
-            </tbody>
-        </table>
-    </div>
-</script>
-
+            <% }); %>
+        </tbody>
+    </table>
+</div>

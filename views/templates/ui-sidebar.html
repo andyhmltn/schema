@@ -1,24 +1,21 @@
-<script type="text/x-handlebars-template" id="template-ui-sidebar">
-    
-    <div class="search">
-        <input type="text" placeholder="Search..." />
-    </div>
-    
-    <ul>
-        <% _.each(items, function(item) { %>
-            <li class="item">
-                <a href="<%= item.url %>" <% if (item.active) { %>class="active"<% } %>>
-                    <% if (item.icon) { %>
-                        <span class="icon">
-                            <img src='<%= item.icon %>' />
-                        </span>
-                    <% } %>
-                    
-                    <span class="text">
-                        <%= item.text %>
+<div class="search">
+    <input type="text" placeholder="Search..." />
+</div>
+
+<ul>
+    <% _.each(items, function(item) { %>
+        <li class="item">
+            <a href="<%= item.url %>" <% if (item.active) { %>class="active"<% } %>>
+                <% if (item.icon) { %>
+                    <span class="icon">
+                        <img src='<%= item.icon %>' />
                     </span>
-                </a>
-            </li>
-        <% }); %>
-    </ul>
-</script>
+                <% } %>
+                
+                <span class="text">
+                    <%= item.text %>
+                </span>
+            </a>
+        </li>
+    <% }); %>
+</ul>
