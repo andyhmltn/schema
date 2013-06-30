@@ -1,18 +1,22 @@
-var TableView = function(table) {
-    this.table = table;
+var TableView = Backbone.Model.extend({
+    initialize: function(table) {
+        this.table = table;
+        this.table.setView(this);
+    },
     
     
-    this.render = function() {
+    /**
+     *
+     */
+    render: function() {
         this.renderContentView();
-    };
+    },
     
     
     /**
      * Render content view
      */
-    this.renderContentView = function() {
-        console.log('Rendering table content view');
-        
+    renderContentView: function() {
         $('#main').html(_.template(
             $('#template-tableview').html(),
             {
@@ -21,15 +25,13 @@ var TableView = function(table) {
         ));
         
         this.bindInputs();
-    }
+    },
     
     
     /**
      *
      */
-    this.bindInputs = function() {
+    bindInputs: function() {
         
-    };
-    
-    this.table.setView(this);
-};
+    }
+});
