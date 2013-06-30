@@ -1,6 +1,5 @@
-var DatabasePicker = function() {
-    
-    this.displayPicker = function() {
+var DatabasePicker = Backbone.Model.extend({
+    displayPicker: function() {
         var db = new DBConnection();
         
         // Populate left nav (database switcher):
@@ -16,8 +15,5 @@ var DatabasePicker = function() {
             {
             }
         ));
-        
-        // this.bindInputs();
-    };
-    
-};
+    }
+});
