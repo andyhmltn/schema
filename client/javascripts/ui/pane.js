@@ -6,6 +6,8 @@ var Pane = Backbone.Model.extend({
     selector: "#pane",
     
     open: function() {
+        this.isOpen = true;
+        
         $(this.selector).animate({
             top: '45px'
         }, 200);
@@ -14,6 +16,8 @@ var Pane = Backbone.Model.extend({
     },
     
     close: function() {
+        this.isOpen = false;
+        
         $(this.selector).animate({
             top: '-105px'
         }, 200);
