@@ -2,6 +2,10 @@ var TableView = Backbone.Model.extend({
     initialize: function(table) {
         this.table = table;
         this.table.setView(this);
+        
+        if (pane.isOpen) {
+            view.setOffset(195);
+        }
     },
     
     
@@ -19,7 +23,7 @@ var TableView = Backbone.Model.extend({
     renderContentView: function() {
         // Clear toolbar and add items:
         toolbar.clear();
-        toolbar.addItem('left', 'Servers', '', function() {
+        toolbar.addItem('left', 'Console', 'terminal.png', function() {
             pane.toggle();
         });
         
