@@ -23,12 +23,12 @@ var SchemaRouter = Backbone.Router.extend({
     // showLogin: function() {
     //     // Set up toolbar:
     //     toolbar.clear();
-    //     Toolbar.addItem('left', 'Login', '', '#/login/', 'loginEvent');
-    //     Toolbar.addItem('left', 'Servers', '', '#/servers/');
+    //     toolbar.addItem('left', 'Login', '', '#/login/', 'loginEvent');
+    //     toolbar.addItem('left', 'Servers', '', '#/servers/');
         
     //     // Fill sidebar with saved servers:
-    //     // Sidebar.clear();
-    //     Sidebar.render();
+    //     // sidebar.clear();
+    //     sidebar.render();
         
     //     // var loginView = new LoginView();
     //     // $('body').html(loginView.render().el);
