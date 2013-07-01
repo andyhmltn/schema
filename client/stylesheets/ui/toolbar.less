@@ -50,7 +50,7 @@
                 float: left;
                 height: @toolbar_height - 20px;
                 width: @toolbar_height;
-                margin: 0 5px;
+                margin: -5px 5px 0 5px;
                 
                 a {
                     display: block;
@@ -65,11 +65,20 @@
                         width: @toolbar_icon_size;
                         height: @toolbar_icon_size;
                         margin: 0 (@toolbar_height - @toolbar_icon_size) / 2;
-                        background: black;
+                        
+                        img {
+                            width: @toolbar_icon_size;
+                            height: @toolbar_icon_size;
+                        }
                     }
                     
                     div.text {
-                        margin-top: 6px;
+                        margin-top: 3px;
+                        color: #fff;
+                    }
+                    
+                    &:hover {
+                        font-weight: bold;
                     }
                 }
             }
