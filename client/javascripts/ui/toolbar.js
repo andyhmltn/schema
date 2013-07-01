@@ -64,9 +64,24 @@ var Toolbar = Backbone.Model.extend({
         var selector = $(this.sections[section]);
         var items = this.section_items[section];
         
+        // Give each of the items a random ID:
+        _.each(items, function(item) {
+            item.id = "template_" + Math.random().toString().substr(2)
+        });
+        
         // Render handlebars template:
         var html = _.template($(this.section_template).html(), {
             items: items
+        });
+        
+        // Bind callbacks:
+        _.each(items, function(item) {
+            if (item.callback) {
+                $(document).on('click', '#' + item.id, function(e) {
+                    e.preventDefault();
+                    item.callback();
+                });
+            }
         });
         
         // Output HTML:
@@ -89,21 +104,19 @@ var Toolbar = Backbone.Model.extend({
     /**
      * Adds an icon to the toolbar
      *
-     * @param string section Section for the icon to be created under
-     * @param string text    Icon text
-     * @param string icon    URL for icon
-     * @param string url     URL for the icon to link to
-     * @param string event   Event name to trigger (optional)
+     * @param string section  Section for the icon to be created under
+     * @param string text     Icon text
+     * @param string icon     URL for icon
+     * @param string callback Callback to be triggered when clicked
      *
      * @return void
      */
-    addItem: function (section, text, icon, url, event) {
+    addItem: function (section, text, icon, callback) {
         // callback instanceof Function
         this.section_items[section].push({
             text: text,
             icon: icon,
-            url: url,
-            event: event
+            callback: callback
         });
         
         this.renderSection(section);

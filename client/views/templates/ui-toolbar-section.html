@@ -1,7 +1,7 @@
 <ul>
     <% _.each(items, function(item) { %>
-        <li class="item">
-            <a href="<%= item.url %>"
+        <li class="item" id="<%= item.id %>">
+            <a href="#"
                 <% if (item.event) { %>
                     onclick="jQuery('body').trigger(jQuery.Event(item.event));"
                 <% } %>
