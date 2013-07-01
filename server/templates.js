@@ -54,7 +54,7 @@ module.exports = {
      */
     startMonitoring: function () {
         // Create monitor to watch templates directory:
-        var template_watch = chokidar.watch('views/templates/', {
+        var template_watch = chokidar.watch('client/views/templates/', {
             ignored: /^\./,
             persistent: true,
             ignoreInitial: true
