@@ -20,20 +20,6 @@ var SchemaRouter = Backbone.Router.extend({
         }
     },
     
-    // showLogin: function() {
-    //     // Set up toolbar:
-    //     toolbar.clear();
-    //     toolbar.addItem('left', 'Login', '', '#/login/', 'loginEvent');
-    //     toolbar.addItem('left', 'Servers', '', '#/servers/');
-        
-    //     // Fill sidebar with saved servers:
-    //     // sidebar.clear();
-    //     sidebar.render();
-        
-    //     // var loginView = new LoginView();
-    //     // $('body').html(loginView.render().el);
-    // },
-    
     needLogin: function() {
         if (!window.token) {
             var token = localStorage['token'];
