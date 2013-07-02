@@ -1,9 +1,11 @@
 <div class="search">
-    <input type="text" placeholder="Search..." />
+    <input type="text" placeholder="Search..." value="<%= search_term %>" />
 </div>
 
 <ul>
     <% _.each(items, function(item) { %>
+        <% if (item.hidden) return; %>
+        
         <li class="item">
             <a href="<%= item.url %>" <% if (item.active) { %>class="active"<% } %>>
                 <% if (item.icon) { %>
