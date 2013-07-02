@@ -1,16 +1,31 @@
 /**
  * Manages sidebar
  */
-Sidebar = Backbone.Model.extend({
+var Sidebar = Backbone.Model.extend({
     /**
      * Initialise function
      */
-    initialise: function () {
+    initialize: function () {
+        var sidebar = this;
+        
         $(document).on('click', '.ui-sidebar li a', function(e) {
             $('.ui-sidebar li a.active').removeClass('active');
             $(this).addClass('active');
+            
+            sidebar.search_term = '';
+            sidebar.render();
+        });
+        
+        $(document).on('keyup', 'input', function () {
+            sidebar.search($(this).val());
         });
     },
+    
+    
+    /**
+     * Empty by default
+     */
+    search_term: "",
     
     
     /**
@@ -53,7 +68,7 @@ Sidebar = Backbone.Model.extend({
             text: text,
             icon: icon,
             url: url,
-            active: active
+            active: active,
         });
         
         this.render();
@@ -67,9 +82,56 @@ Sidebar = Backbone.Model.extend({
      */
     render: function() {
         var html = _.template($(this.template).html(), {
-            items: this.items
+            items: this.items,
+            search_term: this.search_term
         });
         
         $(this.selector).html(html);
+    },
+    
+    
+    /**
+     * Search sidebar
+     *
+     * @param string search_term Search Term
+     *
+     * @return void
+     */
+    search: function(search_term) {
+        // Trim search term:
+        search_term = search_term.trim();
+        
+        // No point searching twice:
+        if (search_term == this.search_term) {
+            return;
+        }
+        
+        // Add search term:
+        this.search_term = search_term;
+        
+        // Filter:
+        this.filter();
+        
+        // Make sure search box is selected (bug):
+        // $(this.selector).find('div.search input').select();
+        $('div.search input').focus().val($('div.search input').val())
+    },
+    
+    
+    /**
+     *
+     */
+    filter: function() {
+        var term = this.search_term;
+        
+        _.each(this.items, function(item) {
+            if (item.text.search(term) > -1) {
+                item.hidden = false;
+            } else {
+                item.hidden = true;
+            }
+        });
+        
+        this.render();
     }
 });
