@@ -19,23 +19,77 @@ var TableView = Backbone.Model.extend({
     },
     
     
-    /**
-     * Render content view
-     */
-    renderContentView: function() {
+    renderGeneric: function() {
+        var tableview = this;
+        
         // Add SQL editor into pane:
         var sqleditor = new SQLEditor();
         pane.render(sqleditor.render());
         
-        // Clear toolbar and add items:
+        // Clear toolbar:
         toolbar.clear();
-        toolbar.addItem('left', 'Console', 'terminal.png', function() {
+        
+        // Add structure item to toolbar:
+        toolbar.addItem('left', 'Structure', 'structure.png', function() {
+            tableview.renderStructure();
+        });
+        
+        // Add content item to toolbar:
+        toolbar.addItem('left', 'Content', 'content.png', function() {
+            tableview.renderContentView();
+        });
+        
+        // Add info item to toolbar:
+        toolbar.addItem('left', 'Table Info', 'info.png', function() {
+            tableview.renderInfo();
+        });
+        
+        // Add console item to toolbar:
+        toolbar.addItem('left', 'Query', 'query.png', function() {
             pane.toggle();
         });
+    },
+    
+    
+    /**
+     * Render content view
+     */
+    renderContentView: function() {
+        this.renderGeneric();
         
         // Render HTML:
         $('#main').html(_.template(
             $('#template-tableview').html(),
+            {
+                table: this.table,
+            }
+        ));
+        
+        this.bindInputs();
+    },
+    
+    
+    renderStructure: function() {
+        this.renderGeneric();
+        
+        // Render HTML:
+        $('#main').html(_.template(
+            $('#template-tablestructure').html(),
+            {
+                table: this.table,
+            }
+        ));
+        
+        this.bindInputs();
+    },
+    
+    
+    renderInfo: function() {
+        this.renderGeneric();
+        
+        // Render HTML:
+        $('#main').html(_.template(
+            $('#template-tableinfo').html(),
             {
                 table: this.table,
             }
