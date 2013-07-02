@@ -27,9 +27,26 @@ var TableView = Backbone.Model.extend({
         var sqleditor = new SQLEditor();
         pane.render(sqleditor.render());
         
-        // Clear toolbar and add items:
+        // Clear toolbar:
         toolbar.clear();
-        toolbar.addItem('left', 'Console', 'terminal.png', function() {
+        
+        // Add structure item to toolbar:
+        toolbar.addItem('left', 'Structure', 'structure.png', function() {
+            alert('display structure');
+        });
+        
+        // Add content item to toolbar:
+        toolbar.addItem('left', 'Content', 'content.png', function() {
+            alert('display content');
+        });
+        
+        // Add info item to toolbar:
+        toolbar.addItem('left', 'Table Info', 'info.png', function() {
+            alert('display info');
+        });
+        
+        // Add console item to toolbar:
+        toolbar.addItem('left', 'Query', 'query.png', function() {
             pane.toggle();
         });
         
