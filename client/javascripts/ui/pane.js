@@ -31,5 +31,9 @@ var Pane = Backbone.Model.extend({
         } else {
             this.open();
         }
+    },
+    
+    render: function(html) {
+        $(this.selector).html(html);
     }
 });

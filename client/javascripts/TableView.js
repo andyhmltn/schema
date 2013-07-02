@@ -21,6 +21,10 @@ var TableView = Backbone.Model.extend({
      * Render content view
      */
     renderContentView: function() {
+        // Add SQL editor into pane:
+        var sqleditor = new SQLEditor();
+        pane.render(sqleditor.render());
+        
         // Clear toolbar and add items:
         toolbar.clear();
         toolbar.addItem('left', 'Console', 'terminal.png', function() {
