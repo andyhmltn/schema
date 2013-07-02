@@ -1,4 +1,10 @@
 var DatabasePicker = Backbone.Model.extend({
+    initialize: function() {
+        if (pane.isOpen) {
+            pane.close();
+        }
+    },
+    
     displayPicker: function() {
         var db = new DBConnection();
         
