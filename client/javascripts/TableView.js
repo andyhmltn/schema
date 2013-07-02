@@ -1,4 +1,6 @@
 var TableView = Backbone.Model.extend({
+    selector: '#main .tableview',
+    
     initialize: function(table) {
         this.table = table;
         this.table.setView(this);
@@ -47,6 +49,16 @@ var TableView = Backbone.Model.extend({
      *
      */
     bindInputs: function() {
+        var selector = this.selector;
         
+        $(selector).find('tbody').on('click', 'td', function() {
+            $(selector).find('tbody td.active').removeClass('active');
+            $(this).addClass('active').attr('contenteditable', 'true');
+        });
+        
+        $(selector).on('blur', 'tbody td.active', function() {
+            console.log($(this).html());
+            $(this).removeClass('active');
+        });
     }
 });
