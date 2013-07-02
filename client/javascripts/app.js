@@ -59,7 +59,7 @@ var SchemaRouter = Backbone.Router.extend({
         var db = new DBConnection();
         
         // Populate left nav (database switcher):
-        db.queryOrLogout('USE ' + database_name + ';', function (rows) {
+        db.queryOrLogout('USE `' + database_name + '`;', function (rows) {
             db.queryOrLogout('SHOW TABLES;', function (rows) {
                 sidebar.clear();
                 
@@ -77,7 +77,7 @@ var SchemaRouter = Backbone.Router.extend({
         var db = new DBConnection();
         
         // Populate left nav (database switcher):
-        db.queryOrLogout('USE ' + database_name + ';', function (rows) {
+        db.queryOrLogout('USE `' + database_name + '`;', function (rows) {
             db.queryOrLogout('SHOW TABLES;', function (rows) {
                 sidebar.clear();
                 
