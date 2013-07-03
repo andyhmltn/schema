@@ -15,7 +15,11 @@
                 <% } %>
                 
                 <span class="text">
-                    <%= item.text %>
+                    <% if (search_term != '') { %>
+                        <%= item.text.replace(search_term, '<span class="search_term">' + search_term + '</span>') %>
+                    <% } else { %>
+                        <%= item.text %>
+                    <% } %>
                 </span>
             </a>
         </li>
