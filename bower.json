@@ -11,6 +11,7 @@
     "tests"
   ],
   "dependencies": {
+    "underscore": "1.4.4",
     "jquery": "~1.9.1"
   }
 }
