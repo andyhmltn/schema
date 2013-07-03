@@ -1,0 +1,16 @@
+{
+  "name": "Schema",
+  "version": "0.0.1",
+  "main": "app.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.9.1"
+  }
+}
