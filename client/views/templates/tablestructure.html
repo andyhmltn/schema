@@ -2,4 +2,25 @@
     <%= table.table_name %>
 </div>
 
-Structure page
+<div class="tableview" id="structure">
+    <table>
+        <thead>
+            <tr>
+                <th>Field Name</th>
+                <th>Type</th>
+                <th>NULL allowed?</th>
+                <th>Default value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% _.each(table.getColumns(), function (column) { %>
+                <tr>
+                    <td><%= column.Field %></td>
+                    <td><%= column.Type %></td>
+                    <td><%= column.Null %></td>
+                    <td><%= column.Default %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
