@@ -1,0 +1,28 @@
+Criteria for version 0.1:
+    - Structure, content and table info views are working
+    - Custom queries work
+    - Pagination on tableview
+    - Editing cells in tableview saves
+    - Able to add rows to database
+    - Able to add new fields to table
+    - Tidied up all pages (e.g. sort "Need to decide what is going here." and "Title?")
+    - Styled database picker
+
+Criteria for version 0.2:
+    - Global search working
+    - Undo functionality works
+    - Responsive design and iPhone and iPad compatibility
+    - Basic exporting works
+
+Criteria for version 0.3:
+    - Support for PostgreSQL
+
+Criteria for version 0.4:
+    - Support for MongoDB
+
+Criteria for version 0.5:
+    - Able to drag and drop files into cells (including images, etc)
+    - Able to drag and drop CSVs, SQL files, etc, into tables to import
+
+Criteria for version 1.0:
+    - A new, professionally designed theme
