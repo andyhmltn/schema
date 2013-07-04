@@ -7,7 +7,6 @@ var Table = Backbone.Model.extend({
         this.columns = [];
         this.rows = [];
         
-        this.db = new DBConnection();
         var table = this;
         
         this.buildColumns(function() {
@@ -28,7 +27,7 @@ var Table = Backbone.Model.extend({
     buildColumns: function(callback) {
         var table = this;
         
-        this.db.queryOrLogout('SHOW columns FROM ' + this.table_name + ';', function (rows) {
+        database.queryOrLogout('SHOW columns FROM ' + this.table_name + ';', function (rows) {
             _.each(rows, function(row) {
                 table.addColumn(row);
             });
@@ -47,7 +46,7 @@ var Table = Backbone.Model.extend({
         var table = this;
         var sql = _.str.sprintf("SELECT * FROM %s LIMIT 50;", this.table_name);
         
-        this.db.queryOrLogout(sql, function (rows) {
+        database.queryOrLogout(sql, function (rows) {
             _.each(rows, function(row) {
                 table.addRow(row);
             });
@@ -68,7 +67,7 @@ var Table = Backbone.Model.extend({
      */
     getStatistics: function(callback) {
         var sql = "SELECT COUNT(*) AS num_rows FROM " + this.table_name;
-        this.db.query(sql, function (err, rows) {
+        database.query(sql, function (err, rows) {
             if (err) {
                 return callback(false);
             }
