@@ -106,8 +106,6 @@ var SchemaRouter = Backbone.Router.extend({
 });
 
 $(function() {
-    window.user = new User;
-    
     var router = new SchemaRouter();
     Backbone.history.start();
 });
