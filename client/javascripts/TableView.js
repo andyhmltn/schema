@@ -111,7 +111,6 @@ var TableView = Backbone.Model.extend({
         });
         
         $(selector).on('blur', 'tbody td.active', function() {
-            console.log($(this).html());
             $(this).removeClass('active');
         });
     }

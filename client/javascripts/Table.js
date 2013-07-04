@@ -18,7 +18,7 @@ var Table = Backbone.Model.extend({
         
         // Get statistics about table:
         this.getStatistics(function(num_rows) {
-            console.log(num_rows);
+            console.log("Need to add number of rows to toolbar:", num_rows);
         });
     },
     
@@ -51,8 +51,6 @@ var Table = Backbone.Model.extend({
             _.each(rows, function(row) {
                 table.addRow(row);
             });
-            
-            console.log(rows);
             
             if (callback) {
                 callback();
@@ -131,7 +129,6 @@ var Table = Backbone.Model.extend({
      */
     renderView: function() {
         if (this.view) {
-            console.log('Rendering view');
             this.view.render();
         }
     }
