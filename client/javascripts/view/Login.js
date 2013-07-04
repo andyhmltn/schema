@@ -31,8 +31,7 @@ var Login = Backbone.Model.extend({
             var password = $('#connect-password').val();
             var port     = $('#connect-port').val();
             
-            db = new DBConnection();
-            db.connectToDatabase(hostname, username, password, port, function(token) {
+            database.connectToDatabase(hostname, username, password, port, function(token) {
                 if (token) {
                     window.token = token;
                     localStorage['token'] = token;

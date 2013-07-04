@@ -1,9 +1,9 @@
 /**
- *
+ * Database
  */
-var DBConnection = Backbone.Model.extend({
+var Database = Backbone.Model.extend({
     /**
-     *
+     * Connect to database
      */
     connectToDatabase: function(hostname, username, password, port, callback) {
         $.post('/api/connect', {
@@ -22,7 +22,7 @@ var DBConnection = Backbone.Model.extend({
     
     
     /**
-     *
+     * Query database
      */
     query: function (sql, callback) {
         $.post('/api/query', {
@@ -39,7 +39,7 @@ var DBConnection = Backbone.Model.extend({
     
     
     /**
-     *
+     * Query database, log user out if there's an error.
      */
     queryOrLogout: function (sql, callback) {
         this.query(sql, function(err, rows) {

@@ -1,3 +1,4 @@
+database = new Database;
 sidebar = new Sidebar;
 toolbar = new Toolbar;
 view = new View;
@@ -42,11 +43,9 @@ var SchemaRouter = Backbone.Router.extend({
     viewDatabase: function(database_name) {
         this.needLogin();
         
-        var db = new DBConnection();
-        
         // Populate left nav (database switcher):
-        db.queryOrLogout('USE `' + database_name + '`;', function (rows) {
-            db.queryOrLogout('SHOW TABLES;', function (rows) {
+        database.queryOrLogout('USE `' + database_name + '`;', function (rows) {
+            database.queryOrLogout('SHOW TABLES;', function (rows) {
                 sidebar.clear();
                 
                 _.each(rows, function (row) {
@@ -60,11 +59,9 @@ var SchemaRouter = Backbone.Router.extend({
     viewTable: function(database_name, table_name) {
         this.needLogin();
         
-        var db = new DBConnection();
-        
         // Populate left nav (database switcher):
-        db.queryOrLogout('USE `' + database_name + '`;', function (rows) {
-            db.queryOrLogout('SHOW TABLES;', function (rows) {
+        database.queryOrLogout('USE `' + database_name + '`;', function (rows) {
+            database.queryOrLogout('SHOW TABLES;', function (rows) {
                 sidebar.clear();
                 
                 _.each(rows, function (row) {
