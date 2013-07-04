@@ -45,6 +45,7 @@
             thead {
                 tr {
                     th {
+                        text-align: left;
                         background: white;
                         padding: 4px 10px;
                         font-size: 12px;
@@ -61,6 +62,9 @@
                         border: 1px solid darken(@toolbar_bg, 20%);
                         font-size: 11px;
                         white-space: nowrap;
+                        overflow: hidden;
+                        max-width: 300px;
+                        text-overflow: ellipsis;
                         
                         &.active {
                             font-weight: bold;
