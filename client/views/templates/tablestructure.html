@@ -15,10 +15,10 @@
         <tbody>
             <% _.each(table.getColumns(), function (column) { %>
                 <tr>
-                    <td><%= column.Field %></td>
-                    <td><%= column.Type %></td>
-                    <td><%= column.Null %></td>
-                    <td><%= column.Default %></td>
+                    <td><%= column.get('name') %></td>
+                    <td><%= column.get('datatype') %></td>
+                    <td><%= column.get('null') %></td>
+                    <td><%= column.get('default') %></td>
                 </tr>
             <% }); %>
         </tbody>

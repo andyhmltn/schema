@@ -8,7 +8,7 @@
             <tr>
                 <% _.each(table.getColumns(), function (column) { %>
                     <th>
-                        <%= column.Field %>
+                        <%= column.get('name') %>
                     </th>
                 <% }); %>
             </tr>
@@ -18,7 +18,7 @@
             <% _.each(table.getRows(), function (row) { %>
                 <tr>
                     <% _.each(table.getColumns(), function (column) { %>
-                        <td><%= row[column.Field] %></td>
+                        <td><%= row[column.get('name')] %></td>
                     <% }); %>
                 </tr>
             <% }); %>

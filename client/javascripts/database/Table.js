@@ -83,7 +83,15 @@ var Table = Backbone.Model.extend({
      *
      */
     addColumn: function (row) {
-        this.columns.push(row);
+        this.columns.push(new Column({
+            default: row.Default,
+            extra: row.Extra,
+            name: row.Field,
+            key: row.Key,
+            null: row.Null,
+            datatype: row.Type
+        }));
+        
         this.renderView();
     },
     
