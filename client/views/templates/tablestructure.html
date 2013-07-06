@@ -23,7 +23,11 @@
         </thead>
         <tbody>
             <% _.each(table.getColumns(), function (column) { %>
-                <tr>
+                <tr 
+                    <% if (column.isPrimaryKey()) { %>
+                        class="primary"
+                    <% } %>
+                >
                     <!-- Column parameters: -->
                     <input type="hidden" class="column_name" value="<%= column.get('name') %>" />
                     
