@@ -6,10 +6,19 @@
     <table>
         <thead>
             <tr>
-                <th>Field Name</th>
+                <th>Field</th>
                 <th>Type</th>
+                <th>Length</th>
+                <th>Unsigned</th>
+                <th>Zerofill</th>
+                <th>Binary</th>
                 <th>Allow Null</th>
-                <th>Default value</th>
+                <th>Key</th>
+                <th>Default</th>
+                <th>Extra</th>
+                <th>Encoding</th>
+                <th>Collation</th>
+                <th>Comment</th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +30,37 @@
                     <!-- Fields: -->
                     <td><%= column.get('name') %></td>
                     <td><%= column.get('datatype') %></td>
-                    <td style="text-align: center">
+                    <td></td>
+                    
+                    <!-- Unsigned -->
+                    <td class="centre">
+                        <input type="checkbox" class="unsigned"
+                            <% if (1 == 1) { %>
+                                disabled="disabled"
+                            <% } %>
+                        />
+                    </td>
+                    
+                    <!-- Zerofill -->
+                    <td class="centre">
+                        <input type="checkbox" class="zerofill"
+                            <% if (1 == 1) { %>
+                                disabled="disabled"
+                            <% } %>
+                        />
+                    </td>
+                    
+                    <!-- Binary -->
+                    <td class="centre">
+                        <input type="checkbox" class="binary"
+                            <% if (1 == 1) { %>
+                                disabled="disabled"
+                            <% } %>
+                        />
+                    </td>
+                    
+                    <!-- Allow Null: -->
+                    <td class="centre">
                         <input type="checkbox" class="allownull"
                             <% if (column.getNull()) { %>
                                 checked="checked"
@@ -32,7 +71,12 @@
                             <% } %>
                         />
                     </td>
+                    <td><%= column.get('key') %></td>
                     <td><%= column.get('default') %></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             <% }); %>
         </tbody>
