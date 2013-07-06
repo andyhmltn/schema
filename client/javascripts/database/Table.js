@@ -97,7 +97,8 @@ var Table = Backbone.Model.extend({
             name: row.Field,
             key: row.Key,
             null: row.Null,
-            datatype: row.Type
+            datatype: row.Type,
+            table: this
         }));
         
         this.renderView();
