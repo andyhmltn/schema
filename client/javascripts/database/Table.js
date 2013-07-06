@@ -16,7 +16,9 @@ var Table = Backbone.Model.extend({
         
         this.buildColumns(function() {
             table.getInitialData(function() {
-                callback();
+                if (callback) {
+                    callback();
+                }
             });
         });
         
