@@ -167,5 +167,26 @@ var Table = Backbone.Model.extend({
         if (this.view) {
             this.view.render();
         }
+    },
+    
+    
+    /**
+     * Change a column to allow or disallow null
+     *
+     * @param string  column_name Column name
+     * @param boolean allow_null  Whether to allow or disallow null values
+     *
+     * @return void
+     */
+    setAllowNull: function(column_name, allow_null, success_callback, error_callback) {
+        // Get column:
+        var column = this.getColumn(column_name);
+        
+        // Find column and modify null setting:
+        if (column) {
+            column.setAllowNull(allow_null, success_callback, error_callback);
+        } else {
+            console.error("Could not find column");
+        }
     }
 });
