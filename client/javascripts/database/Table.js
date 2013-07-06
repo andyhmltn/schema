@@ -35,7 +35,7 @@ var Table = Backbone.Model.extend({
     buildColumns: function(callback) {
         var table = this;
         
-        database.queryOrLogout('SHOW columns FROM ' + this.table_name + ';', function (rows) {
+        database.queryOrLogout('SHOW FULL columns FROM ' + this.table_name + ';', function (rows) {
             _.each(rows, function(row) {
                 table.addColumn(row);
             });
@@ -92,12 +92,15 @@ var Table = Backbone.Model.extend({
      */
     addColumn: function (row) {
         this.columns.push(new Column({
+            name: row.Field,
+            datatype: row.Type,
+            collation: row.Collation,
+            null: row.Null,
+            key: row.Key,
             default: row.Default,
             extra: row.Extra,
-            name: row.Field,
-            key: row.Key,
-            null: row.Null,
-            datatype: row.Type,
+            privileges: row.Privileges,
+            comment: row.Comment,
             table: this
         }));
         

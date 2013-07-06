@@ -16,7 +16,7 @@
                 <th>Key</th>
                 <th>Default</th>
                 <th>Extra</th>
-                <th>Encoding</th>
+                <!-- <th>Encoding</th> -->
                 <th>Collation</th>
                 <th>Comment</th>
             </tr>
@@ -40,7 +40,7 @@
                     <!-- Length: -->
                     <td><%= column.getLength() %></td>
                     
-                    <!-- Unsigned -->
+                    <!-- Unsigned: -->
                     <td class="centre">
                         <input type="checkbox" class="unsigned"
                             <% if (column.isUnsigned()) { %>
@@ -53,7 +53,7 @@
                         />
                     </td>
                     
-                    <!-- Zerofill -->
+                    <!-- Zerofill: -->
                     <!-- <td class="centre">
                         <input type="checkbox" class="zerofill"
                             <% if (1 == 1) { %>
@@ -62,7 +62,7 @@
                         />
                     </td> -->
                     
-                    <!-- Binary -->
+                    <!-- Binary: -->
                     <!-- <td class="centre">
                         <input type="checkbox" class="binary"
                             <% if (1 == 1) { %>
@@ -83,12 +83,25 @@
                             <% } %>
                         />
                     </td>
+                    
+                    <!-- Key: -->
                     <td><%= column.get('key') %></td>
+                    
+                    <!-- Default: -->
                     <td><%= column.get('default') %></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    
+                    <!-- Extra: -->
+                    <td><%- column.get('extra') %></td>
+                    
+                    <!-- Encoding: -->
+                    <!-- @todo Need to figure out where Sequel Pro gets this from -->
+                    <!-- <td></td> -->
+                    
+                    <!-- Collation: -->
+                    <td><%- column.get('collation') %></td>
+                    
+                    <!-- Comment: -->
+                    <td><%- column.get('comment') %></td>
                 </tr>
             <% }); %>
         </tbody>
