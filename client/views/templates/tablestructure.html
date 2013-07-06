@@ -15,9 +15,23 @@
         <tbody>
             <% _.each(table.getColumns(), function (column) { %>
                 <tr>
+                    <!-- Column parameters: -->
+                    <input type="hidden" class="column_name" value="<%= column.get('name') %>" />
+                    
+                    <!-- Fields: -->
                     <td><%= column.get('name') %></td>
                     <td><%= column.get('datatype') %></td>
-                    <td><%= column.get('null') %></td>
+                    <td style="text-align: center">
+                        <input type="checkbox" class="allownull"
+                            <% if (column.getNull()) { %>
+                                checked="checked"
+                            <% } %>
+                            
+                            <% if (column.isPrimaryKey()) { %>
+                                disabled="disabled"
+                            <% } %>
+                        />
+                    </td>
                     <td><%= column.get('default') %></td>
                 </tr>
             <% }); %>
