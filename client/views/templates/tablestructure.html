@@ -27,15 +27,23 @@
                     <!-- Column parameters: -->
                     <input type="hidden" class="column_name" value="<%= column.get('name') %>" />
                     
-                    <!-- Fields: -->
+                    <!-- Field name: -->
                     <td><%= column.get('name') %></td>
-                    <td><%= column.get('datatype') %></td>
-                    <td></td>
+                    
+                    <!-- Datatype: -->
+                    <td><%= column.getRawDatatype().toUpperCase() %></td>
+                    
+                    <!-- Length: -->
+                    <td><%= column.getLength() %></td>
                     
                     <!-- Unsigned -->
                     <td class="centre">
                         <input type="checkbox" class="unsigned"
-                            <% if (1 == 1) { %>
+                            <% if (column.isUnsigned()) { %>
+                                checked="checked"
+                            <% } %>
+                            
+                            <% if (!column.isUnsignedValid()) { %>
                                 disabled="disabled"
                             <% } %>
                         />
