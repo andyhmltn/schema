@@ -7,9 +7,11 @@ Criteria for version 0.1:
     - Able to add new fields to table
     - Tidied up all pages (e.g. sort "Need to decide what is going here." and "Title?")
     - Styled database picker
+    - Show name of database you're in when in tableview
 
 Criteria for version 0.2:
     - Global search working
+    - Query log available (from query pane)
     - Undo functionality works
     - Responsive design and iPhone and iPad compatibility
     - Basic exporting works
