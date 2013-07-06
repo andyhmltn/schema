@@ -104,6 +104,26 @@ var Table = Backbone.Model.extend({
     },
     
     
+    /**
+     * Get single column
+     *
+     * @param string column_name Column name
+     *
+     * @return void
+     */
+    getColumn: function(column_name) {
+        var columns = this.getColumns();
+        var returnColumn = false;
+        
+        _.each(columns, function(column) {
+            if (column.get('name') == column_name) {
+                returnColumn = column;
+            }
+        });
+        
+        return returnColumn;
+    },
+    
     
     /**
      * Add row to table
