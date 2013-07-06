@@ -3,10 +3,15 @@
  */
 var Table = Backbone.Model.extend({
     initialize: function(table_name, callback) {
+        // Set table name:
         this.table_name = table_name;
+        this.set('name', table_name);
+        
+        // Create empty arrays for columns and rows:
         this.columns = [];
         this.rows = [];
         
+        // Set table to this, for build columns and data callbacks:
         var table = this;
         
         this.buildColumns(function() {
@@ -21,8 +26,9 @@ var Table = Backbone.Model.extend({
         });
     },
     
+    
     /**
-     *
+     * Build columns
      */
     buildColumns: function(callback) {
         var table = this;
@@ -40,7 +46,7 @@ var Table = Backbone.Model.extend({
     
     
     /**
-     *
+     * Retrieve data for initially filling tableview
      */
     getInitialData: function(callback) {
         var table = this;
@@ -80,7 +86,7 @@ var Table = Backbone.Model.extend({
     
     
     /**
-     *
+     * Add column to table
      */
     addColumn: function (row) {
         this.columns.push(new Column({
@@ -97,7 +103,7 @@ var Table = Backbone.Model.extend({
     
     
     /**
-     *
+     * Get columns
      */
     getColumns: function () {
         return this.columns;
@@ -152,7 +158,7 @@ var Table = Backbone.Model.extend({
     
     
     /**
-     *
+     * Render tableview
      */
     renderView: function() {
         if (this.view) {
