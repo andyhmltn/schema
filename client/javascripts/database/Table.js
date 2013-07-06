@@ -22,7 +22,7 @@ var Table = Backbone.Model.extend({
         
         // Get statistics about table:
         this.getStatistics(function(num_rows) {
-            console.log("Need to add number of rows to toolbar:", num_rows);
+            console.warn("Need to add number of rows to toolbar:", num_rows);
         });
     },
     
