@@ -80,7 +80,34 @@ var TableView = Backbone.Model.extend({
             }
         ));
         
-        this.bindInputs();
+        var tableview = this;
+        
+        // Bind to Allow Null checkbox:
+        $('#structure').on('click', 'input.allownull', function() {
+            // Get checkbox:
+            var checkbox = $(this);
+            
+            // Check if clicked on or clicked off:
+            if (checkbox.is(':checked')) {
+                var allownull = true;
+            } else {
+                var allownull = false;
+            }
+            
+            // Find column name:
+            var column_name = $(this).parent().parent().find('input.column_name').val();
+            
+            // Set allow null:
+            tableview.table.setAllowNull(column_name, allownull, null, function() {
+                if (allownull) {
+                    checkbox.prop('checked', false);
+                } else {
+                    checkbox.prop('checked', true);
+                }
+                
+                console.error("An error occurred whilst executing SQL to alter the NULL setting");
+            });
+        });
     },
     
     
