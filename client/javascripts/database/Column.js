@@ -57,6 +57,7 @@ var Column = Backbone.Model.extend({
      */
     getNull: function() {
         var nullAllowed = this.get('null').toLowerCase();
+        
         if (nullAllowed == 'yes') {
             return true;
         } else {
@@ -82,9 +83,9 @@ var Column = Backbone.Model.extend({
         
         // Build allow_null for SQL:
         if (allow_null) {
-            allow_null = "NULL";
+            var allow_null_sql = "NULL";
         } else {
-            allow_null = "NOT NULL";
+            var allow_null_sql = "NOT NULL";
         }
         
         // Build SQL:
@@ -93,15 +94,22 @@ var Column = Backbone.Model.extend({
             table_name,
             column_name,
             type,
-            allow_null
+            allow_null_sql
         );
+        
+        // Give this to variable for callback:
+        var column = this;
         
         // Execute SQL and run callbacks:
         database.query(sql, function(err, rows) {
             if (err && error_callback) {
-                error_callback();
-            } else if (success_callback) {
-                success_callback();
+                return error_callback();
+            }
+            
+            column.set('null', allow_null ? "YES" : "NO");
+            
+            if (success_callback) {
+                return success_callback();
             }
         });
     },
