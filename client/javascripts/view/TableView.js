@@ -193,13 +193,21 @@ var TableView = Backbone.Model.extend({
     bindInputs: function() {
         var selector = this.selector;
         
-        $(selector).find('tbody').on('click', 'td', function() {
+        $(selector).find('tbody').on('dblclick', 'td', function() {
             $(selector).find('tbody td.active').removeClass('active');
-            $(this).addClass('active').attr('contenteditable', 'true');
+            $(this).addClass('active').attr('contenteditable', 'true').selectText();
         });
         
         $(selector).on('blur', 'tbody td.active', function() {
             $(this).removeClass('active');
+        });
+        
+        // If enter key is pressed, send "blur" event to save the field:
+        $(selector).on('keydown', 'td', function(e) {
+            if (e.keyCode == '13') {
+                e.preventDefault();
+                $(this).blur();
+            }
         });
     }
 });
