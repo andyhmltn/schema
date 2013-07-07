@@ -102,12 +102,15 @@ var Column = Backbone.Model.extend({
         
         // Execute SQL and run callbacks:
         database.query(sql, function(err, rows) {
+            // If there was an error, run the error callback:
             if (err && error_callback) {
                 return error_callback();
             }
             
+            // Set column allow null to new value:
             column.set('null', allow_null ? "YES" : "NO");
             
+            // If success callback sent, call it:
             if (success_callback) {
                 return success_callback();
             }
@@ -121,15 +124,20 @@ var Column = Backbone.Model.extend({
      * @return string Datatype
      */
     getRawDatatype: function() {
+        // Get parsed datatype:
         var parts = this.parseDataType();
         var type = parts[0];
         
+        // Find location of first bracket in datatype:
         var bracket_location = type.indexOf('(');
+        
+        // If no bracket could be found, just return the whole type:
         if (bracket_location == -1) {
             return type.trim();
         }
         
-        return type.substr(0, bracket_location);
+        // Return datatype up to the first bracket (trimmed):
+        return type.substr(0, bracket_location).trim();
     },
     
     
