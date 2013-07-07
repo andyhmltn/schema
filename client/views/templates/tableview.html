@@ -18,7 +18,13 @@
             <% _.each(table.getRows(), function (row) { %>
                 <tr>
                     <% _.each(table.getColumns(), function (column) { %>
-                        <td><%= row[column.get('name')] %></td>
+                        <td
+                            <% if (column.isPrimaryKey()) { %>
+                                class='primary'
+                            <% } %>
+                        >
+                            <%- row[column.get('name')] %>
+                        </td>
                     <% }); %>
                 </tr>
             <% }); %>

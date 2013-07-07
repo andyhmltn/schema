@@ -22,6 +22,10 @@
         right: 0;
     }
     
+    td.centre {
+        text-align: center;
+    }
+    
     div.tableview {
         overflow: scroll;
         position: fixed;
@@ -71,6 +75,10 @@
                         &.active {
                             font-weight: bold;
                         }
+                    }
+                    
+                    &.primary td, td.primary {
+                        background: lighten(@toolbar_bg, 50%);
                     }
                 }
             }

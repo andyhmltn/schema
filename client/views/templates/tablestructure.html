@@ -6,22 +6,73 @@
     <table>
         <thead>
             <tr>
-                <th>Field Name</th>
+                <th>Field</th>
                 <th>Type</th>
+                <th>Length</th>
+                <th>Unsigned</th>
+                <!-- <th>Zerofill</th> -->
+                <!-- <th>Binary</th> -->
                 <th>Allow Null</th>
-                <th>Default value</th>
+                <th>Key</th>
+                <th>Default</th>
+                <th>Extra</th>
+                <!-- <th>Encoding</th> -->
+                <th>Collation</th>
+                <th>Comment</th>
             </tr>
         </thead>
         <tbody>
             <% _.each(table.getColumns(), function (column) { %>
-                <tr>
+                <tr 
+                    <% if (column.isPrimaryKey()) { %>
+                        class="primary"
+                    <% } %>
+                >
                     <!-- Column parameters: -->
                     <input type="hidden" class="column_name" value="<%= column.get('name') %>" />
                     
-                    <!-- Fields: -->
-                    <td><%= column.get('name') %></td>
-                    <td><%= column.get('datatype') %></td>
-                    <td style="text-align: center">
+                    <!-- Field name: -->
+                    <td class="fieldname"><%= column.get('name') %></td>
+                    
+                    <!-- Datatype: -->
+                    <td><%= column.getRawDatatype().toUpperCase() %></td>
+                    
+                    <!-- Length: -->
+                    <td><%= column.getLength() %></td>
+                    
+                    <!-- Unsigned: -->
+                    <td class="centre">
+                        <input type="checkbox" class="unsigned"
+                            <% if (column.isUnsigned()) { %>
+                                checked="checked"
+                            <% } %>
+                            
+                            <% if (!column.isUnsignedValid()) { %>
+                                disabled="disabled"
+                            <% } %>
+                        />
+                    </td>
+                    
+                    <!-- Zerofill: -->
+                    <!-- <td class="centre">
+                        <input type="checkbox" class="zerofill"
+                            <% if (1 == 1) { %>
+                                disabled="disabled"
+                            <% } %>
+                        />
+                    </td> -->
+                    
+                    <!-- Binary: -->
+                    <!-- <td class="centre">
+                        <input type="checkbox" class="binary"
+                            <% if (1 == 1) { %>
+                                disabled="disabled"
+                            <% } %>
+                        />
+                    </td> -->
+                    
+                    <!-- Allow Null: -->
+                    <td class="centre">
                         <input type="checkbox" class="allownull"
                             <% if (column.getNull()) { %>
                                 checked="checked"
@@ -32,7 +83,25 @@
                             <% } %>
                         />
                     </td>
+                    
+                    <!-- Key: -->
+                    <td><%= column.get('key') %></td>
+                    
+                    <!-- Default: -->
                     <td><%= column.get('default') %></td>
+                    
+                    <!-- Extra: -->
+                    <td><%- column.get('extra') %></td>
+                    
+                    <!-- Encoding: -->
+                    <!-- @todo Need to figure out where Sequel Pro gets this from -->
+                    <!-- <td></td> -->
+                    
+                    <!-- Collation: -->
+                    <td><%- column.get('collation') %></td>
+                    
+                    <!-- Comment: -->
+                    <td><%- column.get('comment') %></td>
                 </tr>
             <% }); %>
         </tbody>
