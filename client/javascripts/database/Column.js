@@ -57,6 +57,7 @@ var Column = Backbone.Model.extend({
      */
     getNull: function() {
         var nullAllowed = this.get('null').toLowerCase();
+        
         if (nullAllowed == 'yes') {
             return true;
         } else {
@@ -82,9 +83,9 @@ var Column = Backbone.Model.extend({
         
         // Build allow_null for SQL:
         if (allow_null) {
-            allow_null = "NULL";
+            var allow_null_sql = "NULL";
         } else {
-            allow_null = "NOT NULL";
+            var allow_null_sql = "NOT NULL";
         }
         
         // Build SQL:
@@ -93,15 +94,25 @@ var Column = Backbone.Model.extend({
             table_name,
             column_name,
             type,
-            allow_null
+            allow_null_sql
         );
+        
+        // Give this to variable for callback:
+        var column = this;
         
         // Execute SQL and run callbacks:
         database.query(sql, function(err, rows) {
+            // If there was an error, run the error callback:
             if (err && error_callback) {
-                error_callback();
-            } else if (success_callback) {
-                success_callback();
+                return error_callback();
+            }
+            
+            // Set column allow null to new value:
+            column.set('null', allow_null ? "YES" : "NO");
+            
+            // If success callback sent, call it:
+            if (success_callback) {
+                return success_callback();
             }
         });
     },
@@ -113,15 +124,20 @@ var Column = Backbone.Model.extend({
      * @return string Datatype
      */
     getRawDatatype: function() {
+        // Get parsed datatype:
         var parts = this.parseDataType();
         var type = parts[0];
         
+        // Find location of first bracket in datatype:
         var bracket_location = type.indexOf('(');
+        
+        // If no bracket could be found, just return the whole type:
         if (bracket_location == -1) {
             return type.trim();
         }
         
-        return type.substr(0, bracket_location);
+        // Return datatype up to the first bracket (trimmed):
+        return type.substr(0, bracket_location).trim();
     },
     
     
