@@ -52,7 +52,7 @@ var Table = Backbone.Model.extend({
      */
     getInitialData: function(callback) {
         var table = this;
-        var sql = _.str.sprintf("SELECT * FROM %s LIMIT 50;", this.table_name);
+        var sql = _.str.sprintf("SELECT * FROM %s LIMIT 100;", this.table_name);
         
         database.queryOrLogout(sql, function (rows) {
             _.each(rows, function(row) {
