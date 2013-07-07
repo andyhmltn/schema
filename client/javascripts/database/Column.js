@@ -232,5 +232,27 @@ var Column = Backbone.Model.extend({
         }
         
         return null;
+    },
+    
+    
+    /**
+     * Change name of column
+     *
+     * @param string column_name     Old column name
+     * @param string new_column_name New column name
+     *
+     * @return void
+     */
+    changeFieldName: function(new_column_name, callback) {
+        // Build SQL:
+        var sql = _.str.sprintf(
+            "ALTER TABLE `%s` CHANGE `%s` `%s` %s",
+            this.get('table').get('name'),
+            this.get('name'),
+            new_column_name,
+            this.get('datatype')
+        );
+        
+        database.query(sql, callback);
     }
 });
