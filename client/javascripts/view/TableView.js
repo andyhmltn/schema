@@ -3,6 +3,7 @@ var TableView = Backbone.Model.extend({
     
     initialize: function(table) {
         this.table = table;
+        this.addInitialData();
         this.table.setView(this);
         
         if (pane.isOpen) {
@@ -11,14 +12,37 @@ var TableView = Backbone.Model.extend({
     },
     
     
+    addInitialData: function() {
+        var table = this.table;
+        var sql = _.str.sprintf("SELECT * FROM %s", table.get('name'));
+        
+        // Build query:
+        var query = new Query(sql);
+        query.setLimit(100);
+        query.setOffset(0);
+        
+        // Get SQL:
+        sql = query.toSQL();
+        
+        database.queryOrLogout(sql, function (rows) {
+            _.each(rows, function(row) {
+                table.addRow(row);
+            });
+        });
+    },
+    
+    
     /**
-     *
+     * Render view
      */
     render: function() {
         this.renderContentView();
     },
     
     
+    /**
+     * Render elements common to all views
+     */
     renderGeneric: function() {
         var tableview = this;
         
@@ -69,6 +93,9 @@ var TableView = Backbone.Model.extend({
     },
     
     
+    /**
+     * Render table structure view
+     */
     renderStructure: function() {
         this.renderGeneric();
         
@@ -172,6 +199,9 @@ var TableView = Backbone.Model.extend({
     },
     
     
+    /**
+     * Render table information view
+     */
     renderInfo: function() {
         this.renderGeneric();
         
@@ -188,7 +218,7 @@ var TableView = Backbone.Model.extend({
     
     
     /**
-     *
+     * Bind inputs
      */
     bindInputs: function() {
         var selector = this.selector;

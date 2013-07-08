@@ -15,16 +15,14 @@ var Table = Backbone.Model.extend({
         var table = this;
         
         this.buildColumns(function() {
-            table.getInitialData(function() {
-                if (callback) {
-                    callback();
-                }
-            });
+            if (callback) {
+                callback();
+            }
         });
         
         // Get statistics about table:
         this.getStatistics(function(num_rows) {
-            console.warn("Need to add number of rows to toolbar:", num_rows);
+            $('#statusbar div.left').html(num_rows + ' rows found');
         });
     },
     
@@ -38,25 +36,6 @@ var Table = Backbone.Model.extend({
         database.queryOrLogout('SHOW FULL columns FROM ' + this.table_name + ';', function (rows) {
             _.each(rows, function(row) {
                 table.addColumn(row);
-            });
-            
-            if (callback) {
-                callback();
-            }
-        });
-    },
-    
-    
-    /**
-     * Retrieve data for initially filling tableview
-     */
-    getInitialData: function(callback) {
-        var table = this;
-        var sql = _.str.sprintf("SELECT * FROM %s LIMIT 100;", this.table_name);
-        
-        database.queryOrLogout(sql, function (rows) {
-            _.each(rows, function(row) {
-                table.addRow(row);
             });
             
             if (callback) {
