@@ -1,0 +1,38 @@
+div.ui-statusbar {
+    height: 30px;
+    background: darken(@toolbar_bg, 10%);
+    border-top: 1px solid darken(@toolbar_bg, 20%);
+    position: fixed;
+    bottom: 0;
+    left: @sidebar_width + 1px;
+    right: 0;
+    
+    .left {
+        float: left;
+        color: #fff;
+        font-size: 12px;
+        padding: 8px;
+        font-weight: bold;
+    }
+    
+    .right {
+        float: right;
+        
+        &.btn {
+            height: 30px;
+            background: darken(@toolbar_bg, 15%);
+            width: 30px;
+            border-left: 1px solid darken(@toolbar_bg, 20%);
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            padding: 4px 0 0 0;
+            
+            &:hover {
+                background: darken(@toolbar_bg, 10%);
+                cursor: pointer;
+            }
+        }
+    }
+}
