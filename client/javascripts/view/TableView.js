@@ -17,12 +17,12 @@ var TableView = Backbone.Model.extend({
         var sql = _.str.sprintf("SELECT * FROM %s", table.get('name'));
         
         // Build query:
-        var query = new Query(sql);
-        query.setLimit(100);
-        query.setOffset(0);
+        this.query = new Query(sql);
+        this.query.setLimit(100);
+        this.query.setOffset(0);
         
         // Get SQL:
-        sql = query.toSQL();
+        sql = this.query.toSQL();
         
         database.queryOrLogout(sql, function (rows) {
             _.each(rows, function(row) {
