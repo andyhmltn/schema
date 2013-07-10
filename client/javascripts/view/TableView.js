@@ -9,10 +9,24 @@ var TableView = Backbone.Model.extend({
         if (pane.isOpen) {
             view.setOffset(195);
         }
+        
+        var tableview = this;
+        
+        $('#statusbar').off();
+        $('#statusbar').on('click', 'div.right.btn', function() {
+            if ($(this).hasClass('next')) {
+                tableview.query.nextPage();
+            } else if ($(this).hasClass('prev')) {
+                tableview.query.prevPage();
+            }
+            
+            tableview.refresh();
+        });
     },
     
     
     addInitialData: function() {
+        var tableview = this;
         var table = this.table;
         var sql = _.str.sprintf("SELECT * FROM %s", table.get('name'));
         
@@ -28,6 +42,26 @@ var TableView = Backbone.Model.extend({
             _.each(rows, function(row) {
                 table.addRow(row);
             });
+            
+            tableview.render();
+        });
+    },
+    
+    
+    refresh: function() {
+        this.table.rows = [];
+        var table = this.table;
+        var tableview = this;
+        
+        // Get SQL:
+        sql = this.query.toSQL();
+        
+        database.queryOrLogout(sql, function (rows) {
+            _.each(rows, function(row) {
+                table.addRow(row);
+            });
+            
+            tableview.render();
         });
     },
     
@@ -36,6 +70,7 @@ var TableView = Backbone.Model.extend({
      * Render view
      */
     render: function() {
+        console.info("Rendering TableView");
         this.renderContentView();
     },
     

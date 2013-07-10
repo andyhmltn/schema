@@ -23,6 +23,12 @@ var Table = Backbone.Model.extend({
         // Get statistics about table:
         this.getStatistics(function(num_rows) {
             $('#statusbar div.left').html(num_rows + ' rows found');
+            
+            if (num_rows <= 100) {
+                $('#statusbar .right.btn').hide();
+            } else {
+                $('#statusbar .right.btn').show();
+            }
         });
     },
     
@@ -121,7 +127,7 @@ var Table = Backbone.Model.extend({
      */
     addRow: function (row) {
         this.rows.push(row);
-        this.renderView();
+        // this.renderView();
     },
     
     

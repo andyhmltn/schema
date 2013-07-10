@@ -52,5 +52,15 @@ var Query = Backbone.Model.extend({
             this.get('limit')
         );
         return sql;
+    },
+    
+    
+    nextPage: function() {
+        this.set('offset', this.get('offset') + this.get('limit'));
+        console.log(this.get('offset'));
+    },
+    prevPage: function() {
+        this.set('offset', this.get('offset') - this.get('limit'));
+        console.log(this.get('offset'));
     }
 });
