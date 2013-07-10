@@ -1,7 +1,7 @@
 /**
  * Manages ui-toolbar
  */
-var Toolbar = Backbone.Model.extend({
+var Toolbar = Backbone.View.extend({
     /**
      * Define handlebars templates
      */

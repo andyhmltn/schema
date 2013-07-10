@@ -1,7 +1,7 @@
 /**
  * SQL editor
  */
-var SQLEditor = Backbone.Model.extend({
+var SQLEditor = Backbone.View.extend({
     /**
      * Set query
      */

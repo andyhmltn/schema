@@ -1,7 +1,7 @@
 /**
  * Manages sidebar
  */
-var Sidebar = Backbone.Model.extend({
+var Sidebar = Backbone.View.extend({
     /**
      * Initialise function
      */

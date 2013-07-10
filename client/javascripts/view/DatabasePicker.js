@@ -1,4 +1,4 @@
-var DatabasePicker = Backbone.Model.extend({
+var DatabasePicker = Backbone.View.extend({
     initialize: function() {
         if (pane.isOpen) {
             pane.close();

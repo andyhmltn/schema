@@ -1,7 +1,7 @@
 /**
  * Login object
  */
-var Login = Backbone.Model.extend({
+var Login = Backbone.View.extend({
     /**
      * Display login form
      */

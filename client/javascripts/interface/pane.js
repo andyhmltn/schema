@@ -1,7 +1,7 @@
 /**
  * Pane
  */
-var Pane = Backbone.Model.extend({
+var Pane = Backbone.View.extend({
     isOpen: false,
     selector: "#pane",
     
