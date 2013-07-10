@@ -16,10 +16,11 @@
         -webkit-font-smoothing: antialiased;
         font-size: 14px;
         padding: 7px;
-        position: fixed;
-        top: @toolbar_height;
-        left: @sidebar_width + 1px; // 1px is for border
+        position: absolute;
+        top: 0px;
+        left: 0px; //@sidebar_width + 1px; // 1px is for border
         right: 0;
+        z-index: 10;
     }
     
     td.centre {
@@ -27,14 +28,20 @@
     }
     
     div.tableview {
+        padding-top: 30px;
         overflow: scroll;
-        position: fixed;
+        position: absolute;
         border-left: 1px solid darken(@toolbar_bg, 20%);
         background: lighten(desaturate(@toolbar_bg, 15%), 50%);
-        top: @toolbar_height + 30px;
-        left: @sidebar_width;
+        // top: @toolbar_height + 30px;
+        // left: @sidebar_width;
         right: 0;
-        bottom: 31px;
+        // bottom: 31px;
+        
+        top: 0;
+        left: -1px;
+        bottom: 0;
+        right: 0;
         
         table {
             position: relative;
