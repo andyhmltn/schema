@@ -15,12 +15,14 @@ var TableView = Backbone.Model.extend({
         $('#statusbar').off();
         $('#statusbar').on('click', 'div.right.btn', function() {
             if ($(this).hasClass('next')) {
-                tableview.query.nextPage();
+                var changed = tableview.query.nextPage();
             } else if ($(this).hasClass('prev')) {
-                tableview.query.prevPage();
+                var changed = tableview.query.prevPage();
             }
             
-            tableview.refresh();
+            if (changed) {
+                tableview.refresh();
+            }
         });
     },
     

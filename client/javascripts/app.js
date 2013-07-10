@@ -84,21 +84,6 @@ var SchemaRouter = Backbone.Router.extend({
         
         var databases = new DatabasePicker();
         databases.displayPicker();
-        
-        // this.checkAppLoaded();
-        
-        // // Get server:
-        // server = new Server({
-        //     id: server_id
-        // });
-        // server.fetch({
-        //     'success': function() {
-        //         window.appView.setNavTitle(server.get('name'));
-        //     },
-        //     'error': function() {
-        //         console.log("an error occurred");
-        //     }
-        // });
     },
 });
 
