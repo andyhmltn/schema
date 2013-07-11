@@ -67,21 +67,7 @@ var SchemaRouter = Backbone.Router.extend({
         
         
         // Populate left nav (database switcher):
-        database.queryOrLogout('USE `' + database_name + '`;', function (rows) {
-            database.queryOrLogout('SHOW TABLES;', function (rows) {
-                sidebar.clear();
-                
-                _.each(rows, function (row) {
-                    var row_table_name = row[_.keys(row)[0]];
-                    var active = table_name == row_table_name;
-                    sidebar.addItem(row_table_name, '', '#/database/' + database_name + '/' + row_table_name + '/', 0, active);
-                });
-            });
-            
-            var table = new Table(table_name, function() {
-                var tableview = new TableView(table);
-            });
-        });
+        sidebar.populateFromDatabase(database_name, table_name);
     },
     
     listDatabases: function (server_id) {

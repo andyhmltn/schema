@@ -11,14 +11,36 @@ var Sidebar = Backbone.View.extend({
         $(document).on('click', '.ui-sidebar li a', function(e) {
             $('.ui-sidebar li a.active').removeClass('active');
             $(this).addClass('active');
-            
-            sidebar.search_term = '';
-            sidebar.render();
         });
         
         $(document).on('keyup', 'input', function () {
             sidebar.search($(this).val());
         });
+    },
+    
+    populateFromDatabase: function(database_name, table_name, refresh) {
+        if (!refresh) {
+            refresh = false;
+        }
+        
+        if (this.current_db != database_name) {
+            console.log("Populating sidebar from", database_name);
+            this.current_db = "" + database_name;
+            
+            database.queryOrLogout('USE `' + database_name + '`;', function (rows) {
+                database.queryOrLogout('SHOW TABLES;', function (rows) {
+                    sidebar.clear();
+                    
+                    _.each(rows, function (row) {
+                        var row_table_name = row[_.keys(row)[0]];
+                        var active = table_name == row_table_name;
+                        sidebar.addItem(row_table_name, '', '#/database/' + database_name + '/' + row_table_name + '/', 0, active, false);
+                    });
+                    
+                    sidebar.render();
+                });
+            });
+        }
     },
     
     
@@ -62,7 +84,7 @@ var Sidebar = Backbone.View.extend({
      *
      * @return void
      */
-    addItem: function(text, icon, url, position, active) {
+    addItem: function(text, icon, url, position, active, render) {
         // callback instanceof Function
         this.items.push({
             text: text,
@@ -71,7 +93,9 @@ var Sidebar = Backbone.View.extend({
             active: active,
         });
         
-        this.render();
+        if (render || render == undefined) {
+            this.render();
+        }
     },
     
     
@@ -81,6 +105,8 @@ var Sidebar = Backbone.View.extend({
      * @return void
      */
     render: function() {
+        console.log("Rendering sidebar");
+        
         var html = _.template($(this.template).html(), {
             items: this.items,
             search_term: this.search_term

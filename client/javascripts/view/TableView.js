@@ -61,24 +61,6 @@ var TableView = Backbone.View.extend({
     },
     
     
-    // refresh: function() {
-    //     this.table.rows = [];
-    //     var table = this.table;
-    //     var tableview = this;
-        
-    //     // Get SQL:
-    //     sql = this.query.toSQL();
-        
-    //     database.queryOrLogout(sql, function (rows) {
-    //         _.each(rows, function(row) {
-    //             table.addRow(row);
-    //         });
-            
-    //         tableview.render();
-    //     });
-    // },
-    
-    
     /**
      * Render content view
      */
