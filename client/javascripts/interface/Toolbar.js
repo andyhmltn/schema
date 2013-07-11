@@ -106,16 +106,14 @@ var Toolbar = Backbone.View.extend({
      *
      * @param string section  Section for the icon to be created under
      * @param string text     Icon text
-     * @param string icon     URL for icon
      * @param string callback Callback to be triggered when clicked
      *
      * @return void
      */
-    addItem: function (section, text, icon, callback) {
+    addItem: function (section, text, callback) {
         // callback instanceof Function
         this.section_items[section].push({
             text: text,
-            icon: icon,
             callback: callback
         });
         
