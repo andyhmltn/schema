@@ -1,5 +1,5 @@
 var TableView = Backbone.View.extend({
-    // selector: '#main .tableview',
+    selector: '#main .tableview',
     
     initialize: function(query) {
         var tableview = this;
@@ -33,54 +33,32 @@ var TableView = Backbone.View.extend({
             pane.toggle();
         });
         
+        // Add SQL editor into pane:
+        var sqleditor = new SQLEditor();
+        pane.render(sqleditor.render());
+        
+        // Render table content viewer:
         this.renderContentView();
         
-        // this.table = table;
-        // this.addInitialData();
-        // this.table.setView(this);
+        // Assign tableview to variable for statusbar callback:
+        var tableview = this;
         
-        // if (pane.isOpen) {
-        //     view.setOffset(195);
-        // }
+        // Remove previous bindings:
+        $('#statusbar').off();
         
-        // var tableview = this;
-        
-        // $('#statusbar').off();
-        // $('#statusbar').on('click', 'div.right.btn', function() {
-        //     if ($(this).hasClass('next')) {
-        //         var changed = tableview.query.nextPage();
-        //     } else if ($(this).hasClass('prev')) {
-        //         var changed = tableview.query.prevPage();
-        //     }
+        // Bind to onclick on the pagination buttons on the sidebar:
+        $('#statusbar').on('click', 'div.right.btn', function() {
+            if ($(this).hasClass('next')) {
+                var changed = tableview.query.nextPage();
+            } else if ($(this).hasClass('prev')) {
+                var changed = tableview.query.prevPage();
+            }
             
-        //     if (changed) {
-        //         tableview.refresh();
-        //     }
-        // });
+            if (changed) {
+                tableview.refresh();
+            }
+        });
     },
-    
-    
-    // addInitialData: function() {
-    //     var tableview = this;
-    //     var table = this.table;
-    //     var sql = _.str.sprintf("SELECT * FROM %s", table.get('name'));
-        
-    //     // Build query:
-    //     this.query = new Query(sql);
-    //     this.query.setLimit(100);
-    //     this.query.setOffset(0);
-        
-    //     // Get SQL:
-    //     sql = this.query.toSQL();
-        
-    //     database.queryOrLogout(sql, function (rows) {
-    //         _.each(rows, function(row) {
-    //             table.addRow(row);
-    //         });
-            
-    //         tableview.render();
-    //     });
-    // },
     
     
     // refresh: function() {
@@ -101,50 +79,6 @@ var TableView = Backbone.View.extend({
     // },
     
     
-    // /**
-    //  * Render view
-    //  */
-    // render: function() {
-    //     console.info("Rendering TableView");
-    //     this.renderContentView();
-    // },
-    
-    
-    // /**
-    //  * Render elements common to all views
-    //  */
-    // renderGeneric: function() {
-    //     var tableview = this;
-        
-    //     // Add SQL editor into pane:
-    //     var sqleditor = new SQLEditor();
-    //     pane.render(sqleditor.render());
-        
-    //     // Clear toolbar:
-    //     toolbar.clear();
-        
-    //     // Add structure item to toolbar:
-    //     toolbar.addItem('left', 'Structure', 'structure.png', function() {
-    //         tableview.renderStructure();
-    //     });
-        
-    //     // Add content item to toolbar:
-    //     toolbar.addItem('left', 'Content', 'content.png', function() {
-    //         tableview.renderContentView();
-    //     });
-        
-    //     // Add info item to toolbar:
-    //     toolbar.addItem('left', 'Table Info', 'info.png', function() {
-    //         tableview.renderInfo();
-    //     });
-        
-    //     // Add console item to toolbar:
-    //     toolbar.addItem('left', 'Query', 'query.png', function() {
-    //         pane.toggle();
-    //     });
-    // },
-    
-    
     /**
      * Render content view
      */
@@ -160,7 +94,27 @@ var TableView = Backbone.View.extend({
                 }
             ));
             
-            //this.bindInputs();
+            // Get tableview selector:
+            var selector = this.selector;
+            
+            // Bind to double-click event on cells:
+            $(selector).find('tbody').on('dblclick', 'td', function() {
+                $(selector).find('tbody td.active').removeClass('active');
+                $(this).addClass('active').attr('contenteditable', 'true').selectText();
+            });
+            
+            // Deselect cell if user moves on:
+            $(selector).on('blur', 'tbody td.active', function() {
+                $(this).removeClass('active');
+            });
+            
+            // If enter key is pressed, send "blur" event to save the field:
+            $(selector).on('keydown', 'td', function(e) {
+                if (e.keyCode == '13') {
+                    e.preventDefault();
+                    $(this).blur();
+                }
+            });
         });
     },
     
@@ -284,30 +238,5 @@ var TableView = Backbone.View.extend({
                 tableview: tableview
             }
         ));
-    },
-    
-    
-    // /**
-    //  * Bind inputs
-    //  */
-    // bindInputs: function() {
-    //     var selector = this.selector;
-        
-    //     $(selector).find('tbody').on('dblclick', 'td', function() {
-    //         $(selector).find('tbody td.active').removeClass('active');
-    //         $(this).addClass('active').attr('contenteditable', 'true').selectText();
-    //     });
-        
-    //     $(selector).on('blur', 'tbody td.active', function() {
-    //         $(this).removeClass('active');
-    //     });
-        
-    //     // If enter key is pressed, send "blur" event to save the field:
-    //     $(selector).on('keydown', 'td', function(e) {
-    //         if (e.keyCode == '13') {
-    //             e.preventDefault();
-    //             $(this).blur();
-    //         }
-    //     });
-    // }
+    }
 });
