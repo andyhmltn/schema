@@ -1,12 +1,12 @@
 <div class="titlebar">
-    <%= table.table_name %>
+    <%= tableview.query.get('query_title') %>
 </div>
 
 <div class="tableview" id="tableview">
     <table>
         <thead>
             <tr>
-                <% _.each(table.getColumns(), function (column) { %>
+                <% _.each(tableview.query.get('columns'), function (column) { %>
                     <th>
                         <%= column.get('name') %>
                     </th>
@@ -15,9 +15,9 @@
         </thead>
         
         <tbody>
-            <% _.each(table.getRows(), function (row) { %>
+            <% _.each(tableview.query.get('rows'), function (row) { %>
                 <tr>
-                    <% _.each(table.getColumns(), function (column) { %>
+                    <% _.each(tableview.query.get('columns'), function (column) { %>
                         <td
                             <% if (column.isPrimaryKey()) { %>
                                 class='primary'
