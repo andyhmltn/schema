@@ -6,10 +6,7 @@
                     onclick="jQuery('body').trigger(jQuery.Event(item.event));"
                 <% } %>
             >
-                <div class="image">
-                    <img src="/images/<%= item.icon %>" alt="">
-                </div>
-                <div class="text"><%= item.text %></div>
+                <%= item.text %>
             </a>
         </li>
     <% }); %>

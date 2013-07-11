@@ -48,37 +48,24 @@
         ul {
             .item {
                 float: left;
-                height: @toolbar_height - 20px;
-                width: @toolbar_height;
-                margin: -10px 15px 0 15px;
+                background: darken(@toolbar_bg, 10%);
+                border: 1px solid darken(@toolbar_bg, 20%);
+                margin: 7px 15px 0 -10px;
+                
+                &:hover {
+                    background: darken(@toolbar_bg, 8%);
+                }
+                
+                &.active {
+                    background: darken(@toolbar_bg, 5%);
+                }
                 
                 a {
-                    display: block;
-                    height: @toolbar_height - 20px;
-                    width: @toolbar_height + 10px;
+                    color: #fff;
                     text-decoration: none;
-                    text-align: center;
-                    color: #000;
-                    font-size: 11px;
-                    
-                    div.image {
-                        height: @toolbar_icon_size;
-                        margin: 0 (@toolbar_height - @toolbar_icon_size) / 2;
-                        
-                        img {
-                            width: @toolbar_icon_size;
-                            height: @toolbar_icon_size;
-                        }
-                    }
-                    
-                    div.text {
-                        margin-top: 0px;
-                        color: #fff;
-                    }
-                    
-                    &:hover {
-                        font-weight: bold;
-                    }
+                    font-size: 13px;
+                    display: block;
+                    padding: 6px 10px 7px 10px;
                 }
             }
         }
