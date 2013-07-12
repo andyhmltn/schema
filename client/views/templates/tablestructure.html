@@ -2,7 +2,7 @@
     <%= table.get('name') %>
 </div>
 
-<div class="tableview" id="structure">
+<div class="tablestructure" id="structure">
     <table>
         <thead>
             <tr>
@@ -101,7 +101,7 @@
                     <td><%- column.get('collation') %></td>
                     
                     <!-- Comment: -->
-                    <td><%- column.get('comment') %></td>
+                    <td class="comment"><%- column.get('comment') %></td>
                 </tr>
             <% }); %>
         </tbody>
