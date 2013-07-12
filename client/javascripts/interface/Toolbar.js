@@ -13,7 +13,6 @@ var Toolbar = Backbone.View.extend({
     sections: {
         'left':  'div.ui-toolbar div.section.left',
         'right': 'div.ui-toolbar div.section.right',
-        // 'sidebar': 'div.ui-toolbar div.section.sidebar'
     },
     
     
@@ -78,6 +77,8 @@ var Toolbar = Backbone.View.extend({
         _.each(items, function(item) {
             if (item.callback) {
                 $(document).on('click', '#' + item.id, function(e) {
+                    $(selector).find('.active').removeClass('active');
+                    $(this).addClass('active');
                     e.preventDefault();
                     item.callback();
                 });
@@ -104,17 +105,19 @@ var Toolbar = Backbone.View.extend({
     /**
      * Adds an icon to the toolbar
      *
-     * @param string section  Section for the icon to be created under
-     * @param string text     Icon text
-     * @param string callback Callback to be triggered when clicked
+     * @param string  section  Section for the icon to be created under
+     * @param string  text     Icon text
+     * @param string  callback Callback to be triggered when clicked
+     * @param boolean active   Whether item should be active or not
      *
      * @return void
      */
-    addItem: function (section, text, callback) {
+    addItem: function (section, text, callback, active) {
         // callback instanceof Function
         this.section_items[section].push({
             text: text,
-            callback: callback
+            callback: callback,
+            active: active
         });
         
         this.renderSection(section);

@@ -1,6 +1,6 @@
 <ul>
     <% _.each(items, function(item) { %>
-        <li class="item" id="<%= item.id %>">
+        <li class="item <% if (item.active) { %>active<% } %>" id="<%= item.id %>">
             <a href="#"
                 <% if (item.event) { %>
                     onclick="jQuery('body').trigger(jQuery.Event(item.event));"

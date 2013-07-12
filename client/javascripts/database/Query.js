@@ -15,44 +15,55 @@ var Query = Backbone.Model.extend({
         // this.set('offset', 0);
     },
     
-    loadFromSQL: function(sql, table) {
+    loadFromSQL: function(sql) {
         this.sql = sql;
-        this.column_sql = _.str.sprintf("SHOW FULL columns FROM %s", table);
     },
     
     loadFromTable: function(table, callback) {
         this.set('query_title', table.get('name'));
+        this.sql = _.str.sprintf("SELECT * FROM %s ", table.get('name'));
         
-        this.sql = _.str.sprintf("SELECT * FROM %s", table.get('name'));
-        this.column_sql = _.str.sprintf("SHOW FULL columns FROM %s", table.get('name'));
         callback();
     },
     
     execute: function(callback) {
         var query = this;
         
-        database.queryOrLogout(query.sql, function (rows) {
+        database.query(query.sql, function (err, rows, columns) {
             query.set('rows', rows);
             
-            database.queryOrLogout(query.column_sql, function (columns) {
-                var cols = [];
-                _.each(columns, function(row) {
-                    cols.push(new Column({
-                        name:       row.Field,
-                        datatype:   row.Type,
-                        collation:  row.Collation,
-                        null:       row.Null,
-                        key:        row.Key,
-                        default:    row.Default,
-                        extra:      row.Extra,
-                        privileges: row.Privileges,
-                        comment:    row.Comment
-                    }));
-                });
-                
-                query.set('columns', cols);
-                callback();
+            var cols = [];
+            _.each(columns, function(row) {
+                cols.push(new Column({
+                    name: row.name
+                }));
             });
+            
+            query.set('columns', cols);
+            
+            if (callback) {
+                callback();
+            }
+            
+            // database.queryOrLogout(query.column_sql, function (columns) {
+            //     var cols = [];
+            //     _.each(columns, function(row) {
+            //         cols.push(new Column({
+            //             name:       row.Field,
+            //             datatype:   row.Type,
+            //             collation:  row.Collation,
+            //             null:       row.Null,
+            //             key:        row.Key,
+            //             default:    row.Default,
+            //             extra:      row.Extra,
+            //             privileges: row.Privileges,
+            //             comment:    row.Comment
+            //         }));
+            //     });
+                
+            //     query.set('columns', cols);
+            //     callback();
+            // });
         });
     },
     

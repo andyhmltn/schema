@@ -1,5 +1,5 @@
 <div class="titlebar">
-    <%= tableview.query.get('query_title') %>
+    <%= table.get('name') %>
 </div>
 
 <div class="tableview" id="structure">
@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            <% _.each(tableview.query.get('columns'), function (column) { %>
+            <% _.each(columns, function (column) { %>
                 <tr 
                     <% if (column.isPrimaryKey()) { %>
                         class="primary"

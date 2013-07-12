@@ -35,6 +35,34 @@ var Table = Backbone.Model.extend({
     },
     
     
+    getFullColumns: function(callback) {
+        var table = this;
+        
+        database.queryOrLogout('SHOW FULL columns FROM ' + table.get('name') + ';', function (columns) {
+            var cols = [];
+            
+            _.each(columns, function(row) {
+                cols.push(new Column({
+                    name: row.Field,
+                    datatype: row.Type,
+                    collation: row.Collation,
+                    null: row.Null,
+                    key: row.Key,
+                    default: row.Default,
+                    extra: row.Extra,
+                    privileges: row.Privileges,
+                    comment: row.Comment,
+                    table: table
+                }))
+            });
+            
+            if (callback) {
+                callback(cols);
+            }
+        });
+    }
+    
+    
     /**
      * Build columns
      */
@@ -92,14 +120,6 @@ var Table = Backbone.Model.extend({
     //     }));
         
     //     this.renderView();
-    // },
-    
-    
-    /**
-     * Get columns
-     */
-    // getColumns: function () {
-    //     return this.columns;
     // },
     
     
