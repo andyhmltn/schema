@@ -30,9 +30,9 @@ var Database = Backbone.Model.extend({
             query: sql
         }, function (data) {
             if (data.success) {
-                callback(false, data.rows);
+                callback(false, data.rows, data.columns);
             } else {
-                callback(true, data.rows);
+                callback(true, data.rows, data.columns);
             }
         }, 'json');
     },
@@ -42,7 +42,8 @@ var Database = Backbone.Model.extend({
      * Query database, log user out if there's an error.
      */
     queryOrLogout: function (sql, callback) {
-        this.query(sql, function(err, rows) {
+        console.warn("Deprecated function queryOrLogout used");
+        this.query(sql, function(err, rows, columns) {
             if (err) {
                 window.token = '';
                 localStorage['token'] = '';
