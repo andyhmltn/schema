@@ -11,8 +11,8 @@ var Query = Backbone.Model.extend({
     initialize: function(query) {
         this.set('query_title', table.get('Custom Query'));
         // this.set('query', query);
-        // this.set('limit', 100);
-        // this.set('offset', 0);
+        this.set('limit', 100);
+        this.set('offset', 0);
     },
     
     loadFromSQL: function(sql) {
@@ -21,15 +21,35 @@ var Query = Backbone.Model.extend({
     
     loadFromTable: function(table, callback) {
         this.set('query_title', table.get('name'));
-        this.sql = _.str.sprintf("SELECT * FROM %s ", table.get('name'));
+        this.sql = _.str.sprintf(
+            "SELECT * FROM %s",
+            table.get('name')
+        );
+        
+        console.log(this.sql);
         
         callback();
+    },
+    
+    /**
+     * Convert query into SQL
+     *
+     * @return string SQL
+     */
+    toSQL: function() {
+        var sql = this.sql;
+        sql += _.str.sprintf(
+            " LIMIT %d, %d",
+            this.get('offset'),
+            this.get('limit')
+        );
+        return sql;
     },
     
     execute: function(callback) {
         var query = this;
         
-        database.query(query.sql, function (err, rows, columns) {
+        database.query(query.toSQL(), function (err, rows, columns) {
             query.set('rows', rows);
             
             var cols = [];
@@ -68,7 +88,7 @@ var Query = Backbone.Model.extend({
     },
     
     getColumns: function() {
-    }
+    },
     
     
     /**
@@ -94,29 +114,12 @@ var Query = Backbone.Model.extend({
     //     this.set('offset', offset);
     // },
     
-    
-    /**
-     * Convert query into SQL
-     *
-     * @return string SQL
-     */
-    // toSQL: function() {
-    //     var sql = this.get('query');
-    //     sql += _.str.sprintf(
-    //         " LIMIT %d, %d",
-    //         this.get('offset'),
-    //         this.get('limit')
-    //     );
-    //     return sql;
-    // },
-    
-    
-    // nextPage: function() {
-    //     this.set('offset', this.get('offset') + this.get('limit'));
-    //     console.log(this.get('offset'));
-    // },
-    // prevPage: function() {
-    //     this.set('offset', this.get('offset') - this.get('limit'));
-    //     console.log(this.get('offset'));
-    // }
+    nextPage: function() {
+        this.set('offset', this.get('offset') + this.get('limit'));
+        this.execute();
+    },
+    prevPage: function() {
+        this.set('offset', this.get('offset') - this.get('limit'));
+        this.execute();
+    }
 });
