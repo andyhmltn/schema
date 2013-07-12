@@ -6,6 +6,19 @@ function return_json (res, data, status) {
     res.status(status).end(JSON.stringify(data));
 }
 
+function parse_type(type_id) {
+    // Figure out type:
+    for (var type in mysql.Types) {
+        var key = mysql.Types[type];
+        
+        if (type_id == key) {
+            return type;
+        }
+    }
+    
+    return false;
+}
+
 module.exports = function(app) {
     /**
      * Make connection to database and return token which the client can
@@ -72,7 +85,7 @@ module.exports = function(app) {
             });
         }
         
-        app.user_connections[token].query(query, function(err, rows) {
+        app.user_connections[token].query(query, function(err, rows, columns) {
             if (err) {
                 return return_json(res, {
                     error: true,
@@ -80,9 +93,20 @@ module.exports = function(app) {
                 });
             }
             
+            // Parse columns to get datatypes, etc:
+            // columns = parse_columns(columns);
+            if (columns) {
+                columns.forEach(function(item) {
+                    if (item.type) {
+                        item.type = parse_type(item.type);
+                    }
+                });
+            }
+            
             return_json(res, {
                 success: true,
-                rows: rows
+                rows: rows,
+                columns: columns
             });
         });
     });
