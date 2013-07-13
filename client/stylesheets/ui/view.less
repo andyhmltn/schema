@@ -20,18 +20,51 @@
     
     .titlebar {
         background: darken(@toolbar_bg, 10%);
-        height: 16px;
+        height: 30px;
         border-bottom: 1px solid darken(@toolbar_bg, 20%);
         color: #fff;
         font-weight: bold;
         -webkit-font-smoothing: antialiased;
         font-size: 14px;
-        padding: 7px;
         position: absolute;
         top: 0px;
         left: 0px; //@sidebar_width + 1px; // 1px is for border
         right: 0;
         z-index: 10;
+        
+        .left {
+            float: left;
+            color: #fff;
+            padding: 7px;
+            font-weight: bold;
+        }
+        
+        .right {
+            float: right;
+            
+            &.btn {
+                height: 26px;
+                background: darken(@toolbar_bg, 15%);
+                width: 30px;
+                border-left: 1px solid darken(@toolbar_bg, 20%);
+                color: #fff;
+                font-weight: bold !important;
+                font-size: 20px !important;
+                text-align: center;
+                padding: 5px 0 0 0;
+                
+                &:hover {
+                    background: darken(@toolbar_bg, 10%);
+                    cursor: pointer;
+                }
+            }
+            
+            &.statistics {
+                color: #fff;
+                padding: 7px;
+                font-weight: bold;
+            }
+        }
     }
     
     td.centre {
