@@ -93,20 +93,25 @@ module.exports = function(app) {
                 });
             }
             
-            // Parse columns to get datatypes, etc:
-            // columns = parse_columns(columns);
-            if (columns) {
-                columns.forEach(function(item) {
-                    if (item.type) {
-                        item.type = parse_type(item.type);
-                    }
+            // Get number of rows:
+            var select_rows = 'SELECT FOUND_ROWS() as num_rows;';
+            app.user_connections[token].query(select_rows, function(err, num_rows) {
+                // Parse columns to get datatypes, etc:
+                if (columns) {
+                    columns.forEach(function(item) {
+                        if (item.type) {
+                            item.type = parse_type(item.type);
+                        }
+                    });
+                }
+                
+                // Return query result:
+                return_json(res, {
+                    success: true,
+                    rows: rows,
+                    columns: columns,
+                    num_rows: num_rows[0].num_rows
                 });
-            }
-            
-            return_json(res, {
-                success: true,
-                rows: rows,
-                columns: columns
             });
         });
     });

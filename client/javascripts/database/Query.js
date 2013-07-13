@@ -22,7 +22,7 @@ var Query = Backbone.Model.extend({
     loadFromTable: function(table, callback) {
         this.set('query_title', table.get('name'));
         this.sql = _.str.sprintf(
-            "SELECT * FROM `%s`",
+            "SELECT SQL_CALC_FOUND_ROWS * FROM `%s`",
             table.get('name')
         );
         
@@ -49,8 +49,9 @@ var Query = Backbone.Model.extend({
     execute: function(callback) {
         var query = this;
         
-        database.query(query.toSQL(), function (err, rows, columns) {
+        database.query(query.toSQL(), function (err, rows, columns, num_rows) {
             query.set('rows', rows);
+            query.set('num_rows', num_rows);
             
             var cols = [];
             _.each(columns, function(row) {

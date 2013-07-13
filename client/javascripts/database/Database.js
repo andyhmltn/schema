@@ -30,9 +30,9 @@ var Database = Backbone.Model.extend({
             query: sql
         }, function (data) {
             if (data.success) {
-                callback(false, data.rows, data.columns);
+                callback(false, data.rows, data.columns, data.num_rows);
             } else {
-                callback(true, data.rows, data.columns);
+                callback(true, data.rows, data.columns, data.num_rows);
             }
         }, 'json');
     },
