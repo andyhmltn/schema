@@ -10,9 +10,6 @@ var TableView = Backbone.View.extend({
             tableview.render();
         });
         
-        // Assign tableview to variable for statusbar callback:
-        var tableview = this;
-        
         // Remove previous bindings:
         $('#statusbar').off();
         
@@ -58,6 +55,19 @@ var TableView = Backbone.View.extend({
             // Deselect cell if user moves on:
             $(selector).on('blur', 'tbody td.active', function() {
                 $(this).removeClass('active');
+            });
+            
+            // Bind to onclick on the pagination buttons in the titlebar:
+            $('.titlebar').on('click', '.btn', function() {
+                if ($(this).hasClass('next')) {
+                    var changed = tableview.query.nextPage();
+                } else if ($(this).hasClass('prev')) {
+                    var changed = tableview.query.prevPage();
+                }
+                
+                if (changed) {
+                    tableview.refresh();
+                }
             });
             
             // If enter key is pressed, send "blur" event to save the field:
