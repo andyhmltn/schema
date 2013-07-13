@@ -22,7 +22,7 @@ var Query = Backbone.Model.extend({
     loadFromTable: function(table, callback) {
         this.set('query_title', table.get('name'));
         this.sql = _.str.sprintf(
-            "SELECT * FROM %s",
+            "SELECT * FROM `%s`",
             table.get('name')
         );
         
