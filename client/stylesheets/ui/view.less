@@ -7,6 +7,17 @@
     left: @sidebar_width + 1px; // 1px is for border
     padding-top: 30px;
     
+    &.loading {
+        background: url(/images/loading.gif) 49% 49% no-repeat;
+        
+        * {
+            display: none;
+        }
+        .titlebar, .titlebar * {
+            display: block;
+        }
+    }
+    
     .titlebar {
         background: darken(@toolbar_bg, 10%);
         height: 16px;

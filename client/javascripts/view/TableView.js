@@ -67,6 +67,8 @@ var TableView = Backbone.View.extend({
                     $(this).blur();
                 }
             });
+            
+            contentview.setLoading(false);
         });
     }
 });

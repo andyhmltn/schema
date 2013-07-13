@@ -16,6 +16,7 @@ var TableStructure = Backbone.View.extend({
             ));
             
             tablestructure.bindInputs();
+            contentview.setLoading(false);
         });
     },
     

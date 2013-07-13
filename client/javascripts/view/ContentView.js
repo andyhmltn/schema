@@ -1,5 +1,8 @@
 var ContentView = Backbone.View.extend({
     initialize: function(table) {
+        // Start loading indicator:
+        this.setLoading(true);
+        
         this.table = table;
         
         this.tableview = new TableView(query);
@@ -28,18 +31,21 @@ var ContentView = Backbone.View.extend({
         
         // Add structure item to toolbar:
         toolbar.addItem('left', 'Structure', function() {
+            contentview.setLoading(true);
             contentview.remember('structure');
             contentview.tablestructure.render();
         });
         
         // Add content item to toolbar:
         toolbar.addItem('left', 'Content', function() {
+            contentview.setLoading(true);
             contentview.remember('content');
             contentview.tableview.render();
         });
         
         // Add info item to toolbar:
         toolbar.addItem('left', 'Table Info', function() {
+            contentview.setLoading(true);
             contentview.remember('info');
             contentview.tableinfo.render();
         });
@@ -61,5 +67,19 @@ var ContentView = Backbone.View.extend({
         // Add SQL editor into pane:
         var sqleditor = new SQLEditor();
         pane.render(sqleditor.render());
+    },
+    
+    /**
+     * Turn on or off the loading indicator on the content view
+     * 
+     * @param  boolean loading Whether to turn the indicator on or off
+     * @return void
+     */
+    setLoading: function (loading) {
+        if (loading) {
+            $('#main').addClass('loading');
+        } else {
+            $('#main').removeClass('loading');
+        }
     }
 });

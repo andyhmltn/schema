@@ -16,5 +16,7 @@ var TableInfo = Backbone.View.extend({
                 table: table,
             }
         ));
+        
+        contentview.setLoading(false);
     }
 });

@@ -115,10 +115,12 @@ var Query = Backbone.Model.extend({
     // },
     
     nextPage: function() {
+        contentview.setLoading(true);
         this.set('offset', this.get('offset') + this.get('limit'));
         this.execute();
     },
     prevPage: function() {
+        contentview.setLoading(true);
         this.set('offset', this.get('offset') - this.get('limit'));
         this.execute();
     }
