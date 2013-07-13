@@ -1,5 +1,25 @@
 <div class="titlebar">
-    <%= tableview.query.get('query_title') %>
+    <div class="left">
+        <%= tableview.query.get('query_title') %>
+    </div>
+    
+    <div class="right btn next">
+        &gt;
+    </div>
+    <div class="right btn prev">
+        &lt;
+    </div>
+    
+    <div class="right statistics">
+        <% if (tableview.query.has('num_rows')) { %>
+            Rows
+            <%= tableview.query.get('offset') %>
+            -
+            <%= tableview.query.get('offset') + tableview.query.get('limit') %>
+            of
+            <%= tableview.query.get('num_rows') %>
+        <% } %>
+    </div>
 </div>
 
 <div class="tableview" id="tableview">
