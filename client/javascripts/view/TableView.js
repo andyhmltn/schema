@@ -7,7 +7,7 @@ var TableView = Backbone.View.extend({
         
         this.query.on('change:rows', function() {
             console.info("Query changed - rendering");
-            tableview.render();
+            tableview.render(false);
         });
         
         // Remove previous bindings:
@@ -31,10 +31,9 @@ var TableView = Backbone.View.extend({
     /**
      * Render content view
      */
-    render: function() {
+    render: function(execute_query) {
         var tableview = this;
-        
-        this.query.execute(function() {
+        var callback = function() {
             // Render HTML:
             $('#main').html(_.template(
                 $('#template-tableview').html(),
@@ -79,6 +78,13 @@ var TableView = Backbone.View.extend({
             });
             
             contentview.setLoading(false);
-        });
+        };
+        
+        
+        if (execute_query || execute_query == undefined) {
+            this.query.execute(callback);
+        } else {
+            callback();
+        }
     }
 });
