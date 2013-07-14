@@ -23,7 +23,6 @@ var Column = Backbone.Model.extend({
     
     /**
      * Check whether the column is allowed to contain null values
-     *
      * @return {Boolean} Whether column can contain a null value
      */
     getNull: function() {
@@ -39,7 +38,6 @@ var Column = Backbone.Model.extend({
     
     /**
      * Change whether column is allowed to contain null values
-     *
      * @param {Boolean} allow_null Value to change setting to
      * @return {undefined}
      */
@@ -90,7 +88,6 @@ var Column = Backbone.Model.extend({
     
     /**
      * Get datatype without any other parameters or information
-     *
      * @return {String} Raw datatype
      */
     getRawDatatype: function() {
@@ -113,7 +110,6 @@ var Column = Backbone.Model.extend({
     
     /**
      * Is column datatype an integer of some sort
-     *
      * @return {Boolean}
      */
     isIntegerType: function() {
@@ -148,7 +144,6 @@ var Column = Backbone.Model.extend({
     
     /**
      * Is column datatype a string of some sort
-     *
      * @return {Boolean}
      */
     isStringType: function() {
@@ -158,7 +153,6 @@ var Column = Backbone.Model.extend({
     
     /**
      * Is column datatype date/time related
-     *
      * @return {Boolean}
      */
     isDateType: function() {
@@ -168,7 +162,6 @@ var Column = Backbone.Model.extend({
     
     /**
      * Is column the primary key
-     *
      * @return {Boolean} True if column is a primary key
      */
     isPrimaryKey: function() {
@@ -178,7 +171,6 @@ var Column = Backbone.Model.extend({
     
     /**
      * Is column unsigned
-     *
      * @return {Boolean} True if column is unsigned
      */
     isUnsigned: function() {
@@ -188,7 +180,6 @@ var Column = Backbone.Model.extend({
     
     /**
      * Is column able to be unsigned (e.g. it's an integer)
-     *
      * @return {Boolean} True if column can be unsigned
      */
     isUnsignedValid: function() {
@@ -223,10 +214,8 @@ var Column = Backbone.Model.extend({
     
     /**
      * Change name of column
-     *
      * @param {String} column_name     Old column name
      * @param {String} new_column_name New column name
-     *
      * @return {undefined}
      */
     changeFieldName: function(new_column_name, callback) {
