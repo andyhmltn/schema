@@ -238,5 +238,34 @@ var Column = Backbone.Model.extend({
         );
         
         database.query(sql, callback);
+    },
+    
+    
+    /**
+     * Get full name of key (e.g. 'PRIMARY' instead of 'PRI');
+     * @return {String} Key full name
+     */
+    getKeyFullName: function() {
+        var key = this.get('key').toUpperCase();
+        
+        if (!key) {
+            return false;
+        }
+        
+        if (key == 'PRI') {
+            return 'PRIMARY';
+        }
+        
+        if (key == 'UNI') {
+            return 'UNIQUE';
+        }
+        
+        if (key == 'MUL') {
+            return 'INDEX';
+        }
+        
+        console.warn("Could not determine full name for key:", key);
+        
+        return key;
     }
 });
