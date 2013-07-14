@@ -50,8 +50,17 @@ var SchemaRouter = Backbone.Router.extend({
                 
                 _.each(rows, function (row) {
                     var table_name = row[_.keys(row)[0]];
-                    sidebar.addItem(table_name, '', '#/database/' + database_name + '/' + table_name + '/');
+                    sidebar.addItem(
+                        table_name,
+                        '',
+                        '#/database/' + database_name + '/' + table_name + '/',
+                        undefined,
+                        undefined,
+                        false
+                    );
                 });
+                
+                sidebar.render();
             });
         });
     },

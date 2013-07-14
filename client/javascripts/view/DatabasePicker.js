@@ -10,8 +10,9 @@ var DatabasePicker = Backbone.View.extend({
         database.queryOrLogout("SHOW DATABASES;", function (rows) {
             for (var row_id in rows) {
                 var row = rows[row_id];
-                sidebar.addItem(row.Database, '', '#/database/' + row.Database + '/', 0);
+                sidebar.addItem(row.Database, '', '#/database/' + row.Database + '/', 0, undefined, false);
             }
+            sidebar.render();
         });
         
         $('#main').html(_.template(
