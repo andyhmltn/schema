@@ -170,6 +170,15 @@ var Column = Backbone.Model.extend({
     
     
     /**
+     * Is column unique
+     * @return {Boolean} True if column is unique
+     */
+    isUnique: function() {
+        return this.get('key') == 'UNI';
+    },
+    
+    
+    /**
      * Is column unsigned
      * @return {Boolean} True if column is unsigned
      */
