@@ -128,7 +128,7 @@
                     }
                     
                     &.primary td, td.primary {
-                        background: lighten(@toolbar_bg, 50%);
+                        background: lighten(@toolbar_bg, 40%);
                     }
                 }
             }
@@ -139,6 +139,54 @@
         td.comment {
             min-width: 150px;
             color: #777;
+        }
+        
+        div.key {
+            background: #E6E3A3;
+            border: 1px solid #C4C27A;
+            padding: 3px;
+            text-align: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            
+            &:hover {
+                border-color: darken(#C4C27A, 20%);
+                color: lighten(#000, 20%);
+            }
+            
+            &.add {
+                width: 15px;
+                margin-left: auto;
+                margin-right: auto;
+                background: #EBEBEB;
+                border-color: #C9C9C9;
+                color: #999;
+                
+                &:hover {
+                    border-color: darken(#C9C9C9, 20%);
+                    color: darken(#999, 20%);
+                }
+            }
+        }
+        
+        .primary div.key {
+            background: #A2DEA7;
+            border: 1px solid #6BB371;
+            
+            &:hover {
+                border-color: darken(#6BB371, 20%);
+            }
+        }
+        .unique div.key {
+            background: #D7AFDE;
+            border-color: #B075BA;
+            
+            &:hover {
+                border-color: darken(#B075BA, 20%);
+            }
         }
     }
 }

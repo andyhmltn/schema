@@ -26,9 +26,10 @@
         <tbody>
             <% _.each(columns, function (column) { %>
                 <tr 
-                    <% if (column.isPrimaryKey()) { %>
-                        class="primary"
-                    <% } %>
+                    class="
+                        <%= column.isPrimaryKey() ? "primary" : "" %>
+                        <%= column.isUnique() ? "unique" : "" %>
+                    "
                 >
                     <!-- Column parameters: -->
                     <input type="hidden" class="column_name" value="<%= column.get('name') %>" />
@@ -87,7 +88,17 @@
                     </td>
                     
                     <!-- Key: -->
-                    <td><%= column.get('key') %></td>
+                    <td>
+                        <% if (column.getKeyFullName()) { %>
+                            <div class="key">
+                                <%= column.getKeyFullName() %>
+                            </div>
+                        <% } else { %>
+                            <div class="key add">
+                                +
+                            </div>
+                        <% } %>
+                    </td>
                     
                     <!-- Default: -->
                     <td><%= column.get('default') %></td>
