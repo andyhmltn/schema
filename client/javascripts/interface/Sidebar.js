@@ -13,7 +13,7 @@ var Sidebar = Backbone.View.extend({
             $(this).addClass('active');
         });
         
-        $(document).on('keyup', 'input', function () {
+        $(document).on('keyup', '.search input', function () {
             sidebar.search($(this).val());
         });
     },
