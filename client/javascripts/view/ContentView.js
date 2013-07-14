@@ -110,7 +110,7 @@ var ContentView = Backbone.View.extend({
     initializePane: function() {
         // Add SQL editor into pane:
         var sqleditor = new SQLEditor();
-        pane.render(sqleditor.render());
+        pane.render(sqleditor);
     },
     
     /**
