@@ -1,4 +1,21 @@
+/**
+ * The ContentView manages the main area of the app. It chooses what should
+ * be displayed (although it takes orders from the sidebar). It controls the
+ * TableStructure, TableView and TableInfo views as well as the query pane.
+ * 
+ * @author  Tim Davies <mail@timdavi.es>
+ */
 var ContentView = Backbone.View.extend({
+    /**
+     * Initialise ContentView
+     * 
+     * Creates the TableView, TableStructure and TableInfo objects,
+     * sets up the toolbar and pane and looks into LocalStorage to see
+     * which view was displayed last.
+     * 
+     * @param  {Table} table Table to display
+     * @return {undefined}
+     */
     initialize: function(table) {
         // Start loading indicator:
         this.setLoading(true);
@@ -23,6 +40,11 @@ var ContentView = Backbone.View.extend({
         }
     },
     
+    
+    /**
+     * Set up toolbar making them control the ContentView
+     * @return {undefined}
+     */
     initializeToolbar: function() {
         // Clear toolbar:
         toolbar.clear();
@@ -56,6 +78,16 @@ var ContentView = Backbone.View.extend({
         });
     },
     
+    
+    /**
+     * Set the remember key or return it if no key is provided.
+     * 
+     * The remember key is used to determine which view to display by
+     * default next time.
+     * 
+     * @param  {String} key String that determines the view to load by default
+     * @return {undefined}
+     */
     remember: function(key) {
         if (!key) {
             return localStorage['contentview_previous'];
@@ -63,6 +95,11 @@ var ContentView = Backbone.View.extend({
         localStorage['contentview_previous'] = key;
     },
     
+    
+    /**
+     * Initialise pane: create SQLEditor object and render it into the pane.
+     * @return {undefined}
+     */
     initializePane: function() {
         // Add SQL editor into pane:
         var sqleditor = new SQLEditor();
@@ -72,8 +109,8 @@ var ContentView = Backbone.View.extend({
     /**
      * Turn on or off the loading indicator on the content view
      * 
-     * @param  boolean loading Whether to turn the indicator on or off
-     * @return void
+     * @param  {Boolean} loading Whether to turn the indicator on or off
+     * @return {undefined}
      */
     setLoading: function (loading) {
         if (loading) {
