@@ -20,12 +20,15 @@ var ContentView = Backbone.View.extend({
         // Start loading indicator:
         this.setLoading(true);
         
+        // Store table for later:
         this.table = table;
         
+        // Create TableView, TableStructure and TableInfo objects:
         this.tableview = new TableView(query);
         this.tablestructure = new TableStructure(table);
         this.tableinfo = new TableInfo(table);
         
+        // Set up toolbar and pane:
         this.initializeToolbar();
         this.initializePane();
         
@@ -49,6 +52,7 @@ var ContentView = Backbone.View.extend({
         // Clear toolbar:
         toolbar.clear();
         
+        // Store this as contentview for use inside callbacks:
         var contentview = this;
         
         // Add structure item to toolbar:
@@ -86,12 +90,15 @@ var ContentView = Backbone.View.extend({
      * default next time.
      * 
      * @param  {String} key String that determines the view to load by default
-     * @return {undefined}
+     * @return {String|undefined} String only returned if key wasn't passed
      */
     remember: function(key) {
+        // If key isn't set, return it:
         if (!key) {
             return localStorage['contentview_previous'];
         }
+        
+        // If key was set, store it in LocalStorage:
         localStorage['contentview_previous'] = key;
     },
     
