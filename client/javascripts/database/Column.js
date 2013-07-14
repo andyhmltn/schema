@@ -1,10 +1,14 @@
 /**
  * Table column
+ * 
+ * @class
+ * @author  Tim Davies <mail@timdavi.es>
  */
 var Column = Backbone.Model.extend({
-    initialize: function() {
-    },
-    
+    /**
+     * Return datatype string split into parts
+     * @return {Array} Array of datatype parts
+     */
     parseDataType: function() {
         if (this.get('parsed_datatype')) {
             return this.get('parsed_datatype');
@@ -16,44 +20,11 @@ var Column = Backbone.Model.extend({
         return type;
     },
     
-    getDataType: function() {
-        var type = this.parseDataType();
-        var datatype = type[0];
-        
-        var type_patterns = [
-            'INTEGER',
-            'INT',
-            'SMALLINT',
-            'TINYINT',
-            'MEDIUMINT',
-            'BIGINT',
-            'DECIMAL',
-            'NUMERIC',
-            'FLOAT',
-            'DOUBLE',
-            'BIT',
-            
-            'CHAR',
-            'VARCHAR',
-            'BINARY',
-            'VARBINARY',
-            'BLOB',
-            'TEXT',
-            'ENUM',
-            'SET',
-            
-            'DATE',
-            'DATETIME',
-            'TIMESTAMP',
-            'TIME',
-            'YEAR'
-        ];
-    },
     
     /**
      * Check whether the column is allowed to contain null values
      *
-     * @return boolean Whether column can contain a null value
+     * @return {Boolean} Whether column can contain a null value
      */
     getNull: function() {
         var nullAllowed = this.get('null').toLowerCase();
@@ -69,9 +40,8 @@ var Column = Backbone.Model.extend({
     /**
      * Change whether column is allowed to contain null values
      *
-     * @param boolean allow_null Value to change setting to
-     *
-     * @return void
+     * @param {Boolean} allow_null Value to change setting to
+     * @return {undefined}
      */
     setAllowNull: function(allow_null, success_callback, error_callback) {
         console.info("Setting allow null to", allow_null, "for column", this.get('name'));
@@ -121,7 +91,7 @@ var Column = Backbone.Model.extend({
     /**
      * Get datatype without any other parameters or information
      *
-     * @return string Datatype
+     * @return {String} Raw datatype
      */
     getRawDatatype: function() {
         // Get parsed datatype:
@@ -144,7 +114,7 @@ var Column = Backbone.Model.extend({
     /**
      * Is column datatype an integer of some sort
      *
-     * @return boolean
+     * @return {Boolean}
      */
     isIntegerType: function() {
         var integer_patterns = [
@@ -179,7 +149,7 @@ var Column = Backbone.Model.extend({
     /**
      * Is column datatype a string of some sort
      *
-     * @return boolean
+     * @return {Boolean}
      */
     isStringType: function() {
         
@@ -189,7 +159,7 @@ var Column = Backbone.Model.extend({
     /**
      * Is column datatype date/time related
      *
-     * @return boolean
+     * @return {Boolean}
      */
     isDateType: function() {
         
@@ -199,7 +169,7 @@ var Column = Backbone.Model.extend({
     /**
      * Is column the primary key
      *
-     * @return boolean True if column is a primary key
+     * @return {Boolean} True if column is a primary key
      */
     isPrimaryKey: function() {
         return this.get('key') == 'PRI';
@@ -209,7 +179,7 @@ var Column = Backbone.Model.extend({
     /**
      * Is column unsigned
      *
-     * @return boolean True if column is unsigned
+     * @return {Boolean} True if column is unsigned
      */
     isUnsigned: function() {
         return this.get('datatype').search("unsigned") > -1;
@@ -219,7 +189,7 @@ var Column = Backbone.Model.extend({
     /**
      * Is column able to be unsigned (e.g. it's an integer)
      *
-     * @return boolean True if column can be unsigned
+     * @return {Boolean} True if column can be unsigned
      */
     isUnsignedValid: function() {
         // if (this.isUnsigned()) {
@@ -236,7 +206,7 @@ var Column = Backbone.Model.extend({
     /**
      * Get field maximum length
      *
-     * @return integer Length
+     * @return {Number} Length
      */
     getLength: function() {
         var type = this.get('datatype');
@@ -254,10 +224,10 @@ var Column = Backbone.Model.extend({
     /**
      * Change name of column
      *
-     * @param string column_name     Old column name
-     * @param string new_column_name New column name
+     * @param {String} column_name     Old column name
+     * @param {String} new_column_name New column name
      *
-     * @return void
+     * @return {undefined}
      */
     changeFieldName: function(new_column_name, callback) {
         // Build SQL:
