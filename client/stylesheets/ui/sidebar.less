@@ -26,6 +26,19 @@
             color: #fff;
             outline: 0;
         }
+        
+        input::-webkit-input-placeholder {
+            color: lighten(@toolbar_bg, 35%);
+        }
+        input:-moz-placeholder {
+            color: lighten(@toolbar_bg, 35%);
+        }
+        input::-moz-placeholder {
+            color: lighten(@toolbar_bg, 35%);
+        }
+        input:-ms-input-placeholder {
+            color: lighten(@toolbar_bg, 35%);
+        }
     }
     
     ul {
