@@ -23,6 +23,9 @@ var ContentView = Backbone.View.extend({
         // Store table for later:
         this.table = table;
         
+        // Get contentview:
+        contentview = this;
+        
         // Create TableView, TableStructure and TableInfo objects:
         this.tableview = new TableView(query);
         this.tablestructure = new TableStructure(table);
