@@ -25,6 +25,9 @@ Criteria for version 0.4:
     - Support for MongoDB
 
 Criteria for version 0.5:
+    - User management
+
+Criteria for version 0.6:
     - Able to drag and drop files into cells (including images, etc)
     - Able to drag and drop CSVs, SQL files, etc, into tables to import
 
