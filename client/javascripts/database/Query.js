@@ -1,40 +1,56 @@
 /**
  * Holds an SQL query and allows basic manipulation of certain
  * parameters, such as the LIMIT clause
+ * 
+ * @author  Tim Davies <mail@timdavi.es>
  */
 var Query = Backbone.Model.extend({
     /**
-     * Initialize object with query and begin parsing.
-     *
-     * @param string query SQL statement to parse
+     * Initialise the object
+     * 
+     * Stores the query 'title' which is the descriptor for the query.
+     * e.g. a custom query is currently just titled "Custom Query", however
+     * a table contentview will have the name of the table being queried
+     * as the query title.
+     * 
+     * @constructor
+     * 
+     * @return {undefined}
      */
-    initialize: function(query) {
+    initialize: function() {
         this.set('query_title', table.get('Custom Query'));
-        // this.set('query', query);
         this.set('limit', 100);
         this.set('offset', 0);
     },
     
+    
+    /**
+     * Build a query object from custom SQL
+     * @param  {String} sql SQL to be executed
+     * @return {undefined}
+     */
     loadFromSQL: function(sql) {
         this.sql = sql;
     },
     
-    loadFromTable: function(table, callback) {
+    
+    /**
+     * Build a query object around displaying the contents of a table.
+     * @param  {String} table Table that will be viewed
+     * @return {undefined}
+     */
+    loadFromTable: function(table) {
         this.set('query_title', table.get('name'));
         this.sql = _.str.sprintf(
             "SELECT SQL_CALC_FOUND_ROWS * FROM `%s`",
             table.get('name')
         );
-        
-        console.log(this.sql);
-        
-        callback();
     },
     
+    
     /**
-     * Convert query into SQL
-     *
-     * @return string SQL
+     * Convert query to SQL
+     * @return {String} Query as SQL
      */
     toSQL: function() {
         var sql = this.sql;
@@ -46,6 +62,13 @@ var Query = Backbone.Model.extend({
         return sql;
     },
     
+    
+    /**
+     * Execute the query by sending it to the API
+     * @param  {Function} callback Function to be run once the query has
+     *                             finished executing and has returned.
+     * @return {undefined}
+     */
     execute: function(callback) {
         var query = this;
         
@@ -66,8 +89,6 @@ var Query = Backbone.Model.extend({
                 callback();
             }
             
-            // database.queryOrLogout(query.column_sql, function (columns) {
-            //     var cols = [];
             //     _.each(columns, function(row) {
             //         cols.push(new Column({
             //             name:       row.Field,
@@ -81,45 +102,25 @@ var Query = Backbone.Model.extend({
             //             comment:    row.Comment
             //         }));
             //     });
-                
-            //     query.set('columns', cols);
-            //     callback();
-            // });
         });
     },
     
-    getColumns: function() {
-    },
-    
     
     /**
-     * Set maximum number of results to return
-     *
-     * @param integer limit Maximum number of results
-     *
-     * @return void
+     * Calculate the offset for advancing to the next page of query results
+     * @return {undefined}
      */
-    // setLimit: function (limit) {
-    //     this.set('limit', limit);
-    // },
-    
-    
-    /**
-     * Set result offset for pagination
-     *
-     * @param integer offset Offset for pagination
-     *
-     * @return void
-     */
-    // setOffset: function (offset) {
-    //     this.set('offset', offset);
-    // },
-    
     nextPage: function() {
         contentview.setLoading(true);
         this.set('offset', this.get('offset') + this.get('limit'));
         this.execute();
     },
+    
+    
+    /**
+     * Calculate the offset for returning to the previous page of query results
+     * @return {undefined}
+     */
     prevPage: function() {
         contentview.setLoading(true);
         this.set('offset', this.get('offset') - this.get('limit'));
