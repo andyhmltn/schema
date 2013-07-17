@@ -1,9 +1,13 @@
 /**
- * Login object
+ * Login View
+ * 
+ * @class
+ * @author  Tim Davies <mail@timdavi.es>
  */
 var Login = Backbone.View.extend({
     /**
      * Display login form
+     * @return {undefined}
      */
     displayLogin : function() {
         $('#main').html(_.template(
@@ -23,6 +27,7 @@ var Login = Backbone.View.extend({
     
     /**
      * Bind inputs
+     * @return {undefined}
      */
     bindInputs : function() {
         $('#server-connect-button').click(function() {
