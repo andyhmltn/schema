@@ -1,3 +1,7 @@
+/**
+ * jQuery plugin for selecting text
+ * @return {undefined}
+ */
 jQuery.fn.selectText = function(){
    var doc = document;
    var element = this[0];
@@ -6,7 +10,7 @@ jQuery.fn.selectText = function(){
        var range = document.body.createTextRange();
        range.moveToElementText(element);
        range.select();
-   } else if (window.getSelection) {
+    } else if (window.getSelection) {
        var selection = window.getSelection();        
        var range = document.createRange();
        range.selectNodeContents(element);
