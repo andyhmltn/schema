@@ -1,8 +1,25 @@
+/**
+ * TableStructure View
+ * 
+ * @class
+ * @author  Tim Davies <mail@timdavi.es>
+ */
 var TableStructure = Backbone.View.extend({
+    /**
+     * Initialise object and store table
+     * @param  {Table} table Table to display
+     * @constructor
+     * @return {undefined}
+     */
     initialize: function(table) {
         this.table = table;
     },
     
+    
+    /**
+     * Render view
+     * @return {undefined}
+     */
     render: function() {
         var tablestructure = this;
         
@@ -20,6 +37,11 @@ var TableStructure = Backbone.View.extend({
         });
     },
     
+    
+    /**
+     * Bind the various inputs in the view
+     * @return {undefined}
+     */
     bindInputs: function() {
         var tablestructure = this;
         
@@ -111,27 +133,4 @@ var TableStructure = Backbone.View.extend({
             });
         });
     }
-    
-    
-    /**
-     * Render table structure view
-     */
-    /*render: function() {
-        var tableview = this;
-        
-        // Render HTML:
-        $('#main').html(_.template(
-            $('#template-tablestructure').html(),
-            {
-                tableview: tableview
-            }
-        ));
-        
-        var tableview = this;
-        
-
-        
-        
-        
-    }*/
 });
