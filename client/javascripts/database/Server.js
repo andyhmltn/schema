@@ -1,6 +1,7 @@
 /**
  * Database server
  * 
+ * @class
  * @author  Tim Davies <mail@timdavi.es>
  */
 var Server = Backbone.Model.extend({
