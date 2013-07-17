@@ -5,7 +5,7 @@
  * however could be used for confirmation / extra information dialogues.
  * 
  * @class
- * @author Tim Davies <mail@timdavi.es
+ * @author  Tim Davies <mail@timdavi.es>
  */
 var Pane = Backbone.View.extend({
     /**
