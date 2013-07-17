@@ -1,14 +1,20 @@
 /**
- * Manages ui-toolbar
+ * Toolbar
+ * 
+ * @class
+ * @author  Tim Davies <mail@timdavi.es>
  */
 var Toolbar = Backbone.View.extend({
     /**
-     * Define handlebars templates
+     * jQuery selector for the toolbar
+     * @type {String}
      */
     section_template: '#template-ui-toolbar-section',
     
     /**
-     * Define toolbar sections
+     * Define sections of the toolbar that items can be added to and their
+     * selectors
+     * @type {Object}
      */
     sections: {
         'left':  'div.ui-toolbar div.section.left',
@@ -17,7 +23,8 @@ var Toolbar = Backbone.View.extend({
     
     
     /**
-     * Define empty arrays for toolbar section contents
+     * Define arrays for sections in to which toolbar items can be added
+     * @type {Object}
      */
     section_items: {
         'left':  [],
@@ -26,11 +33,9 @@ var Toolbar = Backbone.View.extend({
     
     
     /**
-     * Remove all items from section
-     *
-     * @param string section Section to clear
-     *
-     * @return void
+     * Remove all items from a section
+     * @param  {String} section Section key
+     * @return {undefined}
      */
     clearSection: function (section) {
         this.section_items[section] = [];
@@ -39,9 +44,8 @@ var Toolbar = Backbone.View.extend({
     
     
     /**
-     * Clear all sections
-     *
-     * @return void
+     * Remove all items from all sections
+     * @return {undefined}
      */
     clear: function () {
         for (section_key in this.sections) {
@@ -52,11 +56,9 @@ var Toolbar = Backbone.View.extend({
     
     
     /**
-     * Render section of toolbar
-     *
-     * @param string section Section to render
-     *
-     * @return void
+     * Render individual section of toolbar
+     * @param  {String} section Section key
+     * @return {undefined}
      */
     renderSection: function (section) {
         // Get selector and section items:
@@ -92,8 +94,7 @@ var Toolbar = Backbone.View.extend({
     
     /**
      * Render entire toolbar
-     *
-     * @return void
+     * @return {undefined}
      */
     render: function () {
         for (section_key in this.sections) {
@@ -103,14 +104,14 @@ var Toolbar = Backbone.View.extend({
     
     
     /**
-     * Adds an icon to the toolbar
-     *
-     * @param string  section  Section for the icon to be created under
-     * @param string  text     Icon text
-     * @param string  callback Callback to be triggered when clicked
-     * @param boolean active   Whether item should be active or not
-     *
-     * @return void
+     * Add an item to the toolbar
+     * 
+     * @param  {[type]}   section  Section for the icon to be created under
+     * @param  {[type]}   text     Icon text
+     * @param  {Function} callback Callback to be triggered when clicked
+     * @param  {[type]}   active   Whether item should be active or not
+     * 
+     * @return {undefined}
      */
     addItem: function (section, text, callback, active) {
         // callback instanceof Function
