@@ -1,6 +1,22 @@
+/**
+ * TableView
+ * 
+ * @class
+ * @author  Tim Davies <mail@timdavi.es>
+ */
 var TableView = Backbone.View.extend({
+    /**
+     * jQuery selector for the TableView
+     * @type {String}
+     */
     selector: '#main .tableview',
     
+    
+    /**
+     * Initialise view, store query and watch for changes on the query rows
+     * @param  {Query} query Query object to use
+     * @return {undefined}
+     */
     initialize: function(query) {
         var tableview = this;
         this.query = query;
@@ -29,10 +45,13 @@ var TableView = Backbone.View.extend({
     
     
     /**
-     * Render content view
+     * Render view
+     * @param  {Boolean} execute_query Whether to execute query or not
+     * @return {undefined}
      */
     render: function(execute_query) {
         var tableview = this;
+        
         var callback = function() {
             // Render HTML:
             $('#main').html(_.template(
@@ -80,7 +99,7 @@ var TableView = Backbone.View.extend({
             contentview.setLoading(false);
         };
         
-        
+        // If query has not yet been executed, it must be executed:
         if (execute_query || execute_query == undefined) {
             this.query.execute(callback);
         } else {
