@@ -2,6 +2,7 @@
  * Holds an SQL query and allows basic manipulation of certain
  * parameters, such as the LIMIT clause
  * 
+ * @class
  * @author  Tim Davies <mail@timdavi.es>
  */
 var Query = Backbone.Model.extend({
