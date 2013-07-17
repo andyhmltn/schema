@@ -120,11 +120,16 @@ var Query = Backbone.Model.extend({
     
     /**
      * Calculate the offset for returning to the previous page of query results
-     * @return {undefined}
+     * @return {Boolean} True if page could be changed, false otherwise
      */
     prevPage: function() {
-        contentview.setLoading(true);
-        this.set('offset', this.get('offset') - this.get('limit'));
-        this.execute();
+        if (this.get('offset') - this.get('limit') >= 0) {
+            contentview.setLoading(true);
+            this.set('offset', this.get('offset') - this.get('limit'));
+            this.execute();
+            return true;
+        } else {
+            return false;
+        }
     }
 });
