@@ -109,12 +109,20 @@ var Query = Backbone.Model.extend({
     
     /**
      * Calculate the offset for advancing to the next page of query results
-     * @return {undefined}
+     * @return {Boolean} True if page could be changed, false otherwise
      */
     nextPage: function() {
-        contentview.setLoading(true);
-        this.set('offset', this.get('offset') + this.get('limit'));
-        this.execute();
+        var max_pages = Math.ceil(this.get('num_rows') / this.get('limit'));
+        var next_page = Math.ceil(this.get('offset') / this.get('limit')) + 1;
+        
+        if (next_page < max_pages) {
+            contentview.setLoading(true);
+            this.set('offset', this.get('offset') + this.get('limit'));
+            this.execute();
+            return true;
+        }
+        
+        return false;
     },
     
     
@@ -128,8 +136,8 @@ var Query = Backbone.Model.extend({
             this.set('offset', this.get('offset') - this.get('limit'));
             this.execute();
             return true;
-        } else {
-            return false;
         }
+        
+        return false;
     }
 });
