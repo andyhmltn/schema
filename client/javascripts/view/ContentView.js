@@ -3,6 +3,7 @@
  * be displayed (although it takes orders from the sidebar). It controls the
  * TableStructure, TableView and TableInfo views as well as the query pane.
  * 
+ * @class
  * @author  Tim Davies <mail@timdavi.es>
  */
 var ContentView = Backbone.View.extend({
