@@ -32,13 +32,9 @@ var TableView = Backbone.View.extend({
         // Bind to onclick on the pagination buttons on the sidebar:
         $('#statusbar').on('click', 'div.right.btn', function() {
             if ($(this).hasClass('next')) {
-                var changed = tableview.query.nextPage();
+                tableview.query.nextPage();
             } else if ($(this).hasClass('prev')) {
-                var changed = tableview.query.prevPage();
-            }
-            
-            if (changed) {
-                tableview.refresh();
+                tableview.query.prevPage();
             }
         });
     },
@@ -50,6 +46,8 @@ var TableView = Backbone.View.extend({
      * @return {undefined}
      */
     render: function(execute_query) {
+        console.info("Rendering tableview");
+        
         var tableview = this;
         
         var callback = function() {
@@ -78,13 +76,9 @@ var TableView = Backbone.View.extend({
             // Bind to onclick on the pagination buttons in the titlebar:
             $('.titlebar').on('click', '.btn', function() {
                 if ($(this).hasClass('next')) {
-                    var changed = tableview.query.nextPage();
+                    tableview.query.nextPage();
                 } else if ($(this).hasClass('prev')) {
-                    var changed = tableview.query.prevPage();
-                }
-                
-                if (changed) {
-                    tableview.refresh();
+                    tableview.query.prevPage();
                 }
             });
             
