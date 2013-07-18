@@ -1,7 +1,7 @@
 Criteria for version 0.1:
     - Structure, content and table info views are working
     - Custom queries work
-    - Pagination on tableview
+    ✔ Pagination on tableview
     - Editing cells in tableview saves
     - Able to add rows to database
     - Able to add new fields to table
