@@ -31,7 +31,7 @@ var Query = Backbone.Model.extend({
      * @return {undefined}
      */
     loadFromSQL: function(sql) {
-        this.sql = sql;
+        this.set('sql', sql);
     },
     
     
@@ -42,10 +42,10 @@ var Query = Backbone.Model.extend({
      */
     loadFromTable: function(table) {
         this.set('query_title', table.get('name'));
-        this.sql = _.str.sprintf(
+        this.set('sql', _.str.sprintf(
             "SELECT SQL_CALC_FOUND_ROWS * FROM `%s`",
             table.get('name')
-        );
+        ));
     },
     
     
@@ -54,7 +54,7 @@ var Query = Backbone.Model.extend({
      * @return {String} Query as SQL
      */
     toSQL: function() {
-        var sql = this.sql;
+        var sql = this.get('sql');
         sql += _.str.sprintf(
             " LIMIT %d, %d",
             this.get('offset'),
