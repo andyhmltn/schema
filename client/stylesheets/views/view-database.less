@@ -98,7 +98,9 @@ div.view-database {
                             color: #555;
                             font-size: 12px;
                             overflow: hidden;
+                            text-overflow: ellipsis;
                             white-space: nowrap;
+                            height: 15px;
                         }
                         
                         .time {
@@ -109,6 +111,7 @@ div.view-database {
                             font-size: 12px;
                             overflow: hidden;
                             white-space: nowrap;
+                            height: 15px;
                             
                             &.low {
                                 color: @low;
@@ -147,6 +150,13 @@ div.view-database {
             .section {
                 width: 50%;
                 
+                .query {
+                    width: 60%;
+                }
+                .time {
+                    width: 20%;
+                }
+                
                 &.tips {
                     width: 100%;
                 }
@@ -162,8 +172,11 @@ div.view-database {
                 width: 100%;
                 margin-bottom: 15px;
                 
-                .time, .query {
+                .query {
                     width: 45%;
+                }
+                .time {
+                    width: 30%;
                 }
             }
         }
