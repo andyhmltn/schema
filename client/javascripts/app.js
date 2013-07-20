@@ -95,7 +95,14 @@ var SchemaRouter = Backbone.Router.extend({
                     );
                 });
                 
+                // Render sidebar:
                 sidebar.render();
+                
+                // Render database viewer:
+                var databaseView = new DatabaseView({
+                    database_name: database_name,
+                });
+                databaseView.render();
             });
         });
     },
@@ -130,8 +137,8 @@ var SchemaRouter = Backbone.Router.extend({
         sidebar.clear();
         toolbar.clear();
         
-        var databases = new DatabasePicker();
-        databases.displayPicker();
+        var databasePicker = new DatabasePicker();
+        databasePicker.displayPicker();
     },
 });
 
