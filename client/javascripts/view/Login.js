@@ -38,8 +38,15 @@ var Login = Backbone.View.extend({
             
             database.connectToDatabase(hostname, username, password, port, function(token) {
                 if (token) {
+                    // Save database name:
+                    window.database_name = username + '@' + hostname;
+                    localStorage['database_name'] = window.database_name;
+                    
+                    // Save access token:
                     window.token = token;
                     localStorage['token'] = token;
+                    
+                    // Redirect to database picker:
                     window.location = "#/database/";
                 } else {
                     alert("Sorry, could not connect");

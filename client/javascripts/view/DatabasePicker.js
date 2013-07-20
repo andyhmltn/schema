@@ -34,7 +34,7 @@ var DatabasePicker = Backbone.View.extend({
         $('#main').html(_.template(
             $('#template-database-picker').html(),
             {
-                database_name: database.get('name')
+                database_name: window.database_name
             }
         ));
     }
