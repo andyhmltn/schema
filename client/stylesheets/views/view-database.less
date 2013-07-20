@@ -29,7 +29,7 @@ div.view-database {
         .section {
             float: left;
             width: 33%;
-            min-height: 300px;
+            // min-height: 300px;
             // overflow-y: auto;
             
             &.full {
@@ -97,13 +97,18 @@ div.view-database {
                             padding: 19px 19px 0 19px;
                             color: #555;
                             font-size: 12px;
+                            overflow: hidden;
+                            white-space: nowrap;
                         }
                         
                         .time {
                             float: right;
+                            text-align: right;
                             padding: 19px 19px 0 19px;
                             color: #555;
                             font-size: 12px;
+                            overflow: hidden;
+                            white-space: nowrap;
                             
                             &.low {
                                 color: @low;
@@ -141,6 +146,10 @@ div.view-database {
         div.page {
             .section {
                 width: 50%;
+                
+                &.tips {
+                    width: 100%;
+                }
             }
         }
     }
@@ -151,6 +160,11 @@ div.view-database {
         div.page {
             .section {
                 width: 100%;
+                margin-bottom: 15px;
+                
+                .time, .query {
+                    width: 45%;
+                }
             }
         }
     }
