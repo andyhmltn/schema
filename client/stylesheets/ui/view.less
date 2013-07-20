@@ -32,6 +32,10 @@
         right: 0;
         z-index: 10;
         
+        #showMenu {
+            display: none;
+        }
+        
         .left {
             float: left;
             color: #fff;
@@ -188,5 +192,16 @@
                 border-color: darken(#B075BA, 20%);
             }
         }
+    }
+}
+
+@media screen and (max-width:500px) {
+    #showMenu {
+        display: block !important;
+    }
+    
+    .ui-view {
+        width: 100%;
+        left: 0;
     }
 }
