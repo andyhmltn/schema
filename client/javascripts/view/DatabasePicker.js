@@ -32,7 +32,7 @@ var DatabasePicker = Backbone.View.extend({
         });
         
         $('#main').html(_.template(
-            $('#template-database-picker').html(),
+            $('#template-list-databases').html(),
             {
                 database_name: window.database_name
             }
