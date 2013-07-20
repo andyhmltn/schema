@@ -106,10 +106,10 @@ var Toolbar = Backbone.View.extend({
     /**
      * Add an item to the toolbar
      * 
-     * @param  {[type]}   section  Section for the icon to be created under
-     * @param  {[type]}   text     Icon text
+     * @param  {String}   section  Section for the icon to be created under
+     * @param  {String}   text     Icon text
      * @param  {Function} callback Callback to be triggered when clicked
-     * @param  {[type]}   active   Whether item should be active or not
+     * @param  {Boolean}  active   Whether item should be active or not
      * 
      * @return {undefined}
      */

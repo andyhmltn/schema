@@ -12,7 +12,7 @@
 var Sidebar = Backbone.View.extend({
     /**
      * Initialise object by binding to the search box and the individual items
-     * @return {[type]} [description]
+     * @return {undefined}
      */
     initialize: function () {
         var sidebar = this;
@@ -115,7 +115,7 @@ var Sidebar = Backbone.View.extend({
      * 
      * @todo  Implement icon
      * 
-     * @return {[type]}          [description]
+     * @return {undefined}
      */
     addItem: function(text, icon, url, active, render) {
         // Add sidebar item to array:
@@ -177,7 +177,7 @@ var Sidebar = Backbone.View.extend({
     
     /**
      * Method that actually performs the searching based on the search term set
-     * @return {[type]} [description]
+     * @return {undefined}
      */
     filter: function() {
         var sidebar = this;
