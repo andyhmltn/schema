@@ -180,8 +180,10 @@ var Sidebar = Backbone.View.extend({
      * @return {[type]} [description]
      */
     filter: function() {
+        var sidebar = this;
+        
         _.each(this.items, function(item) {
-            if (item.text.search(this.search_term) > -1) {
+            if (item.text.search(sidebar.search_term) > -1) {
                 item.hidden = false;
             } else {
                 item.hidden = true;
