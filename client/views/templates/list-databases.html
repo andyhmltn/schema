@@ -16,8 +16,18 @@
                 
                 <ul class="widget-list">
                     <li class="on">
-                        <div class="text">Number of tables</div>
-                        <div class="number high">46</div>
+                        <div class="text">Number of databases</div>
+                        <div class="number
+                            <% if (num_databases <= 15) { %>
+                                low
+                            <% } else if (num_databases <= 30) { %>
+                                medium
+                            <% } else { %>
+                                high
+                            <% } %>
+                        ">
+                            <%= num_databases %>
+                        </div>
                     </li>
                     <li class="off">
                         <div class="text">Total size</div>
