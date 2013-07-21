@@ -88,5 +88,21 @@ var Database = Backbone.Model.extend({
                 callback(rows);
             }
         });
+    },
+    
+    
+    /**
+     * Get server information
+     * @param  {Function} callback Function to call with results
+     * @return {undefined}
+     */
+    getServerInformation: function(callback) {
+        $.post('/api/server-information', {
+            token: window.token
+        }, function (data) {
+            if (callback) {
+                callback(data);
+            }
+        }, 'json');
     }
 });
