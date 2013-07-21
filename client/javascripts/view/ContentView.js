@@ -117,6 +117,7 @@ var ContentView = Backbone.View.extend({
         pane.render(sqleditor);
     },
     
+    
     /**
      * Turn on or off the loading indicator on the content view
      * 
@@ -124,10 +125,6 @@ var ContentView = Backbone.View.extend({
      * @return {undefined}
      */
     setLoading: function (loading) {
-        if (loading) {
-            $('#main').addClass('loading');
-        } else {
-            $('#main').removeClass('loading');
-        }
+        view.setLoading(loading);
     }
 });
