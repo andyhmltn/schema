@@ -29,13 +29,14 @@ var DatabasePicker = Backbone.View.extend({
                 sidebar.addItem(row.Database, '', '#/database/' + row.Database + '/', undefined, false);
             }
             sidebar.render();
+            
+            $('#main').html(_.template(
+                $('#template-list-databases').html(),
+                {
+                    server_name: window.server_name,
+                    num_databases: rows.length
+                }
+            ));
         });
-        
-        $('#main').html(_.template(
-            $('#template-list-databases').html(),
-            {
-                database_name: window.database_name
-            }
-        ));
     }
 });
