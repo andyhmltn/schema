@@ -1,10 +1,10 @@
 /**
- * DatabasePicker View
+ * ServerView
  * 
  * @class
  * @author  Tim Davies <mail@timdavi.es>
  */
-var DatabasePicker = Backbone.View.extend({
+var ServerView = Backbone.View.extend({
     /**
      * Close the pane is it's open
      * @constructor
@@ -18,10 +18,10 @@ var DatabasePicker = Backbone.View.extend({
     
     
     /**
-     * Display database picker
+     * Render view
      * @return {undefined}
      */
-    displayPicker: function() {
+    render: function() {
         // Populate left nav (database switcher):
         database.queryOrLogout("SHOW DATABASES;", function (rows) {
             for (var row_id in rows) {

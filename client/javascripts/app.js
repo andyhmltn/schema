@@ -116,8 +116,8 @@ var SchemaRouter = Backbone.Router.extend({
         sidebar.clear();
         toolbar.clear();
         
-        var databasePicker = new DatabasePicker();
-        databasePicker.displayPicker();
+        var serverView = new ServerView();
+        serverView.render();
     },
 });
 
