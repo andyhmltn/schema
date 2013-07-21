@@ -4,23 +4,38 @@
 /**
  * Theme settings
  */
-
-// Toolbar:
 @toolbar_height: 45px;
 @toolbar_icon_size: 30px;
 // @toolbar_bg: #634A78;
 @toolbar_bg: #5D86B3;
-
-// Sidebar:
 @sidebar_width: 230px;
+
+
+/**
+ * Font styles
+ */
+.monospace {
+    font-family: "Droid Sans Mono", monospace;
+}
+.serif {
+    font-family: 'Merriweather', serif;
+    font-style: italic;
+}
+.sans {
+    font-family: "Open Sans", sans-serif;
+}
+.fancy {
+    font-family: 'Molle', serif;
+    font-style: italic;
+}
 
 
 /**
  * General styles
  */
 body {
+    .sans;
     background: #fff;
-    font-family: "Open Sans", serif;
 }
 .clear {
     clear: both;
@@ -30,9 +45,6 @@ body {
 }
 .right {
     float: right !important;
-}
-.monospace {
-    font-family: "Droid Sans Mono", monospace;
 }
 
 
