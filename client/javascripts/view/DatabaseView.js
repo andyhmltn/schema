@@ -21,6 +21,10 @@ var DatabaseView = Backbone.View.extend({
      * @return {undefined}
      */
     render: function() {
+        // Set loading:
+        view.setLoading(true);
+        
+        // Assign this to variable for callbacks:
         var database_view = this;
         
         // Populate left nav (database switcher):
@@ -42,6 +46,7 @@ var DatabaseView = Backbone.View.extend({
                 // Render sidebar:
                 sidebar.render();
                 
+                // Render template:
                 $('#main').html(_.template(
                     $('#template-view-database').html(),
                     {
@@ -51,6 +56,9 @@ var DatabaseView = Backbone.View.extend({
                         num_databases: 42
                     }
                 ));
+                
+                // Stop loading:
+                view.setLoading(false);
             });
         });
     }

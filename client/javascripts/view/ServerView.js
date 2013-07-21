@@ -22,6 +22,9 @@ var ServerView = Backbone.View.extend({
      * @return {undefined}
      */
     render: function() {
+        // Set loading:
+        view.setLoading(true);
+        
         // Populate left nav (database switcher):
         database.queryOrLogout("SHOW DATABASES;", function (rows) {
             for (var row_id in rows) {
@@ -69,6 +72,9 @@ var ServerView = Backbone.View.extend({
                         charset: serverInformation.charset
                     }
                 ));
+                
+                // Stop loading:
+                view.setLoading(false);
             });
         });
     }
