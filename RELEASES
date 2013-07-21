@@ -5,7 +5,8 @@ Criteria for version 0.1:
     - Editing cells in tableview saves
     - Able to add rows to database
     - Able to add new fields to table
-    - Tidied up all pages (e.g. sort "Need to decide what is going here." and "Title?")
+    ✔ Tidied up all pages (e.g. sort "Need to decide what is going here." and "Title?")
+    - Complete the server and database report views
     ✔ Styled server picker
     - Show name of database you're in when in tableview
     ✔ Fix issue when switching views whilst pane is open
