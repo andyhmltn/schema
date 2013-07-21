@@ -47,7 +47,7 @@ var SchemaRouter = Backbone.Router.extend({
     needLogin: function() {
         if (!window.token) {
             var token = localStorage['token'];
-            window.database_name = localStorage['database_name'];
+            window.server_name = localStorage['server_name'];
             
             if (token) {
                 window.token = token;
