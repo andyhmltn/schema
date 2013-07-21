@@ -52,8 +52,7 @@ var DatabaseView = Backbone.View.extend({
                     {
                         server_name: window.server_name,
                         database_name: database_view.database_name,
-                        num_tables: 43,
-                        num_databases: 42
+                        num_tables: rows.length
                     }
                 ));
                 
