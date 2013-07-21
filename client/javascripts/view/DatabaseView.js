@@ -21,12 +21,37 @@ var DatabaseView = Backbone.View.extend({
      * @return {undefined}
      */
     render: function() {
-        $('#main').html(_.template(
-            $('#template-view-database').html(),
-            {
-                server_name: window.database_name,
-                database_name: this.database_name
-            }
-        ));
+        var database_view = this;
+        
+        // Populate left nav (database switcher):
+        database.queryOrLogout('USE `' + database_view.database_name + '`;', function (rows) {
+            database.queryOrLogout('SHOW TABLES;', function (rows) {
+                sidebar.clear();
+                
+                _.each(rows, function (row) {
+                    var table_name = row[_.keys(row)[0]];
+                    sidebar.addItem(
+                        table_name,
+                        '',
+                        '#/database/' + database_view.database_name + '/' + table_name + '/',
+                        undefined,
+                        false
+                    );
+                });
+                
+                // Render sidebar:
+                sidebar.render();
+                
+                $('#main').html(_.template(
+                    $('#template-view-database').html(),
+                    {
+                        server_name: window.server_name,
+                        database_name: database_view.database_name,
+                        num_tables: 43,
+                        num_databases: 42
+                    }
+                ));
+            });
+        });
     }
 });
