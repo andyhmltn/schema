@@ -31,15 +31,15 @@
                     </li>
                     <li class="off">
                         <div class="text">Total size</div>
-                        <div class="number low">2<br/><span>GB</span></div>
+                        <div class="number low"><%= size %><br/><span><%= size_unit %></span></div>
                     </li>
                     <li class="on">
                         <div class="text">MySQL Version</div>
-                        <div class="text right">5.5.31-1 - (Debian)</div>
+                        <div class="text right"><%= version %></div>
                     </li>
                     <li class="off">
                         <div class="text">MySQL Charset</div>
-                        <div class="text right">UTF8</div>
+                        <div class="text right"><%= charset.toUpperCase() %></div>
                     </li>
                 </ul>
             </div>
