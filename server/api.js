@@ -117,4 +117,31 @@ module.exports = function(app) {
             });
         });
     });
+    
+    
+    /**
+     * Returns information on the server
+     * 
+     * Such information includes:
+     *     - Total size of all databases
+     *     - Database version number
+     * 
+     * @return {undefined}
+     */
+    app.post('/api/server-information', function(req, res) {
+        var token = req.body.token;
+        
+        app.database.getServerSize(token, function(size) {
+            app.database.getServerVersion(token, function(version) {
+                app.database.getServerCharset(token, function(charset) {
+                    _this.return_json(res, {
+                        success: true,
+                        size: size,
+                        version: version,
+                        charset: charset
+                    });
+                });
+            });
+        });
+    });
 }
