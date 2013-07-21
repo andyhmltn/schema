@@ -55,5 +55,57 @@ module.exports = {
             
             callback(token);
         });
-    }
+    },
+    
+    
+    /**
+     * Get size of all databases on server
+     * @param  {String}   token    Authentication token
+     * @param  {Function} callback Function to call with result
+     * @return {undefined}
+     */
+    getServerSize: function(token, callback) {
+        var sql = "SELECT ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) AS db_size ";
+        sql +=    "FROM   information_schema.tables;";
+        
+        app.user_connections[token].query(sql, function(err, rows) {
+            if (callback) {
+                callback(rows[0].db_size);
+            }
+        });
+    },
+    
+    
+    /**
+     * Get version number of database server
+     * @param  {String}   token    Authentication token
+     * @param  {Function} callback Function to call with result
+     * @return {undefined}
+     */
+    getServerVersion: function(token, callback) {
+        var sql = "SHOW VARIABLES WHERE Variable_name = 'version';";
+        
+        app.user_connections[token].query(sql, function(err, rows) {
+            if (callback) {
+                callback(rows[0].Value);
+            }
+        });
+    },
+    
+    
+    /**
+     * Get charset in use on database server
+     * @param  {String}   token    Authentication token
+     * @param  {Function} callback Function to call with result
+     * @return {undefined}
+     */
+    getServerCharset: function(token, callback) {
+        var sql = "SHOW VARIABLES WHERE Variable_name = 'character_set_system';";
+        
+        app.user_connections[token].query(sql, function(err, rows) {
+            if (callback) {
+                callback(rows[0].Value);
+            }
+        });
+    },
 }
