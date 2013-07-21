@@ -17,6 +17,7 @@ Criteria for version 0.2:
     - Undo functionality works
     - Responsive design and iPhone and iPad compatibility
     - Basic exporting works
+    - Manage database connections - consolidate duplicates and destroy old connections
 
 Criteria for version 0.3:
     - Support for PostgreSQL
