@@ -104,5 +104,23 @@ var Database = Backbone.Model.extend({
                 callback(data);
             }
         }, 'json');
+    },
+    
+    
+    /**
+     * Get database information
+     * @param  {String}   database_name Database name
+     * @param  {Function} callback      Function to call with results
+     * @return {undefined}
+     */
+    getDatabaseInformation: function(database_name, callback) {
+        $.post('/api/database-information', {
+            token: window.token,
+            database_name: database_name
+        }, function (data) {
+            if (callback) {
+                callback(data);
+            }
+        }, 'json');
     }
 });
