@@ -62,34 +62,10 @@ var TableView = Backbone.View.extend({
             // Get tableview selector:
             var selector = this.selector;
             
-            // Bind to double-click event on cells:
-            $(selector).find('tbody').on('dblclick', 'td', function() {
-                $(selector).find('tbody td.active').removeClass('active');
-                $(this).addClass('active').attr('contenteditable', 'true').selectText();
-            });
+            // Bind inputs:
+            tableview.bindInputs();
             
-            // Deselect cell if user moves on:
-            $(selector).on('blur', 'tbody td.active', function() {
-                $(this).removeClass('active');
-            });
-            
-            // Bind to onclick on the pagination buttons in the titlebar:
-            $('.titlebar').on('click', '.btn', function() {
-                if ($(this).hasClass('next')) {
-                    tableview.query.nextPage();
-                } else if ($(this).hasClass('prev')) {
-                    tableview.query.prevPage();
-                }
-            });
-            
-            // If enter key is pressed, send "blur" event to save the field:
-            $(selector).on('keydown', 'td', function(e) {
-                if (e.keyCode == '13') {
-                    e.preventDefault();
-                    $(this).blur();
-                }
-            });
-            
+            // Stop loading:
             contentview.setLoading(false);
         };
         
@@ -99,5 +75,40 @@ var TableView = Backbone.View.extend({
         } else {
             callback();
         }
+    },
+    
+    
+    /**
+     * Bind to tableview inputs
+     * @return {undefined}
+     */
+    bindInputs: function() {
+        // Select cell if double-clicked on:
+        $(this.selector).on('dblclick', 'tbody td', function() {
+            $(this).addClass('active').attr('contenteditable', 'true').selectText();
+        });
+        
+        // Deselect cell if user moves on:
+        $(this.selector).on('blur', 'tbody td.active', function() {
+            // Remove edit attributes:
+            $(this).removeClass('active').removeAttr('contenteditable');
+        });
+        
+        // Bind to onclick on the pagination buttons in the titlebar:
+        $('.titlebar').on('click', '.btn', function() {
+            if ($(this).hasClass('next')) {
+                tableview.query.nextPage();
+            } else if ($(this).hasClass('prev')) {
+                tableview.query.prevPage();
+            }
+        });
+        
+        // If enter key is pressed, send "blur" event to save the field:
+        $(selector).on('keydown', 'td', function(e) {
+            if (e.keyCode == '13') {
+                e.preventDefault();
+                $(this).blur();
+            }
+        });
     }
 });
