@@ -34,8 +34,6 @@ var ServerView = Backbone.View.extend({
             sidebar.render();
             
             database.getServerInformation(function(serverInformation) {
-                console.log(serverInformation);
-                
                 // Get the server size:
                 var server_size = parseInt(serverInformation.size);
                 
