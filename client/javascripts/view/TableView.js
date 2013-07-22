@@ -104,7 +104,7 @@ var TableView = Backbone.View.extend({
         });
         
         // If enter key is pressed, send "blur" event to save the field:
-        $(selector).on('keydown', 'td', function(e) {
+        $(this.selector).on('keydown', 'td', function(e) {
             if (e.keyCode == '13') {
                 e.preventDefault();
                 $(this).blur();
