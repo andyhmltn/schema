@@ -46,15 +46,43 @@ var DatabaseView = Backbone.View.extend({
                 // Render sidebar:
                 sidebar.render();
                 
-                // Render template:
-                $('#main').html(_.template(
-                    $('#template-view-database').html(),
-                    {
-                        server_name: window.server_name,
-                        database_name: database_view.database_name,
-                        num_tables: rows.length
+                database.getDatabaseInformation(database_view.database_name, function(info) {
+                    // Get the server size:
+                    var db_size = parseInt(info.db_size);
+                    
+                    // Default unit is MB:
+                    var size_unit = 'MB';
+                    
+                    // Check for gigabytes:
+                    if (db_size >= 1000) {
+                        db_size /= 1000;
+                        size_unit = 'GB';
                     }
-                ));
+                    
+                    // Check for terabytes:
+                    if (db_size >= 1000) {
+                        db_size /= 1000;
+                        size_unit = 'TB';
+                    }
+                    
+                    // Make sure the output is sensible and doesn't look bad
+                    // in the circle:
+                    if (db_size.toString().indexOf('.') > -1) {
+                        db_size = db_size.toFixed(1)
+                    }
+                    
+                    // Render template:
+                    $('#main').html(_.template(
+                        $('#template-view-database').html(),
+                        {
+                            server_name: window.server_name,
+                            database_name: database_view.database_name,
+                            num_tables: rows.length,
+                            db_size: db_size,
+                            size_unit: size_unit
+                        }
+                    ));
+                });
                 
                 // Stop loading:
                 view.setLoading(false);
