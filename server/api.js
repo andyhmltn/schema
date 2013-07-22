@@ -122,9 +122,10 @@ module.exports = function(app) {
     /**
      * Returns information on the server
      * 
-     * Such information includes:
+     * Information includes:
      *     - Total size of all databases
      *     - Database version number
+     *     - Charset in use
      * 
      * @return {undefined}
      */
@@ -141,6 +142,27 @@ module.exports = function(app) {
                         charset: charset
                     });
                 });
+            });
+        });
+    });
+    
+    
+    /**
+     * Returns information about the database
+     * 
+     * Information includes:
+     *     - Total size of all tables
+     * 
+     * @return {undefined}
+     */
+    app.post('/api/database-information', function(req, res) {
+        var token = req.body.token;
+        var database_name = req.body.database_name;
+        
+        app.database.getDatabaseSize(token, database_name, function(size) {
+            _this.return_json(res, {
+                success: true,
+                db_size: size
             });
         });
     });
