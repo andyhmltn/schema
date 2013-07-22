@@ -77,6 +77,26 @@ module.exports = {
     
     
     /**
+     * Get size of a specific database
+     * @param  {String}   token         Authentication token
+     * @param  {String}   database_name Name of database
+     * @param  {Function} callback      Function to call with result
+     * @return {undefined}
+     */
+    getDatabaseSize: function(token, database_name, callback) {
+        var sql = "SELECT ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) AS db_size ";
+        sql +=    "FROM   information_schema.tables ";
+        sql +=    "WHERE  TABLE_SCHEMA = '" + database_name + "'";
+        
+        app.user_connections[token].query(sql, function(err, rows) {
+            if (callback) {
+                callback(rows[0].db_size);
+            }
+        });
+    },
+    
+    
+    /**
      * Get version number of database server
      * @param  {String}   token    Authentication token
      * @param  {Function} callback Function to call with result
