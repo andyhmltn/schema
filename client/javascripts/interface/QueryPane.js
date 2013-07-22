@@ -1,13 +1,26 @@
 /**
- * Pane
+ * QueryPane
  * 
- * The pane is currently only used for housing the custom query editor,
- * however could be used for confirmation / extra information dialogues.
+ * The query pane is used for displaying the query that produced the results
+ * in the tableview and for editing queries (custom queries).
  * 
  * @class
  * @author  Tim Davies <mail@timdavi.es>
  */
-var Pane = Backbone.View.extend({
+var QueryPane = Backbone.Model.extend({
+    /**
+     * Bind to query attribute and render when it changes
+     * @return {undefined}
+     */
+    initialize: function() {
+        pane = this;
+        this.on('change:query', function() {
+            console.log("Rendering pane");
+            pane.render();
+        });
+    },
+    
+    
     /**
      * Stores current status of pane
      * @type {Boolean} True indicates the pane is open
@@ -66,11 +79,14 @@ var Pane = Backbone.View.extend({
     
     
     /**
-     * Render an object into the pane
-     * @param  {Object} object Object to render, must have a render() method.
+     * Render QueryPane
      * @return {undefined}
      */
-    render: function(object) {
-        $(this.selector).html(object.render());
+    render: function() {
+        $(this.selector).html(
+            _.template($('#template-sql-editor').html(), {
+                query: this.get('query')
+            })
+        );
     }
 });

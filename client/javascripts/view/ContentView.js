@@ -34,7 +34,7 @@ var ContentView = Backbone.View.extend({
         
         // Set up toolbar and pane:
         this.initializeToolbar();
-        this.initializePane();
+        pane.render();
         
         // Render content view:
         var key = this.remember();
@@ -104,17 +104,6 @@ var ContentView = Backbone.View.extend({
         
         // If key was set, store it in LocalStorage:
         localStorage['contentview_previous'] = key;
-    },
-    
-    
-    /**
-     * Initialise pane: create SQLEditor object and render it into the pane.
-     * @return {undefined}
-     */
-    initializePane: function() {
-        // Add SQL editor into pane:
-        var sqleditor = new SQLEditor();
-        pane.render(sqleditor);
     },
     
     

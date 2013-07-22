@@ -2,7 +2,7 @@ database = new Database;
 sidebar = new Sidebar;
 toolbar = new Toolbar;
 view = new View;
-pane = new Pane;
+pane = new QueryPane;
 
 
 /**
