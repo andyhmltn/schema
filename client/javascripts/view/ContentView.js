@@ -31,6 +31,7 @@ var ContentView = Backbone.View.extend({
         this.tableview = new TableView(query);
         this.tablestructure = new TableStructure(table);
         this.tableinfo = new TableInfo(table);
+        this.queryview = new QueryView();
         
         // Set up toolbar and pane:
         this.initializeToolbar();
@@ -42,6 +43,8 @@ var ContentView = Backbone.View.extend({
             this.tablestructure.render();
         } else if (key == 'info') {
             this.tableinfo.render();
+        } else if (key == 'query') {
+            this.queryview.render();
         } else {
             this.tableview.render();
         }
@@ -61,6 +64,7 @@ var ContentView = Backbone.View.extend({
         
         // Add structure item to toolbar:
         toolbar.addItem('left', 'Structure', function() {
+            pane.close();
             contentview.setLoading(true);
             contentview.remember('structure');
             contentview.tablestructure.render();
@@ -68,6 +72,7 @@ var ContentView = Backbone.View.extend({
         
         // Add content item to toolbar:
         toolbar.addItem('left', 'Content', function() {
+            pane.close();
             contentview.setLoading(true);
             contentview.remember('content');
             contentview.tableview.render();
@@ -75,6 +80,7 @@ var ContentView = Backbone.View.extend({
         
         // Add info item to toolbar:
         toolbar.addItem('left', 'Table Info', function() {
+            pane.close();
             contentview.setLoading(true);
             contentview.remember('info');
             contentview.tableinfo.render();
@@ -82,7 +88,10 @@ var ContentView = Backbone.View.extend({
         
         // Add console item to toolbar:
         toolbar.addItem('left', 'Query', function() {
-            pane.toggle();
+            contentview.setLoading(true);
+            contentview.remember('query');
+            pane.open();
+            contentview.queryview.render();
         });
     },
     

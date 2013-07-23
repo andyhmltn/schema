@@ -15,9 +15,14 @@
             Rows
             <%= tableview.query.get('offset') %>
             -
-            <%= tableview.query.get('offset') + tableview.query.get('limit') %>
-            of
-            <%= tableview.query.get('num_rows') %>
+            
+            <% if (tableview.query.get('num_rows') > tableview.query.get('offset') + tableview.query.get('limit')) { %>
+                <%= tableview.query.get('offset') + tableview.query.get('limit') %>
+                of
+                <%= tableview.query.get('num_rows') %>
+            <% } else { %>
+                <%= tableview.query.get('num_rows') %>
+            <% } %>
         <% } %>
     </div>
 </div>
@@ -42,9 +47,10 @@
                             <% if (column.isPrimaryKey()) { %>
                                 class='primary'
                             <% } %>
-                        >
-                            <%- row[column.get('name')] %>
-                        </td>
+                            data-column-name="<%= column.get('name') %>"
+                        ><%-
+                            row[column.get('name')]
+                        %></td>
                     <% }); %>
                 </tr>
             <% }); %>

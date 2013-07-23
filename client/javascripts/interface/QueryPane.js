@@ -40,13 +40,17 @@ var QueryPane = Backbone.Model.extend({
      * @return {undefined}
      */
     open: function() {
-        this.isOpen = true;
+        console.info("Opening QueryPane");
         
-        $(this.selector).animate({
-            top: '45px'
-        }, 200);
-        
-        view.slideAround(195, 200);
+        if (!this.isOpen) {
+            this.isOpen = true;
+            
+            $(this.selector).animate({
+                top: '45px'
+            }, 200);
+            
+            view.slideAround(195, 200);
+        }
     },
     
     
@@ -55,25 +59,16 @@ var QueryPane = Backbone.Model.extend({
      * @return {undefined}
      */
     close: function() {
-        this.isOpen = false;
+        console.info("Closing QueryPane");
         
-        $(this.selector).animate({
-            top: '-105px'
-        }, 200);
-        
-        view.slideAround(45, 200);
-    },
-    
-    
-    /**
-     * If the pane is open, close it. If it's closed, open it.
-     * @return {undefined}
-     */
-    toggle: function() {
         if (this.isOpen) {
-            this.close();
-        } else {
-            this.open();
+            this.isOpen = false;
+            
+            $(this.selector).animate({
+                top: '-105px'
+            }, 200);
+            
+            view.slideAround(45, 200);
         }
     },
     
@@ -83,6 +78,8 @@ var QueryPane = Backbone.Model.extend({
      * @return {undefined}
      */
     render: function() {
+        console.info("Rendering QueryPane");
+        
         $(this.selector).html(
             _.template($('#template-sql-editor').html(), {
                 query: this.get('query')
