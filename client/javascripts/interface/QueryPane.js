@@ -88,5 +88,20 @@ var QueryPane = Backbone.Model.extend({
                 query: this.get('query')
             })
         );
+        
+        this.bindInputs();
+    },
+    
+    
+    /**
+     * Bind inputs
+     * @return {undefined}
+     */
+    bindInputs: function() {
+        $(this.selector).find('#executeQuery').click(function() {
+            var sql = $(this).parent().parent().find('textarea').html();
+            query.set('sql', sql);
+            query.execute();
+        });
     }
 });
