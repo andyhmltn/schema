@@ -108,10 +108,35 @@ var TableView = Backbone.View.extend({
     bindInputs: function() {
         var tableview = this;
         
+        // Bind to save:
+        this.bindSave();
+        
         // Select cell if double-clicked on:
         $(this.selector).on('dblclick', 'tbody td', function() {
             $(this).addClass('active').attr('contenteditable', 'true').selectText();
         });
+        
+        // Bind to onclick on the pagination buttons in the titlebar:
+        $('#statusbar, .titlebar').on('click', '.btn', function() {
+            if ($(this).hasClass('next')) {
+                tableview.nextPage();
+            } else if ($(this).hasClass('prev')) {
+                tableview.prevPage();
+            }
+        });
+        
+        // If enter key is pressed, send "blur" event to save the field:
+        $(this.selector).on('keydown', 'td', function(e) {
+            if (e.keyCode == '13') {
+                e.preventDefault();
+                $(this).blur();
+            }
+        });
+    },
+    
+    
+    bindSave: function() {
+        var tableview = this;
         
         // Deselect cell if user moves on:
         $(this.selector).on('blur', 'tbody td.active', function() {
@@ -140,30 +165,26 @@ var TableView = Backbone.View.extend({
             var value = $(this).text();
             var sql = _.str.sprintf("UPDATE `%s` SET %s = '%s' WHERE %s", tableview.table.get('name'), column, value, where);
             
+            var cell = this;
+            $(cell).addClass('loading');
+            $(cell).animate({
+                'text-indent': '12px',
+                'background-position': '2px'
+            }, 300);
+            $(cell).css('background', '');
+            
             database.query(sql, function(err) {
-                if (err) {
-                    console.log('error updating');
-                } else {
-                    console.log('updated');
-                }
+                $(cell).animate({
+                    'text-indent': '0px',
+                    'background-position': '-20px'
+                }, 300, function() {
+                    $(cell).removeClass('loading');
+                    
+                    if (err) {
+                        $(cell).css('background', 'red');
+                    }
+                });
             });
-        });
-        
-        // Bind to onclick on the pagination buttons in the titlebar:
-        $('#statusbar, .titlebar').on('click', '.btn', function() {
-            if ($(this).hasClass('next')) {
-                tableview.nextPage();
-            } else if ($(this).hasClass('prev')) {
-                tableview.prevPage();
-            }
-        });
-        
-        // If enter key is pressed, send "blur" event to save the field:
-        $(this.selector).on('keydown', 'td', function(e) {
-            if (e.keyCode == '13') {
-                e.preventDefault();
-                $(this).blur();
-            }
         });
     },
     
