@@ -111,6 +111,12 @@ var TableView = Backbone.View.extend({
             // Remove edit attributes:
             $(this).removeClass('active').removeAttr('contenteditable');
             
+            // Check there is a primary key:
+            if ($(this).parent().find('.primary').length < 1) {
+                alert('No primary key - unable to identify the cell in order to save it.');
+                return false;
+            }
+            
             // Build where clause:
             var where = '1 = 1 ';
             
