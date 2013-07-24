@@ -13,19 +13,26 @@ var TableView = Backbone.View.extend({
     
     
     /**
-     * Initialise view, store query and watch for changes on the query rows
-     * @param  {Query} query Query object to use
+     * Number of records to offset by
+     * @type {Number}
+     */
+    offset: 0,
+    
+    
+    /**
+     * Number of results to return per page
+     * @type {Number}
+     */
+    limit: 100,
+    
+    
+    /**
+     * Initialise view
+     * @param  {String} table Table to view
      * @return {undefined}
      */
-    initialize: function(query) {
-        var tableview = this;
-        this.query = query;
-        
-        this.query.on('change:rows', function() {
-            console.info("Query changed - rendering");
-            tableview.render(false);
-            pane.set('query', tableview.query.toSQL());
-        });
+    initialize: function(table) {
+        this.table = table;
         
         // Remove previous bindings:
         $('#statusbar').off();
@@ -34,39 +41,56 @@ var TableView = Backbone.View.extend({
     
     /**
      * Render view
-     * @param  {Boolean} execute_query Whether to execute query or not
      * @return {undefined}
      */
-    render: function(execute_query) {
+    render: function() {
         console.info("Rendering tableview");
         
         var tableview = this;
+        var offset = this.offset;
+        var limit = this.limit;
         
-        var callback = function() {
-            // Render HTML:
-            $('#main').html(_.template(
-                $('#template-tableview').html(),
-                {
-                    tableview: tableview
-                }
-            ));
-            
-            // Get tableview selector:
-            var selector = this.selector;
-            
-            // Bind inputs:
-            tableview.bindInputs();
-            
-            // Stop loading:
-            contentview.setLoading(false);
-        };
+        tableview.table.getFullColumns(function(columns) {
+            tableview.getRows(offset, limit, function(rows, num_rows) {
+                // Save number of rows:
+                tableview.num_rows = num_rows;
+                
+                // Render HTML:
+                $('#main').html(_.template(
+                    $('#template-tableview').html(),
+                    {
+                        tableview: tableview,
+                        columns: columns,
+                        rows: rows,
+                        num_rows: num_rows,
+                        offset: offset,
+                        limit: limit
+                    }
+                ));
+                
+                // Bind inputs:
+                tableview.bindInputs();
+                
+                // Stop loading:
+                contentview.setLoading(false);
+            });
+        });
+    },
+    
+    
+    getRows: function(offset, limit, callback) {
+        var sql = _.str.sprintf(
+            "SELECT SQL_CALC_FOUND_ROWS * FROM `%s` LIMIT %d, %d;",
+            table.get('name'),
+            offset,
+            limit
+        );
         
-        // If query has not yet been executed, it must be executed:
-        if (execute_query || execute_query == undefined) {
-            this.query.execute(callback);
-        } else {
-            callback();
-        }
+        database.queryOrLogout(sql, function(rows, num_rows) {
+            if (callback) {
+                callback(rows, num_rows);
+            }
+        });
     },
     
     
@@ -91,9 +115,9 @@ var TableView = Backbone.View.extend({
         // Bind to onclick on the pagination buttons in the titlebar:
         $('#statusbar, .titlebar').on('click', '.btn', function() {
             if ($(this).hasClass('next')) {
-                tableview.query.nextPage();
+                tableview.nextPage();
             } else if ($(this).hasClass('prev')) {
-                tableview.query.prevPage();
+                tableview.prevPage();
             }
         });
         
@@ -104,5 +128,35 @@ var TableView = Backbone.View.extend({
                 $(this).blur();
             }
         });
+    },
+    
+    
+    /**
+     * Calculate the offset for advancing to the next page of query results
+     * @return {Boolean} True if page could be changed, false otherwise
+     */
+    nextPage: function() {
+        if (this.offset + this.limit < this.num_rows) {
+            contentview.setLoading(true);
+            this.offset += this.limit;
+            this.render();
+            return true;
+        }
+        return false;
+    },
+    
+    
+    /**
+     * Calculate the offset for returning to the previous page of query results
+     * @return {Boolean} True if page could be changed, false otherwise
+     */
+    prevPage: function() {
+        if (this.offset - this.limit >= 0) {
+            contentview.setLoading(true);
+            this.offset -= this.limit;
+            this.render();
+            return true;
+        }
+        return false;
     }
 });

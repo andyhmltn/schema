@@ -28,7 +28,7 @@ var ContentView = Backbone.View.extend({
         contentview = this;
         
         // Create TableView, TableStructure and TableInfo objects:
-        this.tableview = new TableView(query);
+        this.tableview = new TableView(table);
         this.tablestructure = new TableStructure(table);
         this.tableinfo = new TableInfo(table);
         this.queryview = new QueryView();

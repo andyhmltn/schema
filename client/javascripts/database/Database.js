@@ -79,13 +79,13 @@ var Database = Backbone.Model.extend({
      */
     queryOrLogout: function (sql, callback) {
         console.warn("Deprecated function queryOrLogout used");
-        this.query(sql, function(err, rows, columns) {
+        this.query(sql, function(err, rows, columns, num_rows) {
             if (err) {
                 window.token = '';
                 localStorage['token'] = '';
                 window.location = '#/';
             } else {
-                callback(rows);
+                callback(rows, num_rows);
             }
         });
     },

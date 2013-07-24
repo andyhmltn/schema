@@ -1,6 +1,6 @@
 <div class="titlebar">
     <div class="left">
-        <%= tableview.query.get('query_title') %>
+        <%= tableview.table.get('name') %>
     </div>
     
     <div class="right btn next">
@@ -11,17 +11,17 @@
     </div>
     
     <div class="right statistics">
-        <% if (tableview.query.has('num_rows')) { %>
+        <% if (num_rows) { %>
             Rows
-            <%= tableview.query.get('offset') %>
+            <%= offset %>
             -
             
-            <% if (tableview.query.get('num_rows') > tableview.query.get('offset') + tableview.query.get('limit')) { %>
-                <%= tableview.query.get('offset') + tableview.query.get('limit') %>
+            <% if (num_rows > offset + limit) { %>
+                <%= offset + limit %>
                 of
-                <%= tableview.query.get('num_rows') %>
+                <%= num_rows %>
             <% } else { %>
-                <%= tableview.query.get('num_rows') %>
+                <%= num_rows %>
             <% } %>
         <% } %>
     </div>
@@ -31,7 +31,7 @@
     <table>
         <thead>
             <tr>
-                <% _.each(tableview.query.get('columns'), function (column) { %>
+                <% _.each(columns, function (column) { %>
                     <th>
                         <%= column.get('name') %>
                     </th>
@@ -40,9 +40,9 @@
         </thead>
         
         <tbody>
-            <% _.each(tableview.query.get('rows'), function (row) { %>
+            <% _.each(rows, function (row) { %>
                 <tr>
-                    <% _.each(tableview.query.get('columns'), function (column) { %>
+                    <% _.each(columns, function (column) { %>
                         <td
                             <% if (column.isPrimaryKey()) { %>
                                 class='primary'

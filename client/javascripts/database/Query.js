@@ -36,20 +36,6 @@ var Query = Backbone.Model.extend({
     
     
     /**
-     * Build a query object around displaying the contents of a table.
-     * @param  {String} table Table that will be viewed
-     * @return {undefined}
-     */
-    loadFromTable: function(table) {
-        this.set('query_title', table.get('name'));
-        this.set('sql', _.str.sprintf(
-            "SELECT SQL_CALC_FOUND_ROWS * FROM `%s`",
-            table.get('name')
-        ));
-    },
-    
-    
-    /**
      * Convert query to SQL
      * @return {String} Query as SQL
      */
