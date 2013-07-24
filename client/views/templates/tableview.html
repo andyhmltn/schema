@@ -32,8 +32,13 @@
         <thead>
             <tr>
                 <% _.each(columns, function (column) { %>
-                    <th>
-                        <%= column.get('name') %>
+                    <th
+                        data-column-name="<%= column.get('name') %>"
+                        <% if (order_field == column.get('name')) { %>
+                            style="font-weight: bold !important"
+                        <% } %>
+                    >
+                        <%- column.get('name') %>
                     </th>
                 <% }); %>
             </tr>

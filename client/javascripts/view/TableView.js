@@ -27,6 +27,20 @@ var TableView = Backbone.View.extend({
     
     
     /**
+     * Field to order by
+     * @type {String}
+     */
+    order_field_name: '',
+    
+    
+    /**
+     * Direction to order fields
+     * @type {String}
+     */
+    order_direction: 'desc',
+    
+    
+    /**
      * Initialise view
      * @param  {String} table Table to view
      * @return {undefined}
@@ -64,7 +78,8 @@ var TableView = Backbone.View.extend({
                         rows: rows,
                         num_rows: num_rows,
                         offset: offset,
-                        limit: limit
+                        limit: limit,
+                        order_field: tableview.order_field_name
                     }
                 ));
                 
@@ -86,9 +101,19 @@ var TableView = Backbone.View.extend({
      * @return {undefined}
      */
     getRows: function(offset, limit, callback) {
+        var order_by = '';
+        if (this.order_field_name) {
+            order_by = _.str.sprintf(
+                ' ORDER BY %s %s ',
+                this.order_field_name,
+                this.order_direction
+            );
+        }
+        
         var sql = _.str.sprintf(
-            "SELECT SQL_CALC_FOUND_ROWS * FROM `%s` LIMIT %d, %d;",
+            "SELECT SQL_CALC_FOUND_ROWS * FROM `%s` %s LIMIT %d, %d;",
             table.get('name'),
+            order_by,
             offset,
             limit
         );
@@ -132,6 +157,34 @@ var TableView = Backbone.View.extend({
                 $(this).blur();
             }
         });
+        
+        // Bind to column headings:
+        $(this.selector).find('thead th').click(function() {
+            var orderBy = $(this).attr('data-column-name');
+            tableview.orderBy(orderBy);
+        });
+    },
+    
+    
+    /**
+     * Order by field
+     * @param  {String} field_name Field to order by
+     * @return {undefined}
+     */
+    orderBy: function(field_name) {
+        if (this.order_field_name == field_name) {
+            if (this.order_direction == 'desc') {
+                this.order_direction = 'asc';
+            } else {
+                this.order_direction = 'desc';
+            }
+        } else {
+            this.order_field_name = field_name;
+            this.order_direction = 'desc';
+        }
+        
+        contentview.setLoading(true);
+        this.render();
     },
     
     
