@@ -78,6 +78,13 @@ var TableView = Backbone.View.extend({
     },
     
     
+    /**
+     * Get table rows
+     * @param  {Number}   offset   MySQL offset
+     * @param  {Number}   limit    MySQL limit
+     * @param  {Function} callback Function to call with results
+     * @return {undefined}
+     */
     getRows: function(offset, limit, callback) {
         var sql = _.str.sprintf(
             "SELECT SQL_CALC_FOUND_ROWS * FROM `%s` LIMIT %d, %d;",
