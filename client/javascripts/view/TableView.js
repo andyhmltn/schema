@@ -110,6 +110,30 @@ var TableView = Backbone.View.extend({
         $(this.selector).on('blur', 'tbody td.active', function() {
             // Remove edit attributes:
             $(this).removeClass('active').removeAttr('contenteditable');
+            
+            // Build where clause:
+            var where = '1 = 1 ';
+            
+            // Get primary keys:
+            _.each($(this).parent().find('.primary'), function(item) {
+                var key = $(item).attr('data-column-name');
+                var val = $(item).attr('data-value');
+                
+                where = where + _.str.sprintf(' AND %s = "%s" ', key, val);
+            });
+            
+            // Build SQL:
+            var column = $(this).attr('data-column-name');
+            var value = $(this).text();
+            var sql = _.str.sprintf("UPDATE `%s` SET %s = '%s' WHERE %s", tableview.table.get('name'), column, value, where);
+            
+            database.query(sql, function(err) {
+                if (err) {
+                    console.log('error updating');
+                } else {
+                    console.log('updated');
+                }
+            });
         });
         
         // Bind to onclick on the pagination buttons in the titlebar:

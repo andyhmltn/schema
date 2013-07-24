@@ -46,6 +46,7 @@
                         <td
                             <% if (column.isPrimaryKey()) { %>
                                 class='primary'
+                                data-value='<%- row[column.get('name')] %>'
                             <% } %>
                             data-column-name="<%= column.get('name') %>"
                         ><%-
