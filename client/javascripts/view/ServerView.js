@@ -22,6 +22,8 @@ var ServerView = Backbone.View.extend({
      * @return {undefined}
      */
     render: function() {
+        var serverview = this;
+        
         // Set loading:
         view.setLoading(true);
         
@@ -73,7 +75,43 @@ var ServerView = Backbone.View.extend({
                 
                 // Stop loading:
                 view.setLoading(false);
+                
+                // Start loading real-time queries:
+                serverview.startRealTimeQueries();
             });
         });
+    },
+    
+    
+    /**
+     * Get currently running queries and render
+     * @return {undefined}
+     */
+    getRealtimeQueries: function() {
+        var sql = "SHOW PROCESSLIST;"
+        
+        database.query(sql, function(err, result) {
+            $('.section.queries').html(_.template(
+                $('#template-realtime-queries').html(),
+                {
+                    queries: result
+                }
+            ));
+            
+        })
+    },
+    
+    
+    /**
+     * Start polling for queries
+     * @return {[type]} [description]
+     */
+    startRealTimeQueries: function() {
+        if (window.realtime_queries) {
+            clearInterval(window.realtime_queries);
+        }
+        
+        window.realtime_queries = setInterval(this.getRealtimeQueries, 1000);
+        this.getRealtimeQueries();
     }
 });

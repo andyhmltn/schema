@@ -1,0 +1,27 @@
+<div class="inner">
+    <h3>Real-time Queries</h3>
+    
+    <ul class="widget-list">
+        <% _.each(queries, function(query, key) { %>
+            <% console.log(key) %>
+        
+            <% if (query.Command == "Query") { %>
+                <li class="<%= key % 2 ? "on" : "off" %> warning">
+                    <div class="query"><%= query.Info %></div>
+                    <div class="time
+                        <% if (query.Time >= 20) { %>
+                            high
+                        <% } else if (query.Time >= 10) { %>
+                            medium
+                        <% } else { %>
+                            low
+                        <% } %>
+                    ">
+                        <%= query.Time %>
+                        seconds ago
+                    </div>
+                </li>
+            <% } %>
+        <% }) %>
+    </ul>
+</div>
