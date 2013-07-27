@@ -3,8 +3,6 @@
     
     <ul class="widget-list">
         <% _.each(queries, function(query, key) { %>
-            <% console.log(key) %>
-        
             <% if (query.Command == "Query") { %>
                 <li class="<%= key % 2 ? "on" : "off" %> warning">
                     <div class="query"><%= query.Info %></div>
