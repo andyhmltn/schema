@@ -5,6 +5,8 @@ Criteria for version 0.1:
     ✔ Editing cells in tableview saves
     - Able to add rows to database
     - Able to add new fields to table
+    - Able to create new databases
+    - Able to create new tables
     ✔ Tidied up all pages (e.g. sort "Need to decide what is going here." and "Title?")
     - Complete the server and database report views
     ✔ Styled server picker
