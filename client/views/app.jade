@@ -8,6 +8,8 @@ html
     
     meta(name='viewport', content='width=device-width, user-scalable=no')
     
+    script(type='text/javascript', src='/javascripts/general/console.js')
+    
     script(type='text/javascript', src='/bower_components/jquery/jquery.min.js')
     script(type='text/javascript', src='/bower_components/underscore/underscore-min.js')
     script(type='text/javascript', src='/bower_components/underscore.string/dist/underscore.string.min.js')
@@ -25,6 +27,7 @@ html
     script(type='text/javascript', src='/javascripts/interface/Sidebar.js')
     script(type='text/javascript', src='/javascripts/interface/View.js')
     script(type='text/javascript', src='/javascripts/interface/QueryPane.js')
+    script(type='text/javascript', src='/javascripts/interface/StatusBar.js')
     
     script(type='text/javascript', src='/javascripts/view/ServerView.js')
     script(type='text/javascript', src='/javascripts/view/DatabaseView.js')
@@ -47,8 +50,10 @@ html
     div.ui-pane#pane
     div.ui-view#main
     div.ui-statusbar#statusbar
-        div.left
-        div.right.btn.next
-            >
-        div.right.btn.prev
-            <
+        div.sidebar
+        div.main
+            div.left
+            div.right.btn.next
+                >
+            div.right.btn.prev
+                <
