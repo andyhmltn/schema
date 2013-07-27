@@ -3,6 +3,7 @@ sidebar = new Sidebar;
 toolbar = new Toolbar;
 view = new View;
 pane = new QueryPane;
+statusbar = new StatusBar;
 
 
 /**
@@ -20,7 +21,7 @@ var SchemaRouter = Backbone.Router.extend({
         "database/:database/:table/" : "viewTable",
         "database/:database/"        : "viewDatabase",
         "database/"                  : "listDatabases",
-        "servers/"                   : "showServerPicker",
+        "servers/"                   : "listServers",
         ""                           : "redirectToServerPicker",
     },
     
@@ -63,11 +64,30 @@ var SchemaRouter = Backbone.Router.extend({
      * connect to.
      * @return {undefined}
      */
-    showServerPicker: function() {
+    listServers: function() {
         toolbar.clear();
         sidebar.clear();
         var login = new Login();
         login.displayLogin();
+    },
+    
+    
+    /**
+     * List databases that are available
+     * @return {undefined}
+     */
+    listDatabases: function () {
+        this.needLogin();
+        sidebar.clear();
+        toolbar.clear();
+        
+        // Clear status bar and add new database button:
+        statusbar.clear().addSidebarButton('Create New Database', function() {
+            alert('Create new database');
+        })
+        
+        var serverView = new ServerView();
+        serverView.render();
     },
     
     
@@ -83,6 +103,12 @@ var SchemaRouter = Backbone.Router.extend({
         var databaseView = new DatabaseView({
             database_name: database_name,
         });
+        
+        // Clear statusbar and add new table button:
+        statusbar.clear().addSidebarButton('Create New Table', function() {
+            alert('Create a new table');
+        });
+        
         databaseView.render();
     },
     
@@ -102,21 +128,7 @@ var SchemaRouter = Backbone.Router.extend({
         
         // Populate left nav (database switcher):
         sidebar.populateFromDatabase(database_name, table_name);
-    },
-    
-    
-    /**
-     * List databases that are available
-     * @return {undefined}
-     */
-    listDatabases: function () {
-        this.needLogin();
-        sidebar.clear();
-        toolbar.clear();
-        
-        var serverView = new ServerView();
-        serverView.render();
-    },
+    }
 });
 
 
