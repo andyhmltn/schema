@@ -56,11 +56,6 @@ module.exports = function(app) {
      * Log user out, close their DB connections, etc.
      */
     app.post('/api/auth/:token', function(req, res) {
-        Object.keys(app.user_connections).forEach(function(key) {
-            if (key == req.param.token) {
-                console.log('FOUND IT:', key);
-            }
-        });
         if (app.user_connections[req.param.token]) {
             _this.return_json(res, {
             });
