@@ -22,6 +22,7 @@ module.exports = function(app) {
         return false;
     }
     
+    
     /**
      * Make connection to database and return token which the client can
      * use to make subsequent requests to the database.

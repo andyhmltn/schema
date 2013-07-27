@@ -216,7 +216,11 @@ var TableView = Backbone.View.extend({
             // Build SQL:
             var column = $(this).attr('data-column-name');
             var value = $(this).text();
-            var sql = _.str.sprintf("UPDATE `%s` SET %s = '%s' WHERE %s", tableview.table.get('name'), column, value, where);
+            var sql = _.str.sprintf(
+                "UPDATE `%s` SET %s = '%s' WHERE %s",
+                tableview.table.get('name'),
+                column, value, where
+            );
             
             var cell = this;
             $(cell).addClass('loading');
