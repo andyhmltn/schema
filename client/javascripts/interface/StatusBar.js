@@ -4,6 +4,7 @@
  * The status bar sits at the bottom of the screen and is used for holding
  * view controls and status information.
  * 
+ * @class
  * @author  Tim Davies <mail@timdavi.es>
  */
 var StatusBar = Backbone.View.extend({

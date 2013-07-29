@@ -1,6 +1,7 @@
 /**
  * QueryView
  * 
+ * @class
  * @author  Tim Davies <mail@timdavi.es>
  */
 var QueryView = Backbone.View.extend({
