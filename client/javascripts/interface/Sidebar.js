@@ -64,6 +64,29 @@ var Sidebar = Backbone.View.extend({
     
     
     /**
+     * Populate sidebar with a server's databases
+     * @param {Function} callback Function to call once completed (optional)
+     * @return {undefined}
+     */
+    populateFromServer: function(callback) {
+        database.queryOrLogout("SHOW DATABASES;", function (rows) {
+            sidebar.clear();
+            
+            for (var row_id in rows) {
+                var row = rows[row_id];
+                sidebar.addItem(row.Database, '', '#/database/' + row.Database + '/', undefined, false);
+            }
+            
+            sidebar.render();
+            
+            if (callback) {
+                callback(rows);
+            }
+        });
+    },
+    
+    
+    /**
      * String to display in search field
      * @type {String}
      */

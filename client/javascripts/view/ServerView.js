@@ -27,14 +27,9 @@ var ServerView = Backbone.View.extend({
         // Set loading:
         view.setLoading(true);
         
-        // Populate left nav (database switcher):
-        database.queryOrLogout("SHOW DATABASES;", function (rows) {
-            for (var row_id in rows) {
-                var row = rows[row_id];
-                sidebar.addItem(row.Database, '', '#/database/' + row.Database + '/', undefined, false);
-            }
-            sidebar.render();
-            
+        // Populate sidebar with databases:
+        sidebar.populateFromServer(function(rows) {
+            // Get server information for 'report':
             database.getServerInformation(function(serverInformation) {
                 // Get the server size:
                 var server_size = parseInt(serverInformation.size);
