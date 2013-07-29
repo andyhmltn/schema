@@ -87,7 +87,7 @@ var SchemaRouter = Backbone.Router.extend({
             var prompt = new Prompt().display(
                 'Enter new database name',
                 'Create new database',
-                'Don\'t create a new database',
+                'Cancel',
                 function(value) {
                     if (value.length > 0) {
                         database.createNewDatabase(value);
@@ -116,7 +116,16 @@ var SchemaRouter = Backbone.Router.extend({
         
         // Clear statusbar and add new table button:
         statusbar.clear().addSidebarButton('Create New Table', function() {
-            alert('Create a new table');
+            var prompt = new Prompt().display(
+                'Enter new table name',
+                'Create new table',
+                'Cancel',
+                function(value) {
+                    if (value.length > 0) {
+                        database.createNewTable(value);
+                    }
+                }
+            );
         });
         
         databaseView.render();
