@@ -1,0 +1,13 @@
+<div class="prompt">
+    <input type="hidden" class="width" value="500" />
+    <input type="hidden" class="height" value="180" />
+
+    <h2>
+        <%= message %>
+    </h2>
+
+    <input type="text" class="prompt" />
+    
+    <button class="complete"><%= complete_message ? complete_message : 'OK' %></button>
+    <button class="cancel"><%= cancel_message ? cancel_message : 'Cancel' %></button>
+</div>
