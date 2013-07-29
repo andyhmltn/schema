@@ -4,6 +4,7 @@ toolbar = new Toolbar;
 view = new View;
 pane = new QueryPane;
 statusbar = new StatusBar;
+sheet = new Sheet;
 
 
 /**
@@ -83,7 +84,14 @@ var SchemaRouter = Backbone.Router.extend({
         
         // Clear status bar and add new database button:
         statusbar.clear().addSidebarButton('Create New Database', function() {
-            alert('Create new database');
+            var prompt = new Prompt().display(
+                'Enter new database name',
+                'Create new database',
+                'Don\'t create a new database',
+                function(value) {
+                    console.log('Database name chosen: ' + value);
+                }
+            );
         })
         
         var serverView = new ServerView();
