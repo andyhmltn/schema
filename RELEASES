@@ -1,19 +1,25 @@
 Criteria for version 0.1:
-    - Structure, content and table info views are working
-    - Custom queries work
     ✔ Pagination on tableview
     ✔ Editing cells in tableview saves
-    - Able to add rows to database
-    - Able to add new fields to table
-    - Able to create new databases
-    - Able to create new tables
+    ✔ Able to create new databases
+    ✔ Able to create new tables
     ✔ Tidied up all pages (e.g. sort "Need to decide what is going here." and "Title?")
-    - Complete the server and database report views
     ✔ Styled server picker
-    - Show name of database you're in when in tableview
     ✔ Fix issue when switching views whilst pane is open
     ✔ Implement sheet for small dialogues (e.g. confirming actions, editing text fields, etc)
     ✔ Add column ordering to tableview
+    ✔ Content view works completely
+    - Structure view works completely
+    - Table info view works completely
+    - Query view works completely
+    - Able to add rows to database
+    - Able to add new fields to table
+    - Complete the server report view
+    - Complete the database report view
+    - Show name of database you're in when in tableview
+    - Able to delete databases
+    - Able to delete tables
+    - Able to delete rows
 
 Criteria for version 0.2:
     - Global search working
