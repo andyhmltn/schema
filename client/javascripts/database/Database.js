@@ -122,5 +122,32 @@ var Database = Backbone.Model.extend({
                 callback(data);
             }
         }, 'json');
+    },
+    
+    
+    /**
+     * Create a new database with provided name
+     * 
+     * Once created, the user is redirected to edit the database
+     * 
+     * @param {String} database_name Name of new database to be created
+     * 
+     * @return {undefined}
+     */
+    createNewDatabase: function(database_name) {
+        // Build SQL:
+        var sql = _.str.sprintf(
+            'CREATE DATABASE `%s`;',
+            database_name
+        );
+        
+        // Try creating new database:
+        this.query(sql, function(error, result) {
+            if (error) {
+                console.error("Could not create new database '%s'", result);
+            } else {
+                window.location = '#/database/' + database_name + '/';
+            }
+        });
     }
 });
