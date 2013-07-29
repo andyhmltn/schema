@@ -89,7 +89,9 @@ var SchemaRouter = Backbone.Router.extend({
                 'Create new database',
                 'Don\'t create a new database',
                 function(value) {
-                    console.log('Database name chosen: ' + value);
+                    if (value.length > 0) {
+                        database.createNewDatabase(value);
+                    }
                 }
             );
         })
