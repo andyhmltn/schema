@@ -94,7 +94,7 @@ var SchemaRouter = Backbone.Router.extend({
                     }
                 }
             );
-        })
+        });
         
         var serverView = new ServerView();
         serverView.render();
