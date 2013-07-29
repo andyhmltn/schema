@@ -127,11 +127,7 @@ var Database = Backbone.Model.extend({
     
     /**
      * Create a new database with provided name
-     * 
-     * Once created, the user is redirected to edit the database
-     * 
      * @param {String} database_name Name of new database to be created
-     * 
      * @return {undefined}
      */
     createNewDatabase: function(database_name) {
@@ -144,9 +140,33 @@ var Database = Backbone.Model.extend({
         // Try creating new database:
         this.query(sql, function(error, result) {
             if (error) {
-                console.error("Could not create new database '%s'", result);
+                console.error("Could not create new database '%s'", database_name);
             } else {
                 window.location = '#/database/' + database_name + '/';
+            }
+        });
+    },
+    
+    
+    /**
+     * Create a new database with provided name
+     * @param  {String} table_name Name of new table to be created
+     * @return {undefined}
+     */
+    createNewTable: function(table_name) {
+        // Build SQL:
+        var sql = _.str.sprintf(
+            'CREATE TABLE `%s` (id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT);',
+            table_name
+        );
+        
+        // Try creating new database:
+        this.query(sql, function(error, result) {
+            if (error) {
+                console.error("Could not create new table '%s'", table_name);
+            } else {
+                contentview.remember('structure');
+                window.location = window.location + table_name + '/';
             }
         });
     }
