@@ -28,6 +28,7 @@ Criteria for version 0.2:
     - Responsive design and iPhone and iPad compatibility
     - Basic exporting works
     - Manage database connections - consolidate duplicates and destroy old connections
+    - Add error class (based on Sheet) for displaying error messages when queries fail
 
 Criteria for version 0.3:
     - Support for PostgreSQL
