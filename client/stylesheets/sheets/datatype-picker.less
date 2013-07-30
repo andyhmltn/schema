@@ -1,0 +1,77 @@
+#sheet {
+    .datatype-picker {
+        padding: 30px;
+        
+        h2 {
+            float: left;
+            padding: 0;
+            font-size: 20px;
+        }
+        
+        .search {
+            input {
+                float: right;
+                width: 200px;
+            }
+        }
+        
+        .col {
+            float: left;
+            width: 140px;
+            height: 200px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin: 15px 0 0 0;
+            border: 1px solid #ccc;
+            border-left: 0;
+            
+            ul {
+                li {
+                    font-size: 13px;
+                    padding: 5px 35px 5px 10px;
+                    cursor: pointer;
+                    
+                    &.active {
+                        font-weight: bold;
+                        background: #dadada;
+                    }
+                }
+            }
+            
+            &.type-categories {
+                border-left: 1px solid #ccc;
+                width: 135px;
+                -webkit-user-select: none;
+            }
+            
+            &.type-list {
+                -webkit-user-select: none;
+                margin-right: 0;
+            }
+            
+            &.type-desc {
+                float: right;
+                width: 261px;
+                margin-right: 0;
+                
+                h3 {
+                    margin: 15px 0;
+                    text-align: center;
+                    font-size: 15px;
+                    font-weight: bold;
+                }
+                
+                p {
+                    font-size: 12px;
+                    padding: 15px;
+                    line-height: 15px;
+                }
+            }
+        }
+        
+        .buttons {
+            margin-top: 15px;
+            float: right;
+        }
+    }
+}

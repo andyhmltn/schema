@@ -1,0 +1,50 @@
+<div class="datatype-picker">
+    <input type="hidden" class="width" value="600" />
+    <input type="hidden" class="height" value="320" />
+
+    <h2>
+        Choose a data type
+    </h2>
+    
+    <div class="search">
+        <input type="text" placeholder="Search..." />
+    </div>
+    
+    <div class="clear"></div>
+    
+    <div class="col type-categories">
+        <ul>
+            <li class='all active'>All</li>
+            <li class="numeric">Numeric</li>
+            <li class="datetime">Date &amp; Time</li>
+            <li class="string">String</li>
+        </ul>
+    </div>
+    
+    <div class="col type-list">
+        <% _.each(datatypeList, function(list, class_name) { %>
+            <div class="<%= class_name %>">
+                <ul>
+                    <% _.each(list, function(item) { %>
+                        <li
+                            <% if (type == item) { %>
+                                class="active"
+                            <% } %>
+                        >
+                            <%= item %>
+                        </li>
+                    <% }) %>
+                </ul>
+            </div>
+        <% }) %>
+    </div>
+    
+    <div class="col type-desc" id="datatype-desc">
+        
+    </div>
+    
+    <div class="buttons">
+        <button class="cancel">Cancel</button>
+        <button class="complete">Use this data type</button>
+    </div>
+</div>
