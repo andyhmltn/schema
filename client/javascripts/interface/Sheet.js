@@ -58,6 +58,8 @@ var Sheet = Backbone.View.extend({
      * @return {Sheet} Return self
      */
     show: function() {
+        $(this.selector).css('margin-top', '-' + ($(this.selector).height() + 10) + 'px');
+        
         $(this.selector).animate({
             'margin-top': '0px'
         }, 350);
@@ -71,7 +73,7 @@ var Sheet = Backbone.View.extend({
      */
     hide: function() {
         $(this.selector).animate({
-            'margin-top': '-260px'
+            'margin-top': '-' + ($(this.selector).height() + 10) + 'px'
         }, 350);
         return this;
     }
