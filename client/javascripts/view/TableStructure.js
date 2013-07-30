@@ -44,6 +44,7 @@ var TableStructure = Backbone.View.extend({
      */
     bindInputs: function() {
         var tablestructure = this;
+        $('#structure').off();
         
         // Bind to field name:
         $('#structure').on('dblclick', 'td.fieldname', function() {
@@ -132,5 +133,115 @@ var TableStructure = Backbone.View.extend({
                 console.error("An error occurred whilst executing SQL to alter the NULL setting");
             });
         });
+        
+        // Display data type dialogue when data type is clicked on:
+        $('#structure').on('click', 'td.datatype div', function() {
+            // Get current data type:
+            var currentDataType = $(this).text().trim();
+            
+            // Set data type picker template:
+            sheet.setTemplate('#template-datatype-picker', {
+                type: currentDataType,
+                datatypeList: tablestructure.getDatatypeList()
+            });
+            
+            $('#sheet .type-categories li').click(function() {
+                $('#sheet .type-categories li.active').removeClass('active');
+                var category = $(this).attr('class');
+                $(this).addClass('active');
+                
+                if (category == 'all') {
+                    $('#sheet .type-list div').show();
+                } else {
+                    $('#sheet .type-list div').hide();
+                    $('#sheet .type-list div.' + category).show();
+                }
+            });
+            
+            var loadDescription = function() {
+                var datatype = $('#sheet .type-list li.active').text().trim();
+                $('#datatype-desc').html(_.template($('#template-datatype-desc').html(), {
+                    type: datatype,
+                    description: tablestructure.getTypeDescription(datatype)
+                }));
+            };
+            
+            loadDescription();
+            
+            $('#sheet .type-list li').click(function() {
+                $('#sheet .type-list li.active').removeClass('active');
+                $(this).addClass('active');
+                loadDescription();
+            });
+            
+            $('#sheet button.cancel').click(function() {
+                sheet.hide();
+            });
+            
+            // Display sheet:
+            sheet.show();
+        });
+    },
+    
+    
+    /**
+     * Returns list of categorised data types
+     * @return {Array} Data types
+     */
+    getDatatypeList: function() {
+        return {
+            'numeric': [
+                'INT',
+                'INTEGER',
+                'SMALLINT',
+                'TINYINT',
+                'MEDIUMINT',
+                'BIGINT',
+                'DECIMAL',
+                'NUMERIC',
+                'FLOAT',
+                'DOUBLE',
+                'BOOLEAN',
+                'BOOL',
+                'BIT'
+            ],
+            'string': [
+                'CHAR',
+                'VARCHAR',
+                'TINYTEXT',
+                'TEXT',
+                'MEDIUMTEXT',
+                'LONGTEXT',
+                'TINYBLOB',
+                'BLOB',
+                'MEDIUMBLOB',
+                'LONGBLOB',
+                'BINARY',
+                'VARBINARY',
+                'ENUM',
+                'SET'
+            ],
+            'datetime': [
+                'DATE',
+                'DATETIME',
+                'TIMESTAMP',
+                'TIME',
+                'YEAR'
+            ]
+        };
+    },
+    
+    
+    /**
+     * Get description of data type
+     * @param  {String} type Data type name
+     * @return {String} Description of data type
+     */
+    getTypeDescription: function(type) {
+        if (datatype_definitions.hasOwnProperty(type)) {
+            return datatype_definitions[type];
+        }
+        
+        return datatype_definitions['default'];
     }
 });
