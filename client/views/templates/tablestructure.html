@@ -38,7 +38,11 @@
                     <td class="fieldname"><%= column.get('name') %></td>
                     
                     <!-- Datatype: -->
-                    <td><%= column.getRawDatatype().toUpperCase() %></td>
+                    <td class="datatype">
+                        <div>
+                            <%= column.getRawDatatype().toUpperCase() %>
+                        </div>
+                    </td>
                     
                     <!-- Length: -->
                     <td><%= column.getLength() %></td>
