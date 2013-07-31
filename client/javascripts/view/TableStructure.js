@@ -21,6 +21,7 @@ var TableStructure = Backbone.View.extend({
      * @return {undefined}
      */
     render: function() {
+        console.info("Rendering TableStructure");
         var tablestructure = this;
         
         table.getFullColumns(function(columns) {
@@ -136,6 +137,10 @@ var TableStructure = Backbone.View.extend({
         
         // Display data type dialogue when data type is clicked on:
         $('#structure').on('click', 'td.datatype div', function() {
+            // Get current row and field name:
+            var currentRow = $(this).parent().parent();
+            var currentColumnName = currentRow.find('input.column_name').val();
+            
             // Get current data type:
             var currentDataType = $(this).text().trim();
             
@@ -145,19 +150,30 @@ var TableStructure = Backbone.View.extend({
                 datatypeList: tablestructure.getDatatypeList()
             });
             
+            // When a category is clicked on, filter the data types:
             $('#sheet .type-categories li').click(function() {
+                // Remove active class from previous category:
                 $('#sheet .type-categories li.active').removeClass('active');
+                
+                // Get category key to filter with from class:
                 var category = $(this).attr('class');
+                
+                // Add active class to selected category:
                 $(this).addClass('active');
                 
+                // If the category is set to 'all', show all of the data types:
                 if (category == 'all') {
                     $('#sheet .type-list div').show();
                 } else {
+                    // Otherwise, hide all of the data types then show only
+                    // those in the category clicked on:
                     $('#sheet .type-list div').hide();
                     $('#sheet .type-list div.' + category).show();
                 }
             });
             
+            // Function for loading the description for the currently selected
+            // type into the description box:
             var loadDescription = function() {
                 var datatype = $('#sheet .type-list li.active').text().trim();
                 $('#datatype-desc').html(_.template($('#template-datatype-desc').html(), {
@@ -166,16 +182,36 @@ var TableStructure = Backbone.View.extend({
                 }));
             };
             
+            // Load the description for the currently selected type:
             loadDescription();
             
+            // When each of the types are clicked, load its description:
             $('#sheet .type-list li').click(function() {
                 $('#sheet .type-list li.active').removeClass('active');
                 $(this).addClass('active');
+                $('#sheet').find('input.datatype-value').val($(this).text().trim());
                 loadDescription();
             });
             
+            // When the cancel button is pressed, hide the sheet:
             $('#sheet button.cancel').click(function() {
                 sheet.hide();
+            });
+            
+            // When the 'Change Data Type' button is pressed, alter the
+            // data type:
+            $('#sheet button.complete').click(function() {
+                // Hide the sheet:
+                sheet.hide();
+                
+                // Get new data type:
+                var datatype = $('#sheet').find('input.datatype-value').val();
+                
+                // Change data type:
+                tablestructure.alterDataType(currentColumnName, datatype);
+                
+                // Render tablestructure again:
+                tablestructure.render();
             });
             
             // Display sheet:
@@ -243,5 +279,37 @@ var TableStructure = Backbone.View.extend({
         }
         
         return datatype_definitions['default'];
+    },
+    
+    
+    /**
+     * Change data type for a column
+     * @param  {String} columnName  Column to alter
+     * @param  {String} newDataType Data type to be used instead
+     * @return {undefined}
+     */
+    alterDataType: function(columnName, newDataType) {
+        var column = this.table.getColumn(columnName);
+        
+        // column.alterDataType(newDataType);
+        // console.log(column);
+        
+        var sql = _.str.sprintf(
+            "ALTER TABLE `%s` CHANGE `%s` `%s` %s;",
+            this.table.get('name'),
+            columnName,
+            columnName,
+            newDataType
+        );
+        
+        database.query(sql, function(err, result) {
+            if (err) {
+                console.error("There was an error altering the data type");
+            } else {
+                console.info("Data type changed");
+            }
+        });
+        
+        console.log(sql);
     }
 });
