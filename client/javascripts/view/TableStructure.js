@@ -193,11 +193,6 @@ var TableStructure = Backbone.View.extend({
                 loadDescription();
             });
             
-            // When the cancel button is pressed, hide the sheet:
-            $('#sheet button.cancel').click(function() {
-                sheet.hide();
-            });
-            
             // When the 'Change Data Type' button is pressed, alter the
             // data type:
             $('#sheet button.complete').click(function() {
@@ -349,15 +344,6 @@ var TableStructure = Backbone.View.extend({
         
         sheet.setTemplate('#template-field-length-dialogue', {
             length: defaultValue,
-        });
-        
-        // When the cancel button is pressed, hide the sheet:
-        $('#sheet button.cancel').click(function() {
-            sheet.hide();
-        });
-        
-        $('#sheet button.complete').click(function() {
-            sheet.hide();
         });
         
         sheet.show();
