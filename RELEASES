@@ -20,6 +20,7 @@ Criteria for version 0.1:
     - Able to delete databases
     - Able to delete tables
     - Able to delete rows
+    - Start using $el instead of this.selector
 
 Criteria for version 0.2:
     - Global search working
