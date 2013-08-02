@@ -3,15 +3,11 @@
         Custom Query
     </div>
     
-    <div class="right btn next">
-        &gt;
-    </div>
-    <div class="right btn prev">
-        &lt;
-    </div>
-    
     <div class="right statistics">
-        Stats
+        <% if (rows) { %>
+            <%= rows.length %>
+            row<%= rows.length > 1 ? "s" : "" %>
+        <% } %>
     </div>
 </div>
 
@@ -19,17 +15,25 @@
     <table>
         <thead>
             <tr>
-                <td>foo</td>
+                <% _.each(columns, function (column) { %>
+                    <th>
+                        <%- column.name %>
+                    </th>
+                <% }); %>
             </tr>
         </thead>
         
         <tbody>
-            <tr>
-                <td>bar</td>
-            </tr>
-            <tr>
-                <td>baz</td>
-            </tr>
+            <% _.each(rows, function (row) { %>
+                <tr>
+                    <% _.each(columns, function (column) { %>
+                        <td
+                        ><%-
+                            row[column.name]
+                        %></td>
+                    <% }); %>
+                </tr>
+            <% }); %>
         </tbody>
     </table>
 </div>
