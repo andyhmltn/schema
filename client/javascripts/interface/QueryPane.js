@@ -9,16 +9,17 @@
  */
 var QueryPane = Backbone.Model.extend({
     /**
-     * Bind to query attribute and render when it changes
-     * @return {undefined}
+     * Function to run when query changes
+     * @type {Function}
      */
-    initialize: function() {
-        pane = this;
-        this.on('change:query', function() {
-            console.log("Rendering pane");
-            pane.render();
-        });
-    },
+    queryChangeCallback: null,
+    
+    
+    /**
+     * Speed of sliding up and down
+     * @type {Number}
+     */
+    animationSpeed: 300,
     
     
     /**
@@ -40,16 +41,16 @@ var QueryPane = Backbone.Model.extend({
      * @return {undefined}
      */
     open: function() {
-        console.info("Opening QueryPane");
-        
         if (!this.isOpen) {
+            console.info("Opening QueryPane");
+            
             this.isOpen = true;
             
             $(this.selector).animate({
                 top: '45px'
-            }, 200);
+            }, this.animationSpeed);
             
-            view.slideAround(195, 200);
+            view.slideAround(195, this.animationSpeed);
         }
     },
     
@@ -66,9 +67,9 @@ var QueryPane = Backbone.Model.extend({
             
             $(this.selector).animate({
                 top: '-105px'
-            }, 200);
+            }, this.animationSpeed);
             
-            view.slideAround(45, 200);
+            view.slideAround(45, this.animationSpeed);
         }
     },
     
@@ -95,10 +96,44 @@ var QueryPane = Backbone.Model.extend({
      * @return {undefined}
      */
     bindInputs: function() {
+        var _this = this;
+        
         $(this.selector).find('#executeQuery').click(function() {
-            var sql = $(this).parent().parent().find('textarea').html();
-            query.set('sql', sql);
-            query.execute();
+            if (_this.queryChangeCallback) {
+                _this.queryChangeCallback();
+            }
         });
+    },
+    
+    
+    /**
+     * Return the SQL in the QueryPane textarea
+     * @return {String} SQL 
+     */
+    getSQL: function() {
+        var sql = $(this.selector).find('textarea').val();
+        this.set('query', sql);
+        return sql;
+    },
+    
+    
+    /**
+     * Set QueryPane textarea contents
+     * @param  {String} sql SQL
+     * @return {undefined}
+     */
+    setSQL: function(sql) {
+        $(this.selector).find('textarea').val('foo!');
+        this.set('query', sql);
+    },
+    
+    
+    /**
+     * Set function to be called when query is altered
+     * @param  {Function} callback Function to call
+     * @return {undefined}
+     */
+    setQueryChangeCallback: function(callback) {
+        this.queryChangeCallback = callback;
     }
 });
