@@ -59,9 +59,8 @@ var Query = Backbone.Model.extend({
     execute: function(callback) {
         var query = this;
         
-        database.query(query.toSQL(), function (err, rows, columns, num_rows) {
+        database.query(query.toSQL(), function (err, rows, columns) {
             query.set('rows', rows);
-            query.set('num_rows', num_rows);
             
             var cols = [];
             _.each(columns, function(row) {
@@ -90,40 +89,5 @@ var Query = Backbone.Model.extend({
             //         }));
             //     });
         });
-    },
-    
-    
-    /**
-     * Calculate the offset for advancing to the next page of query results
-     * @return {Boolean} True if page could be changed, false otherwise
-     */
-    nextPage: function() {
-        var max_pages = Math.ceil(this.get('num_rows') / this.get('limit'));
-        var next_page = Math.ceil(this.get('offset') / this.get('limit')) + 1;
-        
-        if (next_page < max_pages) {
-            contentview.setLoading(true);
-            this.set('offset', this.get('offset') + this.get('limit'));
-            this.execute();
-            return true;
-        }
-        
-        return false;
-    },
-    
-    
-    /**
-     * Calculate the offset for returning to the previous page of query results
-     * @return {Boolean} True if page could be changed, false otherwise
-     */
-    prevPage: function() {
-        if (this.get('offset') - this.get('limit') >= 0) {
-            contentview.setLoading(true);
-            this.set('offset', this.get('offset') - this.get('limit'));
-            this.execute();
-            return true;
-        }
-        
-        return false;
     }
 });

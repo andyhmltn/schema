@@ -101,6 +101,7 @@ var TableView = Backbone.View.extend({
      * @return {undefined}
      */
     getRows: function(offset, limit, callback) {
+        // Build order by clause:
         var order_by = '';
         if (this.order_field_name) {
             order_by = _.str.sprintf(
@@ -110,18 +111,49 @@ var TableView = Backbone.View.extend({
             );
         }
         
+        // Build SQL for retrieving rows for tableview:
         var sql = _.str.sprintf(
-            "SELECT SQL_CALC_FOUND_ROWS * FROM `%s` %s LIMIT %d, %d;",
+            "SELECT * FROM `%s` %s LIMIT %d, %d;",
             table.get('name'),
             order_by,
             offset,
             limit
         );
         
-        database.queryOrLogout(sql, function(rows, num_rows) {
-            if (callback) {
-                callback(rows, num_rows);
+        database.query(sql, function(err, rows) {
+            // Check to see if any errors occurred:
+            if (err) {
+                alert("Error - could not execute query to retrieve table rows");
+                return;
             }
+            
+            // Build SQL for getting total number of rows:
+            var sql = _.str.sprintf(
+                "SELECT COUNT(*) as c FROM `%s`;",
+                table.get('name')
+            );
+            
+            // Query database for the number of rows and then execute the
+            // callback, if it's valid, with the rows and the row count:
+            database.query(sql, function(err, count_rows) {
+                // Check for an error - default number of rows to 0 if there
+                // is an error, and log to console:
+                if (err) {
+                    console.error(
+                        "An error occurred whilst calculating number of rows for `%s`",
+                        table.get('name')
+                    );
+                    
+                    var num_rows = 0;
+                } else {
+                    var num_rows = count_rows[0]['c'];
+                }
+                
+                // Check the callback and, if valid, return with results:
+                if (callback) {
+                    callback(rows, num_rows);
+                }
+            });
         });
     },
     

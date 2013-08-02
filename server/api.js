@@ -91,25 +91,20 @@ module.exports = function(app) {
                 });
             }
             
-            // Get number of rows:
-            var select_rows = 'SELECT FOUND_ROWS() as num_rows;';
-            app.user_connections[token].query(select_rows, function(err, num_rows) {
-                // Parse columns to get datatypes, etc:
-                if (columns) {
-                    columns.forEach(function(item) {
-                        if (item.type) {
-                            item.type = _this.parse_type(item.type);
-                        }
-                    });
-                }
-                
-                // Return query result:
-                _this.return_json(res, {
-                    success: true,
-                    rows: rows,
-                    columns: columns,
-                    num_rows: num_rows[0].num_rows
+            // Parse columns to get datatypes, etc:
+            if (columns) {
+                columns.forEach(function(item) {
+                    if (item.type) {
+                        item.type = _this.parse_type(item.type);
+                    }
                 });
+            }
+            
+            // Return query result:
+            _this.return_json(res, {
+                success: true,
+                rows: rows,
+                columns: columns
             });
         });
     });

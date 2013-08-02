@@ -46,8 +46,7 @@ var Database = Backbone.Model.extend({
      * @param  {String}   sql      SQL query to execute
      * @param  {Function} callback Function to be called when the query has
      *                             been made with the results of the query:
-     *                             the rows returned, the columns and a count
-     *                             of the number of rows available.
+     *                             the rows and columns returned.
      * @return {undefined}
      */
     query: function (sql, callback) {
@@ -56,9 +55,9 @@ var Database = Backbone.Model.extend({
             query: sql
         }, function (data) {
             if (data.success) {
-                callback(false, data.rows, data.columns, data.num_rows);
+                callback(false, data.rows, data.columns);
             } else {
-                callback(true, data.rows, data.columns, data.num_rows);
+                callback(true, data.rows, data.columns);
             }
         }, 'json');
     },
@@ -70,8 +69,7 @@ var Database = Backbone.Model.extend({
      * @param  {String}   sql      SQL query to execute
      * @param  {Function} callback Function to be called when the query has
      *                             been made with the results of the query:
-     *                             the rows returned, the columns and a count
-     *                             of the number of rows available.
+     *                             the rows and columns returned.
      * 
      * @deprecated Deprecated - bad way of doing things.
      * 
@@ -79,13 +77,13 @@ var Database = Backbone.Model.extend({
      */
     queryOrLogout: function (sql, callback) {
         console.warn("Deprecated function queryOrLogout used");
-        this.query(sql, function(err, rows, columns, num_rows) {
+        this.query(sql, function(err, rows, columns) {
             if (err) {
                 window.token = '';
                 localStorage['token'] = '';
                 window.location = '#/';
             } else {
-                callback(rows, num_rows);
+                callback(rows);
             }
         });
     },
