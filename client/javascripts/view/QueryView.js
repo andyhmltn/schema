@@ -7,10 +7,19 @@
 var QueryView = Backbone.View.extend({
     /**
      * Initialise object
+     * @param {Table} table Table object
      * @return {undefined}
      */
-    initialize: function() {
+    initialize: function(table) {
+        this.table = table;
         
+        pane.setSQL(
+            _.str.sprintf(
+                'SELECT * FROM `%s` LIMIT 100;',
+                this.table.get('name')
+            )
+        );
+        pane.setQueryChangeCallback(this.render);
     },
     
     
@@ -19,14 +28,20 @@ var QueryView = Backbone.View.extend({
      * @return {undefined}
      */
     render: function() {
-        pane.render();
         pane.open();
         
-        $('#main').html(_.template(
-            $('#template-queryview').html(),
-            {
-            }
-        ));
+        // Get the query from the pane textarea:
+        var sql = pane.getSQL();
+        
+        database.query(sql, function(err, rows, cols) {
+            $('#main').html(_.template(
+                $('#template-queryview').html(),
+                {
+                    rows: rows,
+                    columns: cols
+                }
+            ));
+        })
         
         this.bindInputs();
         contentview.setLoading(false);
