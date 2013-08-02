@@ -8,7 +8,7 @@ Criteria for version 0.1:
     ✔ Fix issue when switching views whilst pane is open
     ✔ Implement sheet for small dialogues (e.g. confirming actions, editing text fields, etc)
     ✔ Add column ordering to tableview
-    ✔ Content view works completely
+    - Content view works completely, including sheets for altering dates and TEXT fields
     - Structure view works completely
     - Table info view works completely
     - Query view works completely
@@ -31,16 +31,15 @@ Criteria for version 0.2:
     - Add error class (based on Sheet) for displaying error messages when queries fail
 
 Criteria for version 0.3:
-    - Support for PostgreSQL
+    - User management
+    - Better handling of permissions
 
 Criteria for version 0.4:
-    - Support for MongoDB
+    - Support for PostgreSQL
 
 Criteria for version 0.5:
-    - User management
-
-Criteria for version 0.6:
     - Able to drag and drop files into cells (including images, etc)
+    - Able to view images inside binary fields
     - Able to drag and drop CSVs, SQL files, etc, into tables to import
 
 Criteria for version 1.0:
@@ -48,3 +47,4 @@ Criteria for version 1.0:
 
 Future releases:
     - Support for connecting over SSH
+    - Support for MongoDB
