@@ -31,7 +31,7 @@ var ContentView = Backbone.View.extend({
         this.tableview = new TableView(table);
         this.tablestructure = new TableStructure(table);
         this.tableinfo = new TableInfo(table);
-        this.queryview = new QueryView();
+        this.queryview = new QueryView(table);
         
         // Set up toolbar and pane:
         this.initializeToolbar();
