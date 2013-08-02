@@ -217,6 +217,16 @@ var TableStructure = Backbone.View.extend({
             // Display sheet:
             sheet.show();
         });
+        
+        // Display length dialogue when length field selected:
+        $('#structure').on('dblclick', 'td.length', function() {
+            var dataType = 'VARCHAR';
+            var defaultValue = '255';
+            
+            tablestructure.showLengthDialogue(dataType, defaultValue, function() {
+                console.log('here');
+            });
+        });
     },
     
     
@@ -294,6 +304,17 @@ var TableStructure = Backbone.View.extend({
         // column.alterDataType(newDataType);
         // console.log(column);
         
+        // @todo: Need to show a length dialogue - we will pass in the new
+        //        data type and the dialogue will check if a length is required
+        //        and whether it needs a second part to it, e.g. float(5,2)
+        //        
+        //        We will also pass in the current length to see if this can
+        //        be used as a default value.
+        //        
+        //        Finally, once we have the new length, we need to send this
+        //        (along with other parameters, e.g. default values, if these
+        //        are required) when altering the table.
+        
         var sql = _.str.sprintf(
             "ALTER TABLE `%s` CHANGE `%s` `%s` %s;",
             this.table.get('name'),
@@ -311,5 +332,34 @@ var TableStructure = Backbone.View.extend({
         });
         
         console.log(sql);
+    },
+    
+    
+    /**
+     * [ description]
+     * @param  {[type]}   dataType     [description]
+     * @param  {[type]}   defaultValue [description]
+     * @param  {Function} callback     [description]
+     * @return {[type]}                [description]
+     */
+    showLengthDialogue: function(dataType, defaultValue, callback) {
+        if (sheet.open) {
+            sheet.hide();
+        }
+        
+        sheet.setTemplate('#template-field-length-dialogue', {
+            length: defaultValue,
+        });
+        
+        // When the cancel button is pressed, hide the sheet:
+        $('#sheet button.cancel').click(function() {
+            sheet.hide();
+        });
+        
+        $('#sheet button.complete').click(function() {
+            sheet.hide();
+        });
+        
+        sheet.show();
     }
 });
