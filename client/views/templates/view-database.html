@@ -4,7 +4,7 @@
     </div>
 </div>
 
-<div class="view-database">
+<div class="page-view">
     <div class="page">
         <h2><%= database_name %></h2>
         
@@ -93,24 +93,7 @@
             <div class="inner">
                 <h3>Real-time Queries</h3>
                 
-                <ul class="widget-list">
-                    <li class="on warning">
-                        <div class="query">SELECT * FROM classes WHERE id = 5;</div>
-                        <div class="time high">1 minute, 7 seconds</div>
-                    </li>
-                    <li class="off">
-                        <div class="query">SELECT * FROM documents_doctypes WHERE date_published &lt; now();</div>
-                        <div class="time medium">12 seconds</div>
-                    </li>
-                    <li class="on">
-                        <div class="query">SELECT * FROM tbl_pages LIMIT 15, 30;</div>
-                        <div class="time medium">8 seconds</div>
-                    </li>
-                    <li class="off">
-                        <div class="query">DELETE FROM glossary WHERE id = 7423;</div>
-                        <div class="time low">1 second</div>
-                    </li>
-                </ul>
+                <ul class="widget-list loading"></ul>
             </div>
         </div>
         
