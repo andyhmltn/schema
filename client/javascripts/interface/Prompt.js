@@ -35,11 +35,6 @@ var Prompt = Backbone.View.extend({
         // Select input field:
         $('#sheet input.prompt').select();
         
-        // If cancel button is pressed, hide the sheet:
-        $('#sheet .cancel').click(function() {
-            sheet.hide();
-        });
-        
         // If the 'ok' button is pressed, return the value via callback and
         // hide the prompt:
         $('#sheet .complete').click(function() {

@@ -20,6 +20,13 @@ var Sheet = Backbone.View.extend({
      * @return {Sheet} Returns self
      */
     initialize: function() {
+        var _this = this;
+        
+        // When cancel button inside sheet is clicked, hide the sheet:
+        $(document).on('#sheet click', 'button.cancel', function() {
+            _this.hide();
+        });
+        
         return this;
     },
     
@@ -31,24 +38,41 @@ var Sheet = Backbone.View.extend({
      * @return {Sheet} Return self
      */
     setTemplate: function(template, parameters) {
+        // Get template and check it could be loaded:
         var template = $(template).html();
-        var html = _.template(template, parameters);
-        
-        $(this.selector).html(html);
-        
-        // Check for width and height parameters:
-        var width = $(this.selector).find('input.width').val();
-        var height = $(this.selector).find('input.height').val();
-        
-        if (width) {
-            $(this.selector).width(width + 'px');
-            $(this.selector).css('margin-left', -(parseInt(width) / 2) + 'px');
+        if (!template) {
+            console.error("Could not load the desired template");
+            return false;
         }
         
-        if (height) {
+        // Build template:
+        var html = _.template(template, parameters);
+        
+        // Load in built template:
+        $(this.selector).html(html);
+        
+        // Check for inner div:
+        var inner = $(this.selector + ' > div');
+        
+        // If there was an inner div, work out its dimensions:
+        if (inner) {
+            // Get width and height of inner div:
+            var width = $(inner).outerWidth();
+            var height = $(inner).outerHeight();
+            
+            // Add any margins:
+            width += parseInt($(inner).css('margin-left'));
+            width += parseInt($(inner).css('margin-right'));
+            height += parseInt($(inner).css('margin-top'));
+            height += parseInt($(inner).css('margin-bottom'));
+            
+            // Set width, height and margin (for centering):
+            $(this.selector).width(width + 'px');
+            $(this.selector).css('margin-left', -(parseInt(width) / 2) + 'px');
             $(this.selector).height(height + 'px');
         }
         
+        // Return self for method chaining:
         return this;
     },
     
@@ -81,5 +105,19 @@ var Sheet = Backbone.View.extend({
             'margin-top': '-' + ($(this.selector).height() + 10) + 'px'
         }, 350);
         return this;
+    },
+    
+    
+    /**
+     * Bind callback to 'ok' button being pressed
+     * @param  {Function} callback Function to run
+     * @return {undefined}
+     */
+    bindComplete: function(callback) {
+        $('#sheet .buttons .complete').click(function() {
+            if (callback) {
+                callback();
+            }
+        });
     }
 });
