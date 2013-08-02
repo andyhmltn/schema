@@ -138,7 +138,7 @@ var TableView = Backbone.View.extend({
         
         // Select cell if double-clicked on:
         $(this.selector).on('dblclick', 'tbody td', function() {
-            $(this).addClass('active').attr('contenteditable', 'true').selectText();
+            tableview.editCell(this);
         });
         
         // Bind to onclick on the pagination buttons in the titlebar:
@@ -273,5 +273,120 @@ var TableView = Backbone.View.extend({
             return true;
         }
         return false;
+    },
+    
+    
+    /**
+     * Make a cell editable, either via inline editing or a sheet
+     * @param  {Object} cell DOM element of cell which was clicked on
+     * @return {undefined}
+     */
+    editCell: function(cell) {
+        var _this = this;
+        
+        // Get column and column edit template:
+        var col = this.table.getColumn($(cell).attr('data-column-name'));
+        var editTemplate = col.getEditTemplate();
+        
+        // Check if inline editable:
+        if (!editTemplate) {
+            // Print debugging message:
+            console.info("Cell is inline editable");
+            
+            // Add active class, make editable and select contents:
+            $(cell).addClass('active')
+                   .attr('contenteditable', 'true')
+                   .selectText();
+            
+            // Return to stop sheet functionality being run:
+            return;
+        }
+        
+        // Cell should be edited with a sheet to provide
+        // additional functionality:
+        console.info("Cell should be edited with use of a sheet");
+        
+        // Display sheet:
+        sheet.setTemplate(editTemplate, {
+            value: $(cell).text()
+        }).show();
+        
+        // Bind to complete button press:
+        sheet.bindComplete(function() {
+            var newValue = $(sheet.selector).find('.value').val();
+            
+            $('#sheet .buttons button').attr('disabled', 'disabled');
+            $('#sheet .buttons .complete').text('Saving...');
+            
+            _this.saveCell(cell, newValue, function() {
+                sheet.hide();
+                contentview.setLoading(true);
+                _this.render();
+            });
+        });
+    },
+    
+    
+    /**
+     * Save cell
+     * @param  {Object}   cell     Cell DOM element
+     * @param  {String}   newValue Value to change it to
+     * @param  {Function} callback Optional callback executed when query returns
+     * @return {undefined}
+     */
+    saveCell: function(cell, newValue, callback) {
+        var _this = this;
+        
+        // Check there is a primary key:
+        if ($(cell).parent().find('.primary').length < 1) {
+            alert('No primary key - unable to identify the cell in order to save it.');
+            return false;
+        }
+        
+        // Build where clause:
+        var where = '1 = 1 ';
+        
+        // Get primary keys:
+        _.each($(cell).parent().find('.primary'), function(item) {
+            var key = $(item).attr('data-column-name');
+            var val = $(item).attr('data-value');
+            
+            where = where + _.str.sprintf(' AND %s = "%s" ', key, val);
+        });
+        
+        // Build SQL:
+        var column = $(cell).attr('data-column-name');
+        
+        var sql = _.str.sprintf(
+            "UPDATE `%s` SET %s = '%s' WHERE %s",
+            _this.table.get('name'),
+            column, newValue, where
+        );
+        
+        // Start animation to indicate it's saving:
+        $(cell).addClass('loading');
+        $(cell).animate({
+            'text-indent': '12px',
+            'background-position': '2px'
+        }, 300);
+        $(cell).css('background', '');
+        
+        // Execute query:
+        database.query(sql, function(err) {
+            $(cell).animate({
+                'text-indent': '0px',
+                'background-position': '-20px'
+            }, 300, function() {
+                $(cell).removeClass('loading');
+                
+                if (err) {
+                    $(cell).css('background', 'red');
+                }
+                
+                if (callback) {
+                    callback(err);
+                }
+            });
+        });
     }
 });
