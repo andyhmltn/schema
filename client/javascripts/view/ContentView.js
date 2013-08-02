@@ -33,12 +33,14 @@ var ContentView = Backbone.View.extend({
         this.tableinfo = new TableInfo(table);
         this.queryview = new QueryView(table);
         
+        // Get section key:
+        var key = this.remember();
+        
         // Set up toolbar and pane:
-        this.initializeToolbar();
+        this.initializeToolbar(key);
         pane.render();
         
         // Render content view:
-        var key = this.remember();
         if (key == 'structure') {
             this.tablestructure.render();
         } else if (key == 'info') {
@@ -53,14 +55,21 @@ var ContentView = Backbone.View.extend({
     
     /**
      * Set up toolbar making them control the ContentView
+     * @param {String} key Section that will be loaded
      * @return {undefined}
      */
-    initializeToolbar: function() {
+    initializeToolbar: function(key) {
         // Clear toolbar:
         toolbar.clear();
         
         // Store this as contentview for use inside callbacks:
         var contentview = this;
+        
+        // If key is invalid, set it to the tableview as that is the
+        // default view:
+        if (!key) {
+            key = 'content';
+        }
         
         // Add structure item to toolbar:
         toolbar.addItem('left', 'Structure', function() {
@@ -68,7 +77,7 @@ var ContentView = Backbone.View.extend({
             contentview.setLoading(true);
             contentview.remember('structure');
             contentview.tablestructure.render();
-        });
+        }, key == 'structure');
         
         // Add content item to toolbar:
         toolbar.addItem('left', 'Content', function() {
@@ -76,7 +85,7 @@ var ContentView = Backbone.View.extend({
             contentview.setLoading(true);
             contentview.remember('content');
             contentview.tableview.render();
-        });
+        }, key == 'content');
         
         // Add info item to toolbar:
         toolbar.addItem('left', 'Table Info', function() {
@@ -84,7 +93,7 @@ var ContentView = Backbone.View.extend({
             contentview.setLoading(true);
             contentview.remember('info');
             contentview.tableinfo.render();
-        });
+        }, key == 'info');
         
         // Add console item to toolbar:
         toolbar.addItem('left', 'Query', function() {
@@ -92,7 +101,7 @@ var ContentView = Backbone.View.extend({
             contentview.remember('query');
             pane.open();
             contentview.queryview.render();
-        });
+        }, key == 'query');
     },
     
     
