@@ -278,7 +278,10 @@ var Column = Backbone.Model.extend({
         var datatype = this.getDatatype().toUpperCase();
         
         inlineEditable = {
-            'TEXT' : '#template-cell-editable-TEXT',
+            'TEXT' : '#template-cell-editable-text',
+            'TIMESTAMP' : '#template-cell-editable-date',
+            'DATETIME' : '#template-cell-editable-date',
+            'DATE' : '#template-cell-editable-date',
         }
         
         if (!inlineEditable.hasOwnProperty(datatype)) {
