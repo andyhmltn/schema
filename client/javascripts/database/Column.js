@@ -90,7 +90,7 @@ var Column = Backbone.Model.extend({
      * Get datatype without any other parameters or information
      * @return {String} Raw datatype
      */
-    getRawDatatype: function() {
+    getDatatype: function() {
         // Get parsed datatype:
         var parts = this.parseDataType();
         var type = parts[0];
@@ -128,7 +128,7 @@ var Column = Backbone.Model.extend({
         ];
         
         // Get raw datatype:
-        var datatype = this.getRawDatatype();
+        var datatype = this.getDatatype();
         
         for (var i = 0; i < integer_patterns.length; i++) {
             var pattern = integer_patterns[i];
@@ -267,5 +267,24 @@ var Column = Backbone.Model.extend({
         console.warn("Could not determine full name for key:", key);
         
         return key;
+    },
+    
+    
+    /**
+     * Get sheet template for editing column
+     * @return {String} Template path
+     */
+    getEditTemplate: function() {
+        var datatype = this.getDatatype().toUpperCase();
+        
+        inlineEditable = {
+            'TEXT' : '#template-cell-editable-TEXT',
+        }
+        
+        if (!inlineEditable.hasOwnProperty(datatype)) {
+            return false;
+        }
+        
+        return inlineEditable[datatype];
     }
 });
