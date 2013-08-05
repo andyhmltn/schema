@@ -32,10 +32,6 @@
         right: 0;
         z-index: 10;
         
-        #showMenu {
-            display: none;
-        }
-        
         .left {
             float: left;
             color: #fff;
@@ -221,12 +217,19 @@
 }
 
 @media screen and (max-width:500px) {
-    #showMenu {
-        display: block !important;
-    }
-    
     .ui-view {
         width: 100%;
         left: 0;
+    }
+    
+    div.tableview {
+        table {
+            tbody {
+                td {
+                    padding-top: 10px !important;
+                    padding-bottom: 15px !important;
+                }
+            }
+        }
     }
 }
