@@ -27,6 +27,32 @@
         }
     }
     
+    button#showLeftNav, button#showToolbar {
+        display: none;
+        
+        width: 30px;
+        height: 30px;
+        border: 1px solid darken(@toolbar_bg, 30%);
+        background: darken(@toolbar_bg, 10%);
+        border-radius: 5px;
+        cursor: pointer;
+        position: fixed;
+        
+        &#showLeftNav {
+            top: 7px;
+            left: 7px;
+            background: url(/images/hamburger.png) no-repeat 4px 4px darken(@toolbar_bg, -20%);
+            
+        }
+        
+        &#showToolbar {
+            top: 7px;
+            right: 7px;
+            background: url(/images/settings.png)
+                        no-repeat 4px 4px darken(@toolbar_bg, -20%);
+        }
+    }
+    
     .section {
         height: @toolbar_height - 20px;
         min-width: 100px;
@@ -68,5 +94,47 @@
                 }
             }
         }
+    }
+}
+
+
+@media screen and (max-width:500px) {
+    .ui-toolbar {
+        .section {
+            ul {
+                display: none;
+            }
+            
+            &.left {
+                top: @toolbar_height;
+                
+                ul {
+                    position: fixed;
+                    left: 0;
+                    right: 0;
+                    width: 100% !important;
+                    
+                    li {
+                        margin: 0 !important;
+                        border-top: 0;
+                        width: 100% !important;
+                        opacity: 0.95;
+                        
+                        a {
+                            width: 100% !important;
+                            padding: 15px;
+                        }
+                    }
+                }
+            }
+        }
+        
+        button#showLeftNav, button#showToolbar {
+            display: block;
+        }
+    }
+    
+    #schema_logo {
+        margin-left: 40px;
     }
 }
