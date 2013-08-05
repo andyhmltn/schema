@@ -5,6 +5,16 @@
  * @author  Tim Davies <mail@timdavi.es>
  */
 var Toolbar = Backbone.View.extend({
+    initialize: function() {
+        $(document).on('click', 'button#showToolbar', function() {
+            $('div.ui-toolbar ul').toggle();
+        });
+        
+        $(document).on('click', '#showLeftNav', function() {
+            $('.ui-sidebar').toggle();
+        });
+    },
+    
     /**
      * jQuery selector for the toolbar
      * @type {String}
