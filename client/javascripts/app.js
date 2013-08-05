@@ -158,8 +158,4 @@ var SchemaRouter = Backbone.Router.extend({
 $(function() {
     var router = new SchemaRouter();
     Backbone.history.start();
-    
-    $(document).on('click', '#showMenu', function() {
-        $('.ui-sidebar').fadeIn('fast');
-    });
 });
