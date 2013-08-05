@@ -49,3 +49,58 @@ div#form-database-connect {
         }
     }
 }
+
+
+@media screen and (max-width:500px) {
+    div#form-database-connect {
+        position: fixed;
+        width: auto;
+        height: auto;
+        left: 10px;
+        top: 85px;
+        right: 10px;
+        bottom: 40px;
+        margin: 0;
+        border-radius: 0;
+        overflow-y: scroll;
+        
+        ul {
+            li {
+                padding: 10px 15px;
+                margin: 0 !important;
+                
+                &.label {
+                    clear: both;
+                    float: none;
+                    text-align: left;
+                    font-weight: bold;
+                    font-size: 16px;
+                    padding: 5px 15px;
+                }
+                &.input {
+                    float: none;
+                    
+                    input {
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 6px;
+                        font-size: 18px;
+                    }
+                }
+                &.buttons {
+                    width: auto;
+                    
+                    input {
+                        width: 100px !important;
+                        padding: 10px;
+                        border: 1px solid darken(@toolbar_bg, 30%);
+                        background: darken(@toolbar_bg, 10%);
+                        color: white;
+                        font-weight: bold;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
