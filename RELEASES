@@ -9,6 +9,7 @@ Criteria for version 0.1:
     ✔ Implement sheet for small dialogues (e.g. confirming actions, editing text fields, etc)
     ✔ Add column ordering to tableview
     ✔ Query view works completely
+    ✔ Able to delete databases
     - Content view works completely, including sheets for altering dates and TEXT fields
     - Structure view works completely
     - Table info view works completely
@@ -17,7 +18,6 @@ Criteria for version 0.1:
     - Complete the server report view
     - Complete the database report view
     - Show name of database you're in when in tableview
-    - Able to delete databases
     - Able to delete tables
     - Able to delete rows
     - Start using $el instead of this.selector
