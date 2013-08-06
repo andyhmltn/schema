@@ -82,11 +82,41 @@ var DatabaseView = Backbone.View.extend({
                             size_unit: size_unit
                         }
                     ));
+                    
+                    // Bind inputs:
+                    database_view.bindInputs();
                 });
                 
                 // Stop loading:
                 view.setLoading(false);
             });
+        });
+    },
+    
+    
+    /**
+     * Bind inputs
+     * @return {undefined}
+     */
+    bindInputs: function() {
+        $('#main').off();
+        $('#main').on('click', '#delete-database', function() {
+            // Get database name:
+            var database_name = $(this).attr('data-database-name');
+            
+            // Create and display concerned confirmation:
+            new ConcernedConfirmation().display(
+                'Delete database &#8220;' + database_name + '&#8221;?',
+                'Deleting this database will remove all tables and all data.<br/>Are you really sure?',
+                'Delete database',
+                'Cancel',
+                function() {
+                    var sql = _.str.sprintf("DROP DATABASE `%s`", database_name);
+                    database.query(sql, function(err, result) {
+                        window.location = "/#/database/";
+                    });
+                }
+            );
         });
     }
 });
