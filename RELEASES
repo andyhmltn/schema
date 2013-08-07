@@ -10,9 +10,9 @@ Criteria for version 0.1:
     ✔ Add column ordering to tableview
     ✔ Query view works completely
     ✔ Able to delete databases
+    ✔ Table info view works completely
     - Content view works completely, including sheets for altering dates and TEXT fields
     - Structure view works completely
-    - Table info view works completely
     - Able to add rows to database
     - Able to add new fields to table
     - Complete the server report view
