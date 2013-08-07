@@ -23,14 +23,53 @@ var TableInfo = Backbone.View.extend({
     render: function() {
         var tableview = this;
         
-        // Render HTML:
-        $('#main').html(_.template(
-            $('#template-tableinfo').html(),
-            {
-                table: table,
-            }
-        ));
+        // Get the syntax for creating this table:
+        tableview.getTableSyntax(function(syntax) {
+            
+            // Get table statistics:
+            tableview.getTableStatistics(function(statistics) {
+                
+                // Render HTML:
+                $('#main').html(_.template(
+                    $('#template-tableinfo').html(),
+                    {
+                        table: table,
+                        syntax: syntax,
+                        statistics: statistics
+                    }
+                ));
+                
+                // Stop loading:
+                contentview.setLoading(false);
+            });
+        });
+    },
+    
+    
+    /**
+     * Get syntax to create table
+     * @param  {Function} callback Callback once query is complete
+     * @return {undefined}
+     */
+    getTableSyntax: function(callback) {
+        var sql = _.str.sprintf("SHOW CREATE TABLE `%s`;", this.table.get('name'));
         
-        contentview.setLoading(false);
+        database.query(sql, function(err, rows) {
+            callback(rows[0]["Create Table"]);
+        });
+    },
+    
+    
+    /**
+     * Get table information and statistics
+     * @param  {Function} callback Callback once query is complete
+     * @return {undefined}
+     */
+    getTableStatistics: function(callback) {
+        var sql = _.str.sprintf("SHOW TABLE STATUS LIKE '%s';", this.table.get('name'));
+        
+        database.query(sql, function(err, rows) {
+            callback(rows[0]);
+        });
     }
 });
