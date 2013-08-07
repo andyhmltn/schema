@@ -7,5 +7,65 @@
 <div class="page-view table-info">
     <div class="page">
         <h2><%= table.get('name') %></h2>
+        
+        <div class="section half table-internals">
+            <div class="inner">
+                <h3>Table Information</h3>
+                
+                <ul class="widget-list">
+                    <li class="on">
+                        <div class="text">Type</div>
+                        <div class="text right"><%= statistics.Engine %></div>
+                    </li>
+                    
+                    <li class="off">
+                        <div class="text">Created at</div>
+                        <div class="text right"><%= statistics.Create_time %></div>
+                    </li>
+                    
+                    <li class="on">
+                        <div class="text">Collation</div>
+                        <div class="text right"><%= statistics.Collation %></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section half content-statistics">
+            <div class="inner">
+                <h3>Content Statistics</h3>
+                
+                <ul class="widget-list">
+                    <li class="on">
+                        <div class="text">Row Format</div>
+                        <div class="text right"><%= statistics.Row_format %></div>
+                    </li>
+                    
+                    <li class="off">
+                        <div class="text">Average Row Length</div>
+                        <div class="text right"><%= statistics.Avg_row_length %></div>
+                    </li>
+                    
+                    <li class="on">
+                        <div class="text">Auto Increment</div>
+                        <div class="text right"><%= statistics.Auto_increment ? statistics.Auto_increment : "-" %></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section full comments">
+            <div class="inner">
+                <h3>Comments</h3>
+                <textarea><%= statistics.Comment %></textarea>
+            </div>
+        </div>
+        
+        <div class="section full table-syntax">
+            <div class="inner">
+                <h3>Table Syntax</h3>
+                <textarea class="monospace"><%= syntax %></textarea>
+            </div>
+        </div>
     </div>
 </div>
