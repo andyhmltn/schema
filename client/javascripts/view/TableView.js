@@ -165,12 +165,23 @@ var TableView = Backbone.View.extend({
     bindInputs: function() {
         var tableview = this;
         
-        // Bind to save:
-        this.bindSave();
-        
         // Select cell if double-clicked on:
         $(this.selector).on('dblclick', 'tbody td', function() {
-            tableview.editCell(this);
+            var currentValue = $(this).text();
+            
+            var column = tableview.table.getColumn($(this).attr('data-column-name'));
+            
+            var cell = new Cell({
+                column: column,
+                cell: $(this),
+                tableview: tableview
+            });
+            
+            cell.editCell(function(value) {
+                if (value != currentValue) {
+                    cell.save(value);
+                }
+            });
         });
         
         // Bind to onclick on the pagination buttons in the titlebar:
@@ -179,14 +190,6 @@ var TableView = Backbone.View.extend({
                 tableview.nextPage();
             } else if ($(this).hasClass('prev')) {
                 tableview.prevPage();
-            }
-        });
-        
-        // If enter key is pressed, send "blur" event to save the field:
-        $(this.selector).on('keydown', 'td', function(e) {
-            if (e.keyCode == '13') {
-                e.preventDefault();
-                $(this).blur();
             }
         });
         
@@ -217,64 +220,6 @@ var TableView = Backbone.View.extend({
         
         contentview.setLoading(true);
         this.render();
-    },
-    
-    
-    bindSave: function() {
-        var tableview = this;
-        
-        // Deselect cell if user moves on:
-        $(this.selector).on('blur', 'tbody td.active', function() {
-            // Remove edit attributes:
-            $(this).removeClass('active').removeAttr('contenteditable');
-            
-            // Check there is a primary key:
-            if ($(this).parent().find('.primary').length < 1) {
-                alert('No primary key - unable to identify the cell in order to save it.');
-                return false;
-            }
-            
-            // Build where clause:
-            var where = '1 = 1 ';
-            
-            // Get primary keys:
-            _.each($(this).parent().find('.primary'), function(item) {
-                var key = $(item).attr('data-column-name');
-                var val = $(item).attr('data-value');
-                
-                where = where + _.str.sprintf(' AND %s = "%s" ', key, val);
-            });
-            
-            // Build SQL:
-            var column = $(this).attr('data-column-name');
-            var value = $(this).text();
-            var sql = _.str.sprintf(
-                "UPDATE `%s` SET %s = '%s' WHERE %s",
-                tableview.table.get('name'),
-                column, value, where
-            );
-            
-            var cell = this;
-            $(cell).addClass('loading');
-            $(cell).animate({
-                'text-indent': '12px',
-                'background-position': '2px'
-            }, 300);
-            $(cell).css('background', '');
-            
-            database.query(sql, function(err) {
-                $(cell).animate({
-                    'text-indent': '0px',
-                    'background-position': '-20px'
-                }, 300, function() {
-                    $(cell).removeClass('loading');
-                    
-                    if (err) {
-                        $(cell).css('background', 'red');
-                    }
-                });
-            });
-        });
     },
     
     
@@ -338,10 +283,22 @@ var TableView = Backbone.View.extend({
         // additional functionality:
         console.info("Cell should be edited with use of a sheet");
         
+        var value = $(cell).text();
+        
         // Display sheet:
         sheet.setTemplate(editTemplate, {
-            value: $(cell).text()
+            value: value
         }).show();
+        
+        // Bind datepicker:
+        var field = document.getElementById('datepicker');
+        var picker = new Pikaday({
+            format: 'YYYY-MM-DD',
+            onSelect: function(date) {
+                field.value = picker.toString();
+            }
+        });
+        field.parentNode.insertBefore(picker.el, field.nextSibling);
         
         // Bind to complete button press:
         sheet.bindComplete(function() {
@@ -354,70 +311,6 @@ var TableView = Backbone.View.extend({
                 sheet.hide();
                 contentview.setLoading(true);
                 _this.render();
-            });
-        });
-    },
-    
-    
-    /**
-     * Save cell
-     * @param  {Object}   cell     Cell DOM element
-     * @param  {String}   newValue Value to change it to
-     * @param  {Function} callback Optional callback executed when query returns
-     * @return {undefined}
-     */
-    saveCell: function(cell, newValue, callback) {
-        var _this = this;
-        
-        // Check there is a primary key:
-        if ($(cell).parent().find('.primary').length < 1) {
-            alert('No primary key - unable to identify the cell in order to save it.');
-            return false;
-        }
-        
-        // Build where clause:
-        var where = '1 = 1 ';
-        
-        // Get primary keys:
-        _.each($(cell).parent().find('.primary'), function(item) {
-            var key = $(item).attr('data-column-name');
-            var val = $(item).attr('data-value');
-            
-            where = where + _.str.sprintf(' AND %s = "%s" ', key, val);
-        });
-        
-        // Build SQL:
-        var column = $(cell).attr('data-column-name');
-        
-        var sql = _.str.sprintf(
-            "UPDATE `%s` SET %s = '%s' WHERE %s",
-            _this.table.get('name'),
-            column, newValue, where
-        );
-        
-        // Start animation to indicate it's saving:
-        $(cell).addClass('loading');
-        $(cell).animate({
-            'text-indent': '12px',
-            'background-position': '2px'
-        }, 300);
-        $(cell).css('background', '');
-        
-        // Execute query:
-        database.query(sql, function(err) {
-            $(cell).animate({
-                'text-indent': '0px',
-                'background-position': '-20px'
-            }, 300, function() {
-                $(cell).removeClass('loading');
-                
-                if (err) {
-                    $(cell).css('background', 'red');
-                }
-                
-                if (callback) {
-                    callback(err);
-                }
             });
         });
     }

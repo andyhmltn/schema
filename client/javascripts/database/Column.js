@@ -142,12 +142,11 @@ var Column = Backbone.Model.extend({
     },
     
     
-    /**
-     * Is column datatype a string of some sort
-     * @return {Boolean}
-     */
-    isStringType: function() {
-        
+    isText: function() {
+        if (this.getDatatype().toUpperCase() == 'TEXT') {
+            return true;
+        }
+        return false;
     },
     
     
@@ -155,8 +154,19 @@ var Column = Backbone.Model.extend({
      * Is column datatype date/time related
      * @return {Boolean}
      */
-    isDateType: function() {
-        
+    isDate: function() {
+        var dt = this.getDatatype().toUpperCase();
+        var datetypes = [
+            'DATE',
+            'DATETIME',
+            'TIMESTAMP',
+            'TIME',
+            'YEAR'
+        ]
+        if (datetypes.indexOf(dt) >= 0) {
+            return true;
+        }
+        return false;
     },
     
     
