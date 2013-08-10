@@ -277,27 +277,5 @@ var Column = Backbone.Model.extend({
         console.warn("Could not determine full name for key:", key);
         
         return key;
-    },
-    
-    
-    /**
-     * Get sheet template for editing column
-     * @return {String} Template path
-     */
-    getEditTemplate: function() {
-        var datatype = this.getDatatype().toUpperCase();
-        
-        inlineEditable = {
-            'TEXT' : '#template-cell-editable-text',
-            'TIMESTAMP' : '#template-cell-editable-date',
-            'DATETIME' : '#template-cell-editable-date',
-            'DATE' : '#template-cell-editable-date',
-        }
-        
-        if (!inlineEditable.hasOwnProperty(datatype)) {
-            return false;
-        }
-        
-        return inlineEditable[datatype];
     }
 });

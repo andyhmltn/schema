@@ -250,58 +250,5 @@ var TableView = Backbone.View.extend({
             return true;
         }
         return false;
-    },
-    
-    
-    /**
-     * Make a cell editable, either via inline editing or a sheet
-     * @param  {Object} cell DOM element of cell which was clicked on
-     * @return {undefined}
-     */
-    editCell: function(cell) {
-        var _this = this;
-        
-        // Get column and column edit template:
-        var col = this.table.getColumn($(cell).attr('data-column-name'));
-        var editTemplate = col.getEditTemplate();
-        
-        // Check if inline editable:
-        if (!editTemplate) {
-            // Print debugging message:
-            console.info("Cell is inline editable");
-            
-            // Add active class, make editable and select contents:
-            $(cell).addClass('active')
-                   .attr('contenteditable', 'true')
-                   .selectText();
-            
-            // Return to stop sheet functionality being run:
-            return;
-        }
-        
-        // Cell should be edited with a sheet to provide
-        // additional functionality:
-        console.info("Cell should be edited with use of a sheet");
-        
-        var value = $(cell).text();
-        
-        // Display sheet:
-        sheet.setTemplate(editTemplate, {
-            value: value
-        }).show();
-        
-        // Bind to complete button press:
-        sheet.bindComplete(function() {
-            var newValue = $(sheet.selector).find('.value').val();
-            
-            $('#sheet .buttons button').attr('disabled', 'disabled');
-            $('#sheet .buttons .complete').text('Saving...');
-            
-            _this.saveCell(cell, newValue, function() {
-                sheet.hide();
-                contentview.setLoading(true);
-                _this.render();
-            });
-        });
     }
 });
