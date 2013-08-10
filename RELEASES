@@ -20,7 +20,6 @@ Criteria for version 0.1:
     - Show name of database you're in when in tableview
     - Able to delete tables
     - Able to delete rows
-    - Start using $el instead of this.selector
 
 Criteria for version 0.2:
     - Global search working
@@ -30,8 +29,10 @@ Criteria for version 0.2:
     - Basic exporting works
     - Manage database connections - consolidate duplicates and destroy old connections
     - Add error class (based on Sheet) for displaying error messages when queries fail
+    - Start using $el instead of this.selector
 
 Criteria for version 0.3:
+    - Able to save comments on tables in table info
     - User management
     - Better handling of permissions
 
