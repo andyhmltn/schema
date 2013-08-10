@@ -290,16 +290,6 @@ var TableView = Backbone.View.extend({
             value: value
         }).show();
         
-        // Bind datepicker:
-        var field = document.getElementById('datepicker');
-        var picker = new Pikaday({
-            format: 'YYYY-MM-DD',
-            onSelect: function(date) {
-                field.value = picker.toString();
-            }
-        });
-        field.parentNode.insertBefore(picker.el, field.nextSibling);
-        
         // Bind to complete button press:
         sheet.bindComplete(function() {
             var newValue = $(sheet.selector).find('.value').val();
