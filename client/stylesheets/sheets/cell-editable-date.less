@@ -1,17 +1,123 @@
 #sheet {
     div.cell-editable-date {
-        width: 600px;
-        // height: 200px;
+        width: 603px;
+        height: 310px;
         padding: 30px;
+        min-height: 258px;
         
-        .datepicker {
-            height: 200px;
-            width: 100%;
-            margin: 10px -1px;
+        .datetimepicker {
+            margin: 20px 0 10px 0;
+            height: 250px;
+            // width: 601px;
             border: 1px solid #ccc;
-        }
-        
-        .buttons {
+            
+            .datepicker, .timepicker {
+                float: left;
+                width: 300px;
+                height: 250px;
+                border-right: 1px solid #ccc;
+                
+                .bar {
+                    height: 39px;
+                    background: #fafafa;
+                    border-bottom: 1px solid #ccc;
+                    
+                    .title {
+                        color: #444;
+                        text-align: center;
+                        font-size: 18px;
+                        height: 30px;
+                        padding-top: 9px;
+                    }
+                    
+                    .next, .prev {
+                        height: 39px;
+                        width: 39px;
+                        background: lighten(#fafafa, -1%);
+                        cursor: pointer;
+                        -webkit-user-select: none;
+                        
+                        &.left {
+                            border-right: 1px solid #ccc;
+                            background: url(/images/prev.png) 11px 12px no-repeat;
+                        }
+                        &.right {
+                            border-left: 1px solid #ccc;
+                            background: url(/images/next.png) 13px 12px no-repeat;
+                        }
+                        
+                        &:hover {
+                            background-color: lighten(#fafafa, -5%);
+                        }
+                        
+                        &:active {
+                            background-color: lighten(#fafafa, -10%);
+                        }
+                    }
+                }
+            }
+            
+            .datepicker {
+                .bar {
+                    .title {
+                        .left;
+                        width: 300px - (40px * 2);
+                    }
+                }
+                
+                .days {
+                    width: 280px;
+                    height: 100px;
+                    margin: 0px 10px 10px 10px;
+                    
+                    .day {
+                        .left;
+                        width: 30px;
+                        height: 17px;
+                        margin: 4px;
+                        border: 1px solid #ccc;
+                        background: #fafafa;
+                        text-align: center;
+                        font-size: 12px;
+                        padding-top: 3px;
+                        border-radius: 2px;
+                        
+                        &:hover {
+                            border-color: #aaa;
+                            cursor: pointer;
+                        }
+                        
+                        &.active {
+                            background: blue;
+                            background: #69A5E7;
+                            border-color: #4A75A3;
+                            color: #fff;
+                            font-weight: bold;
+                        }
+                        
+                        &.offset {
+                            background: #fff;
+                            border-color: #fafafa;
+                            color: #ccc;
+                        }
+                        
+                        &.heading {
+                            border-color: #fff;
+                            background: #fff;
+                            height: 12px;
+                            font-size: 10px;
+                        }
+                    }
+                }
+            }
+            
+            .timepicker {
+                border-right: 0;
+                
+                .title {
+                    width: 300px;
+                }
+            }
         }
     }
 }
