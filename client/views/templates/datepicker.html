@@ -1,0 +1,31 @@
+<div class="bar">
+    <div class="left prev"></div>
+    <div class="title">
+        <%= selectedMonthTitle %>
+        -
+        <%= selectedYear %>
+    </div>
+    <div class="right next"></div>
+</div>
+
+<div class="days">
+    <div class="day heading">Mon</div>
+    <div class="day heading">Tue</div>
+    <div class="day heading">Wed</div>
+    <div class="day heading">Thu</div>
+    <div class="day heading">Fri</div>
+    <div class="day heading">Sat</div>
+    <div class="day heading">Sun</div>
+    
+    <% _.each(initialOffsetDays, function(day) { %>
+        <div class="day offset"><%= day %></div>
+    <% }) %>
+    
+    <% for (var day = 1; day <= numberOfDays; day++) { %>
+        <div class="day pickable <%= day == activeDay && selectedYear == activeYear && selectedMonth == activeMonth ? 'active' : '' %>"><%= day %></div>
+    <% } %>
+    
+    <% _.each(finalOffsetDays, function(day) { %>
+        <div class="day offset"><%= day %></div>
+    <% }) %>
+</div>
