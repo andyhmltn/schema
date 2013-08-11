@@ -47,6 +47,7 @@ var StatusBar = Backbone.View.extend({
     
     /**
      * Clear all buttons, pagination controls and status text
+     * @param {String} section Section to clear (optional)
      * @return {StatusBar} Returns self
      */
     clear: function(section) {
