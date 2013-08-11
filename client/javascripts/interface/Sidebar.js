@@ -60,6 +60,20 @@ var Sidebar = Backbone.View.extend({
                 });
             });
         }
+        
+        // Clear statusbar and add new table button:
+        statusbar.clear('sidebar').addSidebarButton('Create New Table', function() {
+            var prompt = new Prompt().display(
+                'Enter new table name',
+                'Create new table',
+                'Cancel',
+                function(value) {
+                    if (value.length > 0) {
+                        database.createNewTable(value);
+                    }
+                }
+            );
+        });
     },
     
     
