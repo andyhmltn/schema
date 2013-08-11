@@ -14,15 +14,16 @@ var ContentView = Backbone.View.extend({
      * sets up the toolbar and pane and looks into LocalStorage to see
      * which view was displayed last.
      * 
-     * @param  {Table} table Table to display
+     * @param  {Array} params Parameters
      * @return {undefined}
      */
-    initialize: function(table) {
+    initialize: function(params) {
         // Start loading indicator:
         this.setLoading(true);
         
-        // Store table for later:
-        this.table = table;
+        // Store table and database name for later:
+        this.table = params.table;
+        this.databaseName = params.databaseName;
         
         // Get contentview:
         contentview = this;
@@ -102,6 +103,26 @@ var ContentView = Backbone.View.extend({
             pane.open();
             contentview.queryview.render();
         }, key == 'query');
+        
+        toolbar.addItem('right', 'Delete table', function() {
+            // Get table name:
+            var table_name = contentview.table.get('name');
+            var database_name = contentview.table.get('')
+            
+            // Create and display concerned confirmation:
+            new ConcernedConfirmation().display(
+                'Delete table &#8220;' + table_name + '&#8221;?',
+                'Deleting this table will remove all data.<br/>Are you really sure?',
+                'Delete table',
+                'Cancel',
+                function() {
+                    var sql = _.str.sprintf("DROP TABLE `%s`", table_name);
+                    database.query(sql, function(err, result) {
+                        window.location = "/#/database/" + contentview.databaseName + "/";
+                    });
+                }
+            );
+        });
     },
     
     

@@ -11,6 +11,7 @@ Criteria for version 0.1:
     ✔ Query view works completely
     ✔ Able to delete databases
     ✔ Table info view works completely
+    ✔ Able to delete tables
     - Content view works completely, including sheets for altering dates and TEXT fields
     - Structure view works completely
     - Able to add rows to database
@@ -18,7 +19,6 @@ Criteria for version 0.1:
     - Complete the server report view
     - Complete the database report view
     - Show name of database you're in when in tableview
-    - Able to delete tables
     - Able to delete rows
 
 Criteria for version 0.2:

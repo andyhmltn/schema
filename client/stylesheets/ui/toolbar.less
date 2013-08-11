@@ -67,7 +67,17 @@
             left: @sidebar_width + 10px;
         }
         &.right {
-            right: 10px;
+            right: 13px;
+            
+            li {
+                a {
+                    background: #BA3B2D;
+                    
+                    &:hover {
+                        background: darken(#BA3B2D, 5%);
+                    }
+                }
+            }
         }
         
         ul {

@@ -143,7 +143,10 @@ var SchemaRouter = Backbone.Router.extend({
         this.needLogin();
         
         table = new Table(table_name);
-        contentview = new ContentView(table);
+        contentview = new ContentView({
+            databaseName: database_name,
+            table: table
+        });
         
         // Populate left nav (database switcher):
         sidebar.populateFromDatabase(database_name, table_name);
