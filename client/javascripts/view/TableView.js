@@ -64,6 +64,10 @@ var TableView = Backbone.View.extend({
         var offset = this.offset;
         var limit = this.limit;
         
+        statusbar.clear('main .left').addMainViewButton("Add New Row", function() {
+            alert('new row');
+        });
+        
         tableview.table.getFullColumns(function(columns) {
             tableview.getRows(offset, limit, function(rows, num_rows) {
                 // Save number of rows:
@@ -183,6 +187,8 @@ var TableView = Backbone.View.extend({
                 }
             });
         });
+        
+        $('#statusbar, .titlebar').off();
         
         // Bind to onclick on the pagination buttons in the titlebar:
         $('#statusbar, .titlebar').on('click', '.btn', function() {

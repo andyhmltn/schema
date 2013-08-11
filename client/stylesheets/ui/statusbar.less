@@ -9,12 +9,7 @@ div.ui-statusbar {
     right: 0;
     z-index: 10;
     
-    .sidebar {
-        width: @sidebar_width;
-        border-right: 1px solid darken(@toolbar_bg, 20%);
-        height: 30px;
-        text-align: center;
-        
+    .sidebar, .main {
         button {
             height: 22px;
             margin: 4px;
@@ -30,6 +25,19 @@ div.ui-statusbar {
         }
     }
     
+    .sidebar {
+        float: left;
+        width: @sidebar_width;
+        border-right: 1px solid darken(@toolbar_bg, 20%);
+        height: 30px;
+        text-align: center;
+        
+        button {
+            height: 22px;
+            margin: 4px;
+        }
+    }
+    
     .main {
         .left {
             float: left;
@@ -37,6 +45,11 @@ div.ui-statusbar {
             font-size: 12px;
             padding: 8px;
             font-weight: bold;
+            
+            button {
+                height: 21px;
+                margin: -4px -4px -4px -2px;
+            }
         }
         
         .right {
