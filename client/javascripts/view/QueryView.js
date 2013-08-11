@@ -33,6 +33,8 @@ var QueryView = Backbone.View.extend({
         // Get the query from the pane textarea:
         var sql = pane.getSQL();
         
+        statusbar.clear('main .left');
+        
         database.query(sql, function(err, rows, cols) {
             $('#main').html(_.template(
                 $('#template-queryview').html(),

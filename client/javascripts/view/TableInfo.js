@@ -23,6 +23,8 @@ var TableInfo = Backbone.View.extend({
     render: function() {
         var tableview = this;
         
+        statusbar.clear('main .left');
+        
         // Get the syntax for creating this table:
         tableview.getTableSyntax(function(syntax) {
             

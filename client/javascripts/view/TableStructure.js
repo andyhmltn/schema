@@ -24,6 +24,8 @@ var TableStructure = Backbone.View.extend({
         console.info("Rendering TableStructure");
         var tablestructure = this;
         
+        statusbar.clear('main .left');
+        
         table.getFullColumns(function(columns) {
             $('#main').html(_.template(
                 $('#template-tablestructure').html(),
