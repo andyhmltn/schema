@@ -49,10 +49,17 @@ var StatusBar = Backbone.View.extend({
      * Clear all buttons, pagination controls and status text
      * @return {StatusBar} Returns self
      */
-    clear: function() {
+    clear: function(section) {
         console.info("Clearing StatusBar");
         this.displayPaginationControls(false);
-        $(this.selector).find('button').remove();
+        
+        if (section) {
+            var selector = this.selector + ' .' + section;
+        } else {
+            var selector = this.selector;
+        }
+        
+        $(selector).find('button').remove();
         return this;
     },
     
@@ -68,5 +75,19 @@ var StatusBar = Backbone.View.extend({
         console.info("Adding button to StatusBar (%s)", button_text);
         var element = $('<button></button>').html(button_text).click(callback);
         $(this.selector).find('.sidebar').append(element);
+    },
+    
+    
+    /**
+     * Add button to main view section of status bar
+     * @param  {String}   button_text Text to be displayed on the button
+     * @param  {Function} callback    Function to be called when button
+     *                                is clicked
+     * @return {undefined}
+     */
+    addMainViewButton: function(button_text, callback) {
+        console.info("Adding button to StatusBar (%s)", button_text);
+        var element = $('<button></button>').html(button_text).click(callback);
+        $(this.selector).find('.main .left').append(element);
     }
 });
