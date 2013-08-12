@@ -1,0 +1,20 @@
+<tr
+    class="
+        <% if (edit) { %>newRow<% } %>
+    "
+>
+    <% _.each(columns, function (column) { %>
+        <td
+            class="
+                <% if (edit) { %>active<% } %>
+                <% if (column.isPrimaryKey()) { %>primary<% } %>
+            "
+            <% if (column.isPrimaryKey()) { %>
+                data-value='<%- row[column.get('name')] %>'
+            <% } %>
+            data-column-name="<%= column.get('name') %>"
+        ><% if (edit) { %><input type="text" value="<% } %><%-
+            row[column.get('name')]
+        %><% if (edit) { %>" /><% } %></td>
+    <% }); %>
+</tr>
