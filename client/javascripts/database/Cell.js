@@ -45,13 +45,21 @@ var Cell = Backbone.Model.extend({
             // Remove any old bindings:
             $(cell).off();
             
+            if ($(cell).hasClass('active')) {
+                return;
+            }
+            
             // Make active and enable editing:
-            $(cell).addClass('active')
-                        .attr('contenteditable', 'true')
-                        .selectText();
+            // $(cell).addClass('active')
+                        // .attr('contenteditable', 'true')
+                        // .selectText();
+            
+            var content = $(cell).text();
+            var input = $('<input type="text" />').val(content);
+            $(cell).addClass('active').html(input).find('input').select();
             
             // Check for user pressing enter:
-            $(cell).keydown(function(e) {
+            $(cell).on('keydown', 'input', function(e) {
                 if (e.keyCode == '13') {
                     e.preventDefault();
                     $(cell).blur();
@@ -59,8 +67,11 @@ var Cell = Backbone.Model.extend({
             });
             
             // When the user clicks away from field, return the new value:
-            $(cell).blur(function() {
-                callback($(cell).text());
+            $(cell).find('input').blur(function() {
+                var value = $(cell).find('input').val();
+                $(cell).html(value);
+                $(cell).removeClass('active');
+                callback(value);
             });
         }
     },

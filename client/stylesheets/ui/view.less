@@ -118,6 +118,8 @@
             
             tbody {
                 tr {
+                    height: 20px;
+                    
                     td {
                         background: #fafafa;
                         padding: 4px 10px;
@@ -129,6 +131,19 @@
                         text-overflow: ellipsis;
                         
                         &.active {
+                            padding: 0;
+                            
+                            input {
+                                display: block;
+                                margin: 0;
+                                border: 0;
+                                width: 100%;
+                                // background: red;
+                                height: 19px;
+                                padding: 4px 9px;
+                                box-sizing: border-box;
+                                outline: 0;
+                            }
                         }
                         
                         &.loading {

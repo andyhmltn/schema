@@ -64,10 +64,6 @@ var TableView = Backbone.View.extend({
         var offset = this.offset;
         var limit = this.limit;
         
-        statusbar.clear('main .left').addMainViewButton("Add New Row", function() {
-            alert('new row');
-        });
-        
         tableview.table.getFullColumns(function(columns) {
             tableview.getRows(offset, limit, function(rows, num_rows) {
                 // Save number of rows:
@@ -92,6 +88,61 @@ var TableView = Backbone.View.extend({
                 
                 // Stop loading:
                 contentview.setLoading(false);
+                
+                statusbar.clear('main .left').addMainViewButton("Add New Row", function() {
+                    // Add empty row:
+                    var row = {};
+                    
+                    _.each(columns, function(column) {
+                        var value = "";
+                        var datatype = column.getDatatype().toUpperCase();
+                        
+                        if (datatype == 'DATETIME') {
+                            value = '0000-00-00 00:00:00';
+                            value = new Date();
+                        }
+                        if (datatype == 'DATE') {
+                            value = '0000-00-00';
+                            value = new Date();
+                        }
+                        if (datatype == 'TIME') {
+                            value = '00:00';
+                            value = new Date();
+                        }
+                        if (datatype == 'YEAR') {
+                            value = '0000';
+                            value = new Date();
+                        }
+                        if (datatype == 'TIMESTAMP') {
+                            value = new Date();
+                        }
+                        
+                        row[column.get('name')] = value;
+                    });
+                    
+                    var newRow = _.template($('#template-row').html(), {
+                        row: row,
+                        columns: columns,
+                        edit: true
+                    });
+                    
+                    $('#tableview table tbody').append(newRow);
+                    
+                    // Scroll to it:
+                    var DOMtableview = $('#tableview')[0];
+                    $(DOMtableview).scrollTop(DOMtableview.scrollHeight);
+                    
+                    tableview.bindInputs();
+                    
+                    $('#tableview tbody tr.newRow td:first-child input').select();
+                    
+                    statusbar.addMainViewButton("Save changes", function() {
+                        $('#tableview tbody tr.newRow').each(function(row) {
+                            
+                        });
+                        $(this).remove();
+                    });
+                });
             });
         });
     },
@@ -168,6 +219,8 @@ var TableView = Backbone.View.extend({
      */
     bindInputs: function() {
         var tableview = this;
+        
+        $(this.selector).off();
         
         // Select cell if double-clicked on:
         $(this.selector).on('dblclick', 'tbody td', function() {
