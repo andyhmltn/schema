@@ -1,5 +1,7 @@
 # Schema
 
+![Schema](http://i.imgur.com/jhJWMzj.png)
+
 Schema is a modern, web-based database management tool. Features include:
 
 - Modern UI and markup
