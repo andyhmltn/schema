@@ -5,7 +5,9 @@ Schema is a modern, web-based database management tool. Features include:
 - Modern UI and markup
 - All AJAX
 - Persistent database connections
-- Support for MySQL (and eventually PostgreSQL and Mongo)
+- Support for MySQL (and soon PostgreSQL)
+- Very fast
+- Helpful information as you work, such as the storage sizes of data types
 
 ## Installation
 
@@ -34,14 +36,21 @@ in your browser.
 
 Thanks for trying Schema!
 
-## Development
+## Problems to be aware of
 
-I will add information about the source code and an overview of how it works
-soon on the Github wiki. In the meantime, feel free to take a look at the source
-and contribute any pull requests - they will be very welcome.
+Schema is seriously alpha software. Check out the RELEASES file for the criteria
+I have decided on for each release. There's a *lot* left to do and what has been
+done is almost definitely buggy as hell.
 
-I am especially interested in having a designer come up with a nicer theme,
-a UX expert take a look at how the UI could be improved and any advice or
-pull requests from web developers with tips on how the markup could be improved.
-
-Please do not hesitate to get in touch if you can advise.
+- Inserting and editing data issues - very little of this works and what does
+  work is buggy. Use with care and definitely not on production. I am working
+  on inserting and editing data currently.
+- There is no "garbage collection" on database connections, so currently they
+  will just keep piling up. This will be addressed soon (as well as database
+  connection consolidation). There may be memory leaks, both server-side and
+  client-side.
+- Bugs in browsers other than Safari and Chrome. I have not tested in Firefox
+  or IE.
+- Security problems - I have kept the server-side code small to (hopefully)
+  reduce security issues however there could be problems still. Also, details
+  are currently sent over plaintext so don't use on an untrusted network yet.
