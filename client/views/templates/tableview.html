@@ -46,19 +46,13 @@
         
         <tbody>
             <% _.each(rows, function (row) { %>
-                <tr>
-                    <% _.each(columns, function (column) { %>
-                        <td
-                            <% if (column.isPrimaryKey()) { %>
-                                class='primary'
-                                data-value='<%- row[column.get('name')] %>'
-                            <% } %>
-                            data-column-name="<%= column.get('name') %>"
-                        ><%-
-                            row[column.get('name')]
-                        %></td>
-                    <% }); %>
-                </tr>
+                <%=
+                    _.template($('#template-row').html(), {
+                        row: row,
+                        columns: columns,
+                        edit: false
+                    })
+                %>
             <% }); %>
         </tbody>
     </table>
