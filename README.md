@@ -1,4 +1,5 @@
 # Schema
+#### Warning: alpha and missing many crucial features.
 
 ![Schema](http://i.imgur.com/jhJWMzj.png)
 
